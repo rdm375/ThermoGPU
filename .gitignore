@@ -1,0 +1,50 @@
+# CMake / build trees
+build/
+build-*/
+cmake-build-*/
+CMakeCache.txt
+CMakeFiles/
+Testing/
+CTestTestfile.cmake
+cmake_install.cmake
+compile_commands.json
+Makefile
+
+# Compiled objects and libraries
+*.o
+*.obj
+*.a
+*.so
+*.so.*
+*.dll
+*.dylib
+*.out
+
+# CUDA generated/build artifacts
+*.ptx
+*.cubin
+*.fatbin
+
+# Python environments and caches
+.venv/
+.venv-*/
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.cache/
+
+# Benchmark/runtime output
+*.log
+
+# Editors / temporary files
+*~
+*.swp
+*.swo
+.vscode/
+.idea/
+
+# OS metadata
+.DS_Store
+Thumbs.db
