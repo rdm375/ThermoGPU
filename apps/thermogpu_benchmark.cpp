@@ -159,6 +159,47 @@ Timing measure(const thermogpu::Mixture& mixture,
 }
 
 
+#ifdef THERMOGPU_HAS_CUDA
+Timing measure_cuda_resident(const thermogpu::Mixture& mixture,
+                             const thermogpu::MixtureBatch& batch) {
+    thermogpu::CudaBatchWorkspace workspace(mixture, batch);
+    workspace.run();
+    auto result = workspace.download();
+    double sum = checksum(result);
+    const std::size_t n = batch.size();
+
+    std::size_t calls = 1;
+    for (;;) {
+        const auto t0 = clock_type::now();
+        for (std::size_t k=0;k<calls;++k) workspace.run();
+        const auto t1 = clock_type::now();
+        const double elapsed=std::chrono::duration<double>(t1-t0).count();
+        if (elapsed >= calibration_floor_seconds) {
+            calls=std::max<std::size_t>(1,static_cast<std::size_t>(std::ceil(
+                std::clamp(static_cast<double>(calls)*target_sample_seconds/elapsed,1.0,
+                           static_cast<double>(std::numeric_limits<std::size_t>::max()/2)))));
+            break;
+        }
+        if(calls>std::numeric_limits<std::size_t>::max()/10) break;
+        calls*=10;
+    }
+
+    std::vector<double> times; times.reserve(sample_count);
+    for(int sample=0;sample<sample_count;++sample){
+        const auto t0=clock_type::now();
+        for(std::size_t k=0;k<calls;++k) workspace.run();
+        const auto t1=clock_type::now();
+        times.push_back(std::chrono::duration<double>(t1-t0).count()/static_cast<double>(calls));
+    }
+    result=workspace.download(); sum+=checksum(result);
+    const double med=median(times); const auto [min_it,max_it]=std::minmax_element(times.begin(),times.end());
+    std::vector<double> deviations; for(double t:times) deviations.push_back(std::abs(t-med));
+    const double mad=median(deviations); benchmark_sink=sum;
+    return Timing{calls,*min_it,med,*max_it,mad,static_cast<double>(n)/med,
+                  med*1.0e9/static_cast<double>(n),med>0.0?100.0*mad/med:0.0,sum};
+}
+#endif
+
 struct Observation {
     std::size_t states{};
     double seconds_per_call{};
@@ -279,6 +320,21 @@ int main(int argc, char** argv) {
             if (std::string(argv[1]) == "--crossover") {
                 if (argc != 2) throw std::invalid_argument("--crossover takes no batch-size arguments");
                 sizes = {10, 15, 20, 25, 30, 40, 50, 60, 75, 100};
+            } else if (std::string(argv[1]) == "--gpu-crossover") {
+                if (argc != 2) throw std::invalid_argument("--gpu-crossover takes no batch-size arguments");
+#ifndef THERMOGPU_HAS_CUDA
+                throw std::invalid_argument("--gpu-crossover requires THERMOGPU_ENABLE_CUDA=ON");
+#else
+                sizes = {100, 150, 200, 250, 300, 400, 500, 750, 1000,
+                         1500, 2000, 3000, 4000, 5000, 7500, 10000};
+#endif
+            } else if (std::string(argv[1]) == "--gpu-e2e-crossover") {
+                if (argc != 2) throw std::invalid_argument("--gpu-e2e-crossover takes no batch-size arguments");
+#ifndef THERMOGPU_HAS_CUDA
+                throw std::invalid_argument("--gpu-e2e-crossover requires THERMOGPU_ENABLE_CUDA=ON");
+#else
+                sizes = {3200, 3400, 3600, 3800, 4000, 4200, 4400, 4600, 4800};
+#endif
             } else {
                 for (int i = 1; i < argc; ++i) {
                     const auto value = std::stoull(argv[i]);
@@ -304,7 +360,12 @@ int main(int argc, char** argv) {
 #else
         std::cout << "OpenMP: disabled\n";
 #endif
-        std::cout << '\n'
+#ifdef THERMOGPU_HAS_CUDA
+        std::cout << "CUDA: enabled (resident-kernel and end-to-end rows)\n";
+#else
+        std::cout << "CUDA: disabled\n";
+#endif
+        std::cout << '\n' 
                   << std::left << std::setw(10) << "Backend"
                   << std::right << std::setw(8) << "Threads"
                   << std::setw(12) << "States"
@@ -319,12 +380,24 @@ int main(int argc, char** argv) {
                   << '\n';
 
         std::map<int, std::vector<Observation>> model_observations;
+#ifdef THERMOGPU_HAS_CUDA
+        struct GpuCrossoverRow {
+            std::size_t states{};
+            std::string cpu_backend;
+            double cpu_seconds{};
+            Timing cuda_resident{};
+            Timing cuda_e2e{};
+        };
+        std::vector<GpuCrossoverRow> gpu_crossover_rows;
+#endif
 
         for (const std::size_t n : sizes) {
             const auto batch = make_batch(n);
             const Timing scalar = measure(mixture, batch, thermogpu::evaluate_mixture_batch_scalar);
             print_row("scalar", 1, n, scalar, scalar.median_seconds_per_call);
             model_observations[0].push_back({n, scalar.median_seconds_per_call, scalar.relative_mad_percent});
+            double best_cpu_seconds = scalar.median_seconds_per_call;
+            std::string best_cpu_backend = "scalar";
 
 #ifdef THERMOGPU_HAS_OPENMP
             const std::vector<int> thread_counts{1, 2, 4, 8};
@@ -334,7 +407,21 @@ int main(int argc, char** argv) {
                 const Timing parallel = measure(mixture, batch, thermogpu::evaluate_mixture_batch_openmp);
                 print_row("OpenMP", threads, n, parallel, scalar.median_seconds_per_call);
                 model_observations[threads].push_back({n, parallel.median_seconds_per_call, parallel.relative_mad_percent});
+                if (parallel.relative_mad_percent <= unstable_mad_percent &&
+                    parallel.median_seconds_per_call < best_cpu_seconds) {
+                    best_cpu_seconds = parallel.median_seconds_per_call;
+                    best_cpu_backend = "OMP" + std::to_string(threads);
+                }
             }
+#endif
+#ifdef THERMOGPU_HAS_CUDA
+            const Timing cuda_resident = measure_cuda_resident(mixture, batch);
+            print_row("CUDA-res", 0, n, cuda_resident, scalar.median_seconds_per_call);
+            const Timing cuda_e2e = measure(mixture, batch, thermogpu::evaluate_mixture_batch_cuda);
+            print_row("CUDA-e2e", 0, n, cuda_e2e, scalar.median_seconds_per_call);
+            if (argc == 2 && (std::string(argv[1]) == "--gpu-crossover" ||
+                              std::string(argv[1]) == "--gpu-e2e-crossover"))
+                gpu_crossover_rows.push_back({n, best_cpu_backend, best_cpu_seconds, cuda_resident, cuda_e2e});
 #endif
             std::cout << '\n';
         }
@@ -342,6 +429,33 @@ int main(int argc, char** argv) {
         if (argc == 2 && std::string(argv[1]) == "--crossover") {
             print_performance_model(model_observations);
         }
+#ifdef THERMOGPU_HAS_CUDA
+        if (argc == 2 && (std::string(argv[1]) == "--gpu-crossover" ||
+                          std::string(argv[1]) == "--gpu-e2e-crossover")) {
+            std::cout << "GPU crossover summary: CUDA speedup relative to fastest stable measured CPU backend\n"
+                      << std::left << std::setw(10) << "States"
+                      << std::setw(12) << "CPU-best"
+                      << std::right << std::setw(14) << "CPU ns/st"
+                      << std::setw(14) << "CUDA-res"
+                      << std::setw(12) << "res/CPU"
+                      << std::setw(14) << "CUDA-e2e"
+                      << std::setw(12) << "e2e/CPU" << '\n';
+            for (const auto& row : gpu_crossover_rows) {
+                const double cpu_ns = row.cpu_seconds * 1.0e9 / static_cast<double>(row.states);
+                std::cout << std::left << std::setw(10) << row.states
+                          << std::setw(12) << row.cpu_backend
+                          << std::right << std::setw(14) << std::fixed << std::setprecision(1) << cpu_ns
+                          << std::setw(14) << row.cuda_resident.ns_per_state
+                          << std::setw(12) << std::setprecision(3)
+                          << row.cpu_seconds / row.cuda_resident.median_seconds_per_call
+                          << std::setw(14) << std::setprecision(1) << row.cuda_e2e.ns_per_state
+                          << std::setw(12) << std::setprecision(3)
+                          << row.cpu_seconds / row.cuda_e2e.median_seconds_per_call << '\n';
+            }
+            std::cout << "\nCrossover note: values > 1 mean CUDA is faster than the measured CPU envelope. "
+                         "Bracket crossover from adjacent measured points around 1; no GPU fit is applied.\n";
+        }
+#endif
 
         if (!std::isfinite(benchmark_sink)) return EXIT_FAILURE;
         return EXIT_SUCCESS;

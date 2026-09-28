@@ -28,6 +28,9 @@ target_compile_options(thermogpu_eval PRIVATE -Wall -Wextra -Wpedantic)
 
 add_executable(thermogpu_benchmark apps/thermogpu_benchmark.cpp)
 target_link_libraries(thermogpu_benchmark PRIVATE thermogpu_scalar)
+if(THERMOGPU_ENABLE_CUDA)
+  target_link_libraries(thermogpu_benchmark PRIVATE thermogpu_cuda)
+endif()
 target_compile_options(thermogpu_benchmark PRIVATE -Wall -Wextra -Wpedantic)
 
 enable_testing()

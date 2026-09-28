@@ -5,6 +5,7 @@
 #include "mixture.hpp"
 #include "result.hpp"
 #include <cstddef>
+#include <memory>
 #include <vector>
 
 namespace thermogpu {
@@ -41,6 +42,26 @@ MixtureBatchResult evaluate_mixture_batch_openmp(const Mixture& mixture,
 #ifdef THERMOGPU_HAS_CUDA
 MixtureBatchResult evaluate_mixture_batch_cuda(const Mixture& mixture,
                                                const MixtureBatch& batch);
+
+// Reusable CUDA execution context for measurements or applications that keep a
+// fixed batch resident on the device. Construction performs allocation + H2D;
+// run() launches and synchronizes the PR kernel; download() performs D2H.
+class CudaBatchWorkspace {
+public:
+    CudaBatchWorkspace(const Mixture& mixture, const MixtureBatch& batch);
+    ~CudaBatchWorkspace();
+    CudaBatchWorkspace(CudaBatchWorkspace&&) noexcept;
+    CudaBatchWorkspace& operator=(CudaBatchWorkspace&&) noexcept;
+    CudaBatchWorkspace(const CudaBatchWorkspace&) = delete;
+    CudaBatchWorkspace& operator=(const CudaBatchWorkspace&) = delete;
+
+    void run();
+    MixtureBatchResult download() const;
+
+private:
+    struct Impl;
+    std::unique_ptr<Impl> impl_;
+};
 #endif
 
 } // namespace thermogpu

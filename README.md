@@ -6,7 +6,7 @@ V1.0 targets single-phase multicomponent Peng–Robinson calculations and compar
 
 ## Current status
 
-**M1 scalar thermodynamics:** pure-component and multicomponent Peng–Robinson reference implementation.
+**Current milestone: M5 CUDA characterization complete, pending final acceptance run/tag.** Scalar, OpenMP, and baseline CUDA Peng–Robinson batch backends are implemented and differentially tested.
 
 Implemented now:
 - C++20/CMake project
@@ -20,13 +20,13 @@ Implemented now:
 - mixture molecular weight, density, and component fugacity coefficients
 - pure-as-mixture equivalence, limiting, mixture, `kij`, and invalid-input tests
 - initial five-component property table
-- optional CUDA build switch (CUDA EOS implementation intentionally deferred)
+- optional CUDA batch backend with resident-workspace and end-to-end benchmark paths
 - M3 structure-of-arrays batch input: pressure, temperature, and state-major flattened composition
 - scalar batch evaluator returning Z, density, residual, root metadata, and state-major component ln(phi)
 - batch-vs-single-state differential tests across varying P, T, and composition
 - explicit empty-batch behavior and batch layout/composition validation
 
-M4 OpenMP batched execution is complete. The structure-of-arrays batch contract now has scalar and OpenMP backends; a deterministic 1,000-state differential campaign checks OpenMP against the scalar reference across pressure, temperature, composition, roots, density, residuals, and component fugacity coefficients. Next: M5 CUDA execution. An M4 characterization executable, `thermogpu_benchmark`, measures scalar and OpenMP throughput across batch sizes and thread counts without mixing correctness checks into the timed region.
+M4 OpenMP batched execution is complete. M5 adds the CUDA batch backend, CUDA-vs-scalar differential testing, and resident versus end-to-end CUDA characterization. `thermogpu_benchmark` measures scalar, OpenMP, and (when enabled) CUDA throughput without mixing correctness checks into the timed region.
 
 ## Build
 
@@ -36,11 +36,19 @@ cmake --build build -j"$(nproc)"
 ctest --test-dir build --output-on-failure
 ```
 
-CUDA is disabled by default until the CUDA EOS milestone:
+CUDA remains optional. For the tested CUDA 12.4 environment, use GCC 13 consistently for both C++ and the nvcc host compiler; CUDA 12.4 does not support GCC 15 as a host compiler:
 
 ```bash
-cmake -S . -B build -DTHERMOGPU_ENABLE_CUDA=ON
+rm -rf build
+cmake -S . -B build \
+    -DCMAKE_BUILD_TYPE=Release \
+    -DCMAKE_CXX_COMPILER=/usr/bin/g++-13 \
+    -DCMAKE_CUDA_HOST_COMPILER=/usr/bin/g++-13 \
+    -DTHERMOGPU_ENABLE_OPENMP=ON \
+    -DTHERMOGPU_ENABLE_CUDA=ON
 ```
+
+See `docs/benchmarking.md` for the toolchain diagnosis and M5 CUDA characterization. On the characterized Dell Precision 7710 / i7-6920HQ / Quadro M3000M, resident CUDA crossed the measured CPU envelope between 250–300 states (~275 interpolated), while end-to-end CUDA crossed between 3800–4000 states (~3900; 3936 by local interpolation). These are machine- and workload-specific measurements, not universal dispatch thresholds.
 
 ## Mixture API policy
 
@@ -58,7 +66,7 @@ The M3 unit test differentially compares every scalar-batch state against direct
 
 ## M4 CPU benchmark
 
-`thermogpu_benchmark` sweeps deterministic CH4/C2H6 batches through the scalar backend and OpenMP at 1, 2, 4, and 8 threads (when available). It reports nanoseconds per state, EOS evaluations per second, and speedup relative to scalar at the same batch size. The benchmark performs a warm-up and reports the median of five timed samples; correctness validation is deliberately outside the timed region. See `docs/benchmarking.md` for methodology.
+`thermogpu_benchmark` sweeps deterministic CH4/C2H6 batches through the scalar backend and OpenMP at 1, 2, 4, and 8 threads (when available). It reports nanoseconds per state, EOS evaluations per second, and speedup relative to scalar at the same batch size. The benchmark performs a warm-up, calibrates to approximately 200 ms per sample, and reports the median of nine timed samples; correctness validation is deliberately outside the timed region. See `docs/benchmarking.md` for methodology.
 
 ```bash
 ./build/thermogpu_benchmark
