@@ -1,0 +1,40 @@
+Generating SQLite file results/m7/profile/nsys_1c_100k.sqlite from results/m7/profile/nsys_1c_100k.nsys-rep
+Processing [results/m7/profile/nsys_1c_100k.sqlite] with [/usr/lib/x86_64-linux-gnu/nsight-systems/target-linux-x64/reports/cuda_gpu_kern_sum.py]... 
+
+ ** CUDA GPU Kernel Summary (cuda_gpu_kern_sum):
+
+ Time (%)  Total Time (ns)  Instances   Avg (ns)     Med (ns)    Min (ns)   Max (ns)   StdDev (ns)                                                  Name                                                
+ --------  ---------------  ---------  -----------  -----------  ---------  ---------  -----------  ----------------------------------------------------------------------------------------------------
+    100.0       12,170,245         11  1,106,385.9  1,107,663.0  1,090,959  1,113,359      6,846.8  thermogpu::<unnamed>::pr_batch_kernel(const thermogpu::<unnamed>::DeviceComponent *, const double *…
+
+Processing [results/m7/profile/nsys_1c_100k.sqlite] with [/usr/lib/x86_64-linux-gnu/nsight-systems/target-linux-x64/reports/cuda_gpu_mem_time_sum.py]... 
+
+ ** CUDA GPU MemOps Summary (by Time) (cuda_gpu_mem_time_sum):
+
+ Time (%)  Total Time (ns)  Count  Avg (ns)  Med (ns)  Min (ns)  Max (ns)  StdDev (ns)           Operation          
+ --------  ---------------  -----  --------  --------  --------  --------  -----------  ----------------------------
+     63.2          396,892      7  56,698.9  76,287.0    11,840    77,439     26,528.0  [CUDA memcpy Device-to-Host]
+     36.8          230,909      5  46,181.8  76,255.0       416    76,639     41,516.1  [CUDA memcpy Host-to-Device]
+
+Processing [results/m7/profile/nsys_1c_100k.sqlite] with [/usr/lib/x86_64-linux-gnu/nsight-systems/target-linux-x64/reports/cuda_gpu_mem_size_sum.py]... 
+
+ ** CUDA GPU MemOps Summary (by Size) (cuda_gpu_mem_size_sum):
+
+ Total (MB)  Count  Avg (MB)  Med (MB)  Min (MB)  Max (MB)  StdDev (MB)           Operation          
+ ----------  -----  --------  --------  --------  --------  -----------  ----------------------------
+      4.100      7     0.586     0.800     0.100     0.800        0.285  [CUDA memcpy Device-to-Host]
+      2.400      5     0.480     0.800     0.000     0.800        0.438  [CUDA memcpy Host-to-Device]
+
+Processing [results/m7/profile/nsys_1c_100k.sqlite] with [/usr/lib/x86_64-linux-gnu/nsight-systems/target-linux-x64/reports/cuda_api_sum.py]... 
+
+ ** CUDA API Summary (cuda_api_sum):
+
+ Time (%)  Total Time (ns)  Num Calls   Avg (ns)     Med (ns)    Min (ns)    Max (ns)   StdDev (ns)            Name         
+ --------  ---------------  ---------  -----------  -----------  ---------  ----------  ------------  ----------------------
+     82.1       70,674,430         12  5,889,535.8     85,842.0      3,673  70,036,018  20,200,942.0  cudaMalloc            
+     14.2       12,199,921         11  1,109,083.7  1,110,787.0  1,093,747   1,114,582       6,663.4  cudaDeviceSynchronize 
+      1.6        1,397,992         12    116,499.3    127,667.0      3,936     202,227      72,749.2  cudaMemcpy            
+      1.5        1,294,620         12    107,885.0    152,559.5      6,494     172,105      72,583.7  cudaFree              
+      0.6          506,355         11     46,032.3      4,079.0      3,873     461,647     137,846.5  cudaLaunchKernel      
+      0.0            2,077          1      2,077.0      2,077.0      2,077       2,077           0.0  cuModuleGetLoadingMode
+

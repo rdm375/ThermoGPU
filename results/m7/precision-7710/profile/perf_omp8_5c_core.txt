@@ -1,0 +1,12 @@
+
+ Performance counter stats for './build/thermogpu_scaling --profile omp 5 100000 8':
+
+    38,373,682,098      cycles                                                                
+    45,488,208,910      instructions                                                          
+
+       1.734959838 seconds time elapsed
+
+      13.236011000 seconds user
+       0.035692000 seconds sys
+
+

@@ -1,0 +1,274 @@
+Change Dir: '/home/redacted/Sync/ThermoGPU/build'
+
+Run Clean Command: /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile clean
+/usr/bin/gmake  -f CMakeFiles/Makefile2 clean
+gmake[1]: Entering directory '/nvme/Sync/ThermoGPU/build'
+/usr/bin/gmake  -f CMakeFiles/thermogpu_scalar.dir/build.make CMakeFiles/thermogpu_scalar.dir/clean
+gmake[2]: Entering directory '/nvme/Sync/ThermoGPU/build'
+/usr/bin/cmake -P CMakeFiles/thermogpu_scalar.dir/cmake_clean.cmake
+gmake[2]: Leaving directory '/nvme/Sync/ThermoGPU/build'
+/usr/bin/gmake  -f CMakeFiles/thermogpu_cuda.dir/build.make CMakeFiles/thermogpu_cuda.dir/clean
+gmake[2]: Entering directory '/nvme/Sync/ThermoGPU/build'
+/usr/bin/cmake -P CMakeFiles/thermogpu_cuda.dir/cmake_clean.cmake
+gmake[2]: Leaving directory '/nvme/Sync/ThermoGPU/build'
+/usr/bin/gmake  -f CMakeFiles/thermogpu_eval.dir/build.make CMakeFiles/thermogpu_eval.dir/clean
+gmake[2]: Entering directory '/nvme/Sync/ThermoGPU/build'
+/usr/bin/cmake -P CMakeFiles/thermogpu_eval.dir/cmake_clean.cmake
+gmake[2]: Leaving directory '/nvme/Sync/ThermoGPU/build'
+/usr/bin/gmake  -f CMakeFiles/thermogpu_benchmark.dir/build.make CMakeFiles/thermogpu_benchmark.dir/clean
+gmake[2]: Entering directory '/nvme/Sync/ThermoGPU/build'
+/usr/bin/cmake -P CMakeFiles/thermogpu_benchmark.dir/cmake_clean.cmake
+gmake[2]: Leaving directory '/nvme/Sync/ThermoGPU/build'
+/usr/bin/gmake  -f CMakeFiles/thermogpu_scaling.dir/build.make CMakeFiles/thermogpu_scaling.dir/clean
+gmake[2]: Entering directory '/nvme/Sync/ThermoGPU/build'
+/usr/bin/cmake -P CMakeFiles/thermogpu_scaling.dir/cmake_clean.cmake
+gmake[2]: Leaving directory '/nvme/Sync/ThermoGPU/build'
+/usr/bin/gmake  -f CMakeFiles/test_pr.dir/build.make CMakeFiles/test_pr.dir/clean
+gmake[2]: Entering directory '/nvme/Sync/ThermoGPU/build'
+/usr/bin/cmake -P CMakeFiles/test_pr.dir/cmake_clean.cmake
+gmake[2]: Leaving directory '/nvme/Sync/ThermoGPU/build'
+/usr/bin/gmake  -f CMakeFiles/test_pr_batch.dir/build.make CMakeFiles/test_pr_batch.dir/clean
+gmake[2]: Entering directory '/nvme/Sync/ThermoGPU/build'
+/usr/bin/cmake -P CMakeFiles/test_pr_batch.dir/cmake_clean.cmake
+gmake[2]: Leaving directory '/nvme/Sync/ThermoGPU/build'
+/usr/bin/gmake  -f CMakeFiles/test_pr_batch_cuda.dir/build.make CMakeFiles/test_pr_batch_cuda.dir/clean
+gmake[2]: Entering directory '/nvme/Sync/ThermoGPU/build'
+/usr/bin/cmake -P CMakeFiles/test_pr_batch_cuda.dir/cmake_clean.cmake
+gmake[2]: Leaving directory '/nvme/Sync/ThermoGPU/build'
+/usr/bin/gmake  -f CMakeFiles/thermogpu_validate_cuda.dir/build.make CMakeFiles/thermogpu_validate_cuda.dir/clean
+gmake[2]: Entering directory '/nvme/Sync/ThermoGPU/build'
+/usr/bin/cmake -P CMakeFiles/thermogpu_validate_cuda.dir/cmake_clean.cmake
+gmake[2]: Leaving directory '/nvme/Sync/ThermoGPU/build'
+/usr/bin/gmake  -f CMakeFiles/thermogpu_diagnose_state.dir/build.make CMakeFiles/thermogpu_diagnose_state.dir/clean
+gmake[2]: Entering directory '/nvme/Sync/ThermoGPU/build'
+/usr/bin/cmake -P CMakeFiles/thermogpu_diagnose_state.dir/cmake_clean.cmake
+gmake[2]: Leaving directory '/nvme/Sync/ThermoGPU/build'
+/usr/bin/gmake  -f CMakeFiles/test_pr_batch_openmp.dir/build.make CMakeFiles/test_pr_batch_openmp.dir/clean
+gmake[2]: Entering directory '/nvme/Sync/ThermoGPU/build'
+/usr/bin/cmake -P CMakeFiles/test_pr_batch_openmp.dir/cmake_clean.cmake
+gmake[2]: Leaving directory '/nvme/Sync/ThermoGPU/build'
+/usr/bin/gmake  -f CMakeFiles/test_pr_reference.dir/build.make CMakeFiles/test_pr_reference.dir/clean
+gmake[2]: Entering directory '/nvme/Sync/ThermoGPU/build'
+/usr/bin/cmake -P CMakeFiles/test_pr_reference.dir/cmake_clean.cmake
+gmake[2]: Leaving directory '/nvme/Sync/ThermoGPU/build'
+/usr/bin/gmake  -f CMakeFiles/test_pr_thermopack.dir/build.make CMakeFiles/test_pr_thermopack.dir/clean
+gmake[2]: Entering directory '/nvme/Sync/ThermoGPU/build'
+/usr/bin/cmake -P CMakeFiles/test_pr_thermopack.dir/cmake_clean.cmake
+gmake[2]: Leaving directory '/nvme/Sync/ThermoGPU/build'
+/usr/bin/gmake  -f CMakeFiles/test_pr_frozen_oracle.dir/build.make CMakeFiles/test_pr_frozen_oracle.dir/clean
+gmake[2]: Entering directory '/nvme/Sync/ThermoGPU/build'
+/usr/bin/cmake -P CMakeFiles/test_pr_frozen_oracle.dir/cmake_clean.cmake
+gmake[2]: Leaving directory '/nvme/Sync/ThermoGPU/build'
+gmake[1]: Leaving directory '/nvme/Sync/ThermoGPU/build'
+
+Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile
+/usr/bin/cmake -S/home/redacted/Sync/ThermoGPU -B/home/redacted/Sync/ThermoGPU/build --check-build-system CMakeFiles/Makefile.cmake 0
+/usr/bin/cmake -E cmake_progress_start /home/redacted/Sync/ThermoGPU/build/CMakeFiles /home/redacted/Sync/ThermoGPU/build//CMakeFiles/progress.marks
+/usr/bin/gmake  -f CMakeFiles/Makefile2 all
+gmake[1]: Entering directory '/nvme/Sync/ThermoGPU/build'
+/usr/bin/gmake  -f CMakeFiles/thermogpu_scalar.dir/build.make CMakeFiles/thermogpu_scalar.dir/depend
+gmake[2]: Entering directory '/nvme/Sync/ThermoGPU/build'
+cd /home/redacted/Sync/ThermoGPU/build && /usr/bin/cmake -E cmake_depends "Unix Makefiles" /home/redacted/Sync/ThermoGPU /home/redacted/Sync/ThermoGPU /home/redacted/Sync/ThermoGPU/build /home/redacted/Sync/ThermoGPU/build /home/redacted/Sync/ThermoGPU/build/CMakeFiles/thermogpu_scalar.dir/DependInfo.cmake "--color=" thermogpu_scalar
+gmake[2]: Leaving directory '/nvme/Sync/ThermoGPU/build'
+/usr/bin/gmake  -f CMakeFiles/thermogpu_scalar.dir/build.make CMakeFiles/thermogpu_scalar.dir/build
+gmake[2]: Entering directory '/nvme/Sync/ThermoGPU/build'
+[  3%] Building CXX object CMakeFiles/thermogpu_scalar.dir/src/cpu/pr_scalar.cpp.o
+/usr/bin/g++-13 -DTHERMOGPU_HAS_OPENMP=1 -I/home/redacted/Sync/ThermoGPU/include -O3 -DNDEBUG -std=c++20 -Wall -Wextra -Wpedantic -fopenmp -MD -MT CMakeFiles/thermogpu_scalar.dir/src/cpu/pr_scalar.cpp.o -MF CMakeFiles/thermogpu_scalar.dir/src/cpu/pr_scalar.cpp.o.d -o CMakeFiles/thermogpu_scalar.dir/src/cpu/pr_scalar.cpp.o -c /home/redacted/Sync/ThermoGPU/src/cpu/pr_scalar.cpp
+[  6%] Building CXX object CMakeFiles/thermogpu_scalar.dir/src/cpu/pr_batch_scalar.cpp.o
+/usr/bin/g++-13 -DTHERMOGPU_HAS_OPENMP=1 -I/home/redacted/Sync/ThermoGPU/include -O3 -DNDEBUG -std=c++20 -Wall -Wextra -Wpedantic -fopenmp -MD -MT CMakeFiles/thermogpu_scalar.dir/src/cpu/pr_batch_scalar.cpp.o -MF CMakeFiles/thermogpu_scalar.dir/src/cpu/pr_batch_scalar.cpp.o.d -o CMakeFiles/thermogpu_scalar.dir/src/cpu/pr_batch_scalar.cpp.o -c /home/redacted/Sync/ThermoGPU/src/cpu/pr_batch_scalar.cpp
+[ 10%] Building CXX object CMakeFiles/thermogpu_scalar.dir/src/cpu/pr_batch_openmp.cpp.o
+/usr/bin/g++-13 -DTHERMOGPU_HAS_OPENMP=1 -I/home/redacted/Sync/ThermoGPU/include -O3 -DNDEBUG -std=c++20 -Wall -Wextra -Wpedantic -fopenmp -MD -MT CMakeFiles/thermogpu_scalar.dir/src/cpu/pr_batch_openmp.cpp.o -MF CMakeFiles/thermogpu_scalar.dir/src/cpu/pr_batch_openmp.cpp.o.d -o CMakeFiles/thermogpu_scalar.dir/src/cpu/pr_batch_openmp.cpp.o -c /home/redacted/Sync/ThermoGPU/src/cpu/pr_batch_openmp.cpp
+[ 13%] Linking CXX static library libthermogpu_scalar.a
+/usr/bin/cmake -P CMakeFiles/thermogpu_scalar.dir/cmake_clean_target.cmake
+/usr/bin/cmake -E cmake_link_script CMakeFiles/thermogpu_scalar.dir/link.txt --verbose=1
+/usr/bin/ar qc libthermogpu_scalar.a CMakeFiles/thermogpu_scalar.dir/src/cpu/pr_scalar.cpp.o CMakeFiles/thermogpu_scalar.dir/src/cpu/pr_batch_scalar.cpp.o CMakeFiles/thermogpu_scalar.dir/src/cpu/pr_batch_openmp.cpp.o
+/usr/bin/ranlib libthermogpu_scalar.a
+gmake[2]: Leaving directory '/nvme/Sync/ThermoGPU/build'
+[ 13%] Built target thermogpu_scalar
+/usr/bin/gmake  -f CMakeFiles/thermogpu_cuda.dir/build.make CMakeFiles/thermogpu_cuda.dir/depend
+gmake[2]: Entering directory '/nvme/Sync/ThermoGPU/build'
+cd /home/redacted/Sync/ThermoGPU/build && /usr/bin/cmake -E cmake_depends "Unix Makefiles" /home/redacted/Sync/ThermoGPU /home/redacted/Sync/ThermoGPU /home/redacted/Sync/ThermoGPU/build /home/redacted/Sync/ThermoGPU/build /home/redacted/Sync/ThermoGPU/build/CMakeFiles/thermogpu_cuda.dir/DependInfo.cmake "--color=" thermogpu_cuda
+gmake[2]: Leaving directory '/nvme/Sync/ThermoGPU/build'
+/usr/bin/gmake  -f CMakeFiles/thermogpu_cuda.dir/build.make CMakeFiles/thermogpu_cuda.dir/build
+gmake[2]: Entering directory '/nvme/Sync/ThermoGPU/build'
+[ 16%] Building CUDA object CMakeFiles/thermogpu_cuda.dir/src/cuda/pr_cuda.cu.o
+/usr/bin/nvcc -forward-unknown-to-host-compiler -ccbin=/usr/bin/g++-13 -DTHERMOGPU_HAS_CUDA=1 -DTHERMOGPU_HAS_OPENMP=1 --options-file CMakeFiles/thermogpu_cuda.dir/includes_CUDA.rsp -O3 -DNDEBUG -std=c++17 "--generate-code=arch=compute_52,code=[compute_52,sm_52]" -Xptxas=-v -MD -MT CMakeFiles/thermogpu_cuda.dir/src/cuda/pr_cuda.cu.o -MF CMakeFiles/thermogpu_cuda.dir/src/cuda/pr_cuda.cu.o.d -x cu -c /home/redacted/Sync/ThermoGPU/src/cuda/pr_cuda.cu -o CMakeFiles/thermogpu_cuda.dir/src/cuda/pr_cuda.cu.o
+ptxas info    : 272 bytes gmem, 16 bytes cmem[4]
+ptxas info    : Compiling entry function '_ZN9thermogpu43_GLOBAL__N__aff9a357_10_pr_cuda_cu_3dd5cbf315diagnose_kernelEPKNS0_15DeviceComponentEPKdiddS5_PNS_16CudaPrDiagnosticE' for 'sm_52'
+ptxas info    : Function properties for _ZN9thermogpu43_GLOBAL__N__aff9a357_10_pr_cuda_cu_3dd5cbf315diagnose_kernelEPKNS0_15DeviceComponentEPKdiddS5_PNS_16CudaPrDiagnosticE
+    10200 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
+ptxas info    : Used 84 registers, 10200 bytes cumulative stack size, 376 bytes cmem[0], 516 bytes cmem[2]
+ptxas info    : Function properties for __internal_trig_reduction_slowpathd
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
+ptxas info    : Compiling entry function '_ZN9thermogpu43_GLOBAL__N__aff9a357_10_pr_cuda_cu_3dd5cbf315pr_batch_kernelEPKNS0_15DeviceComponentEPKdiS5_S5_S5_mPdS6_S6_S6_PiPhS7_' for 'sm_52'
+ptxas info    : Function properties for _ZN9thermogpu43_GLOBAL__N__aff9a357_10_pr_cuda_cu_3dd5cbf315pr_batch_kernelEPKNS0_15DeviceComponentEPKdiS5_S5_S5_mPdS6_S6_S6_PiPhS7_
+    832 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
+ptxas info    : Used 58 registers, 832 bytes cumulative stack size, 432 bytes cmem[0], 516 bytes cmem[2]
+ptxas info    : Function properties for __internal_trig_reduction_slowpathd
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
+[ 20%] Linking CXX static library libthermogpu_cuda.a
+/usr/bin/cmake -P CMakeFiles/thermogpu_cuda.dir/cmake_clean_target.cmake
+/usr/bin/cmake -E cmake_link_script CMakeFiles/thermogpu_cuda.dir/link.txt --verbose=1
+/usr/bin/ar qc libthermogpu_cuda.a CMakeFiles/thermogpu_cuda.dir/src/cuda/pr_cuda.cu.o
+/usr/bin/ranlib libthermogpu_cuda.a
+gmake[2]: Leaving directory '/nvme/Sync/ThermoGPU/build'
+[ 20%] Built target thermogpu_cuda
+/usr/bin/gmake  -f CMakeFiles/thermogpu_eval.dir/build.make CMakeFiles/thermogpu_eval.dir/depend
+gmake[2]: Entering directory '/nvme/Sync/ThermoGPU/build'
+cd /home/redacted/Sync/ThermoGPU/build && /usr/bin/cmake -E cmake_depends "Unix Makefiles" /home/redacted/Sync/ThermoGPU /home/redacted/Sync/ThermoGPU /home/redacted/Sync/ThermoGPU/build /home/redacted/Sync/ThermoGPU/build /home/redacted/Sync/ThermoGPU/build/CMakeFiles/thermogpu_eval.dir/DependInfo.cmake "--color=" thermogpu_eval
+gmake[2]: Leaving directory '/nvme/Sync/ThermoGPU/build'
+/usr/bin/gmake  -f CMakeFiles/thermogpu_eval.dir/build.make CMakeFiles/thermogpu_eval.dir/build
+gmake[2]: Entering directory '/nvme/Sync/ThermoGPU/build'
+[ 23%] Building CXX object CMakeFiles/thermogpu_eval.dir/apps/thermogpu_eval.cpp.o
+/usr/bin/g++-13 -DTHERMOGPU_HAS_OPENMP=1 -I/home/redacted/Sync/ThermoGPU/include -O3 -DNDEBUG -std=c++20 -Wall -Wextra -Wpedantic -fopenmp -MD -MT CMakeFiles/thermogpu_eval.dir/apps/thermogpu_eval.cpp.o -MF CMakeFiles/thermogpu_eval.dir/apps/thermogpu_eval.cpp.o.d -o CMakeFiles/thermogpu_eval.dir/apps/thermogpu_eval.cpp.o -c /home/redacted/Sync/ThermoGPU/apps/thermogpu_eval.cpp
+[ 26%] Linking CXX executable thermogpu_eval
+/usr/bin/cmake -E cmake_link_script CMakeFiles/thermogpu_eval.dir/link.txt --verbose=1
+/usr/bin/g++-13 -O3 -DNDEBUG -Wl,--dependency-file=CMakeFiles/thermogpu_eval.dir/link.d CMakeFiles/thermogpu_eval.dir/apps/thermogpu_eval.cpp.o -o thermogpu_eval  libthermogpu_scalar.a /usr/lib/gcc/x86_64-linux-gnu/13/libgomp.so /usr/lib/x86_64-linux-gnu/libpthread.a
+gmake[2]: Leaving directory '/nvme/Sync/ThermoGPU/build'
+[ 26%] Built target thermogpu_eval
+/usr/bin/gmake  -f CMakeFiles/thermogpu_benchmark.dir/build.make CMakeFiles/thermogpu_benchmark.dir/depend
+gmake[2]: Entering directory '/nvme/Sync/ThermoGPU/build'
+cd /home/redacted/Sync/ThermoGPU/build && /usr/bin/cmake -E cmake_depends "Unix Makefiles" /home/redacted/Sync/ThermoGPU /home/redacted/Sync/ThermoGPU /home/redacted/Sync/ThermoGPU/build /home/redacted/Sync/ThermoGPU/build /home/redacted/Sync/ThermoGPU/build/CMakeFiles/thermogpu_benchmark.dir/DependInfo.cmake "--color=" thermogpu_benchmark
+gmake[2]: Leaving directory '/nvme/Sync/ThermoGPU/build'
+/usr/bin/gmake  -f CMakeFiles/thermogpu_benchmark.dir/build.make CMakeFiles/thermogpu_benchmark.dir/build
+gmake[2]: Entering directory '/nvme/Sync/ThermoGPU/build'
+[ 30%] Building CXX object CMakeFiles/thermogpu_benchmark.dir/apps/thermogpu_benchmark.cpp.o
+/usr/bin/g++-13 -DTHERMOGPU_HAS_CUDA=1 -DTHERMOGPU_HAS_OPENMP=1 -I/home/redacted/Sync/ThermoGPU/include -O3 -DNDEBUG -std=c++20 -Wall -Wextra -Wpedantic -fopenmp -MD -MT CMakeFiles/thermogpu_benchmark.dir/apps/thermogpu_benchmark.cpp.o -MF CMakeFiles/thermogpu_benchmark.dir/apps/thermogpu_benchmark.cpp.o.d -o CMakeFiles/thermogpu_benchmark.dir/apps/thermogpu_benchmark.cpp.o -c /home/redacted/Sync/ThermoGPU/apps/thermogpu_benchmark.cpp
+[ 33%] Linking CXX executable thermogpu_benchmark
+/usr/bin/cmake -E cmake_link_script CMakeFiles/thermogpu_benchmark.dir/link.txt --verbose=1
+/usr/bin/g++-13 -O3 -DNDEBUG -Wl,--dependency-file=CMakeFiles/thermogpu_benchmark.dir/link.d CMakeFiles/thermogpu_benchmark.dir/apps/thermogpu_benchmark.cpp.o -o thermogpu_benchmark   -L/usr/lib/x86_64-linux-gnu/stubs  libthermogpu_scalar.a libthermogpu_cuda.a libthermogpu_scalar.a /usr/lib/gcc/x86_64-linux-gnu/13/libgomp.so /usr/lib/x86_64-linux-gnu/libpthread.a -lcudadevrt -lcudart_static -lrt -lpthread -ldl
+gmake[2]: Leaving directory '/nvme/Sync/ThermoGPU/build'
+[ 33%] Built target thermogpu_benchmark
+/usr/bin/gmake  -f CMakeFiles/thermogpu_scaling.dir/build.make CMakeFiles/thermogpu_scaling.dir/depend
+gmake[2]: Entering directory '/nvme/Sync/ThermoGPU/build'
+cd /home/redacted/Sync/ThermoGPU/build && /usr/bin/cmake -E cmake_depends "Unix Makefiles" /home/redacted/Sync/ThermoGPU /home/redacted/Sync/ThermoGPU /home/redacted/Sync/ThermoGPU/build /home/redacted/Sync/ThermoGPU/build /home/redacted/Sync/ThermoGPU/build/CMakeFiles/thermogpu_scaling.dir/DependInfo.cmake "--color=" thermogpu_scaling
+gmake[2]: Leaving directory '/nvme/Sync/ThermoGPU/build'
+/usr/bin/gmake  -f CMakeFiles/thermogpu_scaling.dir/build.make CMakeFiles/thermogpu_scaling.dir/build
+gmake[2]: Entering directory '/nvme/Sync/ThermoGPU/build'
+[ 36%] Building CXX object CMakeFiles/thermogpu_scaling.dir/apps/thermogpu_scaling.cpp.o
+/usr/bin/g++-13 -DTHERMOGPU_HAS_CUDA=1 -DTHERMOGPU_HAS_OPENMP=1 -I/home/redacted/Sync/ThermoGPU/include -O3 -DNDEBUG -std=c++20 -Wall -Wextra -Wpedantic -fopenmp -MD -MT CMakeFiles/thermogpu_scaling.dir/apps/thermogpu_scaling.cpp.o -MF CMakeFiles/thermogpu_scaling.dir/apps/thermogpu_scaling.cpp.o.d -o CMakeFiles/thermogpu_scaling.dir/apps/thermogpu_scaling.cpp.o -c /home/redacted/Sync/ThermoGPU/apps/thermogpu_scaling.cpp
+[ 40%] Linking CXX executable thermogpu_scaling
+/usr/bin/cmake -E cmake_link_script CMakeFiles/thermogpu_scaling.dir/link.txt --verbose=1
+/usr/bin/g++-13 -O3 -DNDEBUG -Wl,--dependency-file=CMakeFiles/thermogpu_scaling.dir/link.d CMakeFiles/thermogpu_scaling.dir/apps/thermogpu_scaling.cpp.o -o thermogpu_scaling   -L/usr/lib/x86_64-linux-gnu/stubs  libthermogpu_scalar.a libthermogpu_cuda.a libthermogpu_scalar.a /usr/lib/gcc/x86_64-linux-gnu/13/libgomp.so /usr/lib/x86_64-linux-gnu/libpthread.a -lcudadevrt -lcudart_static -lrt -lpthread -ldl
+gmake[2]: Leaving directory '/nvme/Sync/ThermoGPU/build'
+[ 40%] Built target thermogpu_scaling
+/usr/bin/gmake  -f CMakeFiles/test_pr.dir/build.make CMakeFiles/test_pr.dir/depend
+gmake[2]: Entering directory '/nvme/Sync/ThermoGPU/build'
+cd /home/redacted/Sync/ThermoGPU/build && /usr/bin/cmake -E cmake_depends "Unix Makefiles" /home/redacted/Sync/ThermoGPU /home/redacted/Sync/ThermoGPU /home/redacted/Sync/ThermoGPU/build /home/redacted/Sync/ThermoGPU/build /home/redacted/Sync/ThermoGPU/build/CMakeFiles/test_pr.dir/DependInfo.cmake "--color=" test_pr
+gmake[2]: Leaving directory '/nvme/Sync/ThermoGPU/build'
+/usr/bin/gmake  -f CMakeFiles/test_pr.dir/build.make CMakeFiles/test_pr.dir/build
+gmake[2]: Entering directory '/nvme/Sync/ThermoGPU/build'
+[ 43%] Building CXX object CMakeFiles/test_pr.dir/tests/unit/test_pr.cpp.o
+/usr/bin/g++-13 -DTHERMOGPU_HAS_OPENMP=1 -I/home/redacted/Sync/ThermoGPU/include -O3 -DNDEBUG -std=c++20 -fopenmp -MD -MT CMakeFiles/test_pr.dir/tests/unit/test_pr.cpp.o -MF CMakeFiles/test_pr.dir/tests/unit/test_pr.cpp.o.d -o CMakeFiles/test_pr.dir/tests/unit/test_pr.cpp.o -c /home/redacted/Sync/ThermoGPU/tests/unit/test_pr.cpp
+[ 46%] Linking CXX executable test_pr
+/usr/bin/cmake -E cmake_link_script CMakeFiles/test_pr.dir/link.txt --verbose=1
+/usr/bin/g++-13 -O3 -DNDEBUG -Wl,--dependency-file=CMakeFiles/test_pr.dir/link.d CMakeFiles/test_pr.dir/tests/unit/test_pr.cpp.o -o test_pr  libthermogpu_scalar.a /usr/lib/gcc/x86_64-linux-gnu/13/libgomp.so /usr/lib/x86_64-linux-gnu/libpthread.a
+gmake[2]: Leaving directory '/nvme/Sync/ThermoGPU/build'
+[ 46%] Built target test_pr
+/usr/bin/gmake  -f CMakeFiles/test_pr_batch.dir/build.make CMakeFiles/test_pr_batch.dir/depend
+gmake[2]: Entering directory '/nvme/Sync/ThermoGPU/build'
+cd /home/redacted/Sync/ThermoGPU/build && /usr/bin/cmake -E cmake_depends "Unix Makefiles" /home/redacted/Sync/ThermoGPU /home/redacted/Sync/ThermoGPU /home/redacted/Sync/ThermoGPU/build /home/redacted/Sync/ThermoGPU/build /home/redacted/Sync/ThermoGPU/build/CMakeFiles/test_pr_batch.dir/DependInfo.cmake "--color=" test_pr_batch
+gmake[2]: Leaving directory '/nvme/Sync/ThermoGPU/build'
+/usr/bin/gmake  -f CMakeFiles/test_pr_batch.dir/build.make CMakeFiles/test_pr_batch.dir/build
+gmake[2]: Entering directory '/nvme/Sync/ThermoGPU/build'
+[ 50%] Building CXX object CMakeFiles/test_pr_batch.dir/tests/unit/test_batch.cpp.o
+/usr/bin/g++-13 -DTHERMOGPU_HAS_OPENMP=1 -I/home/redacted/Sync/ThermoGPU/include -O3 -DNDEBUG -std=c++20 -Wall -Wextra -Wpedantic -fopenmp -MD -MT CMakeFiles/test_pr_batch.dir/tests/unit/test_batch.cpp.o -MF CMakeFiles/test_pr_batch.dir/tests/unit/test_batch.cpp.o.d -o CMakeFiles/test_pr_batch.dir/tests/unit/test_batch.cpp.o -c /home/redacted/Sync/ThermoGPU/tests/unit/test_batch.cpp
+[ 53%] Linking CXX executable test_pr_batch
+/usr/bin/cmake -E cmake_link_script CMakeFiles/test_pr_batch.dir/link.txt --verbose=1
+/usr/bin/g++-13 -O3 -DNDEBUG -Wl,--dependency-file=CMakeFiles/test_pr_batch.dir/link.d CMakeFiles/test_pr_batch.dir/tests/unit/test_batch.cpp.o -o test_pr_batch  libthermogpu_scalar.a /usr/lib/gcc/x86_64-linux-gnu/13/libgomp.so /usr/lib/x86_64-linux-gnu/libpthread.a
+gmake[2]: Leaving directory '/nvme/Sync/ThermoGPU/build'
+[ 53%] Built target test_pr_batch
+/usr/bin/gmake  -f CMakeFiles/test_pr_batch_cuda.dir/build.make CMakeFiles/test_pr_batch_cuda.dir/depend
+gmake[2]: Entering directory '/nvme/Sync/ThermoGPU/build'
+cd /home/redacted/Sync/ThermoGPU/build && /usr/bin/cmake -E cmake_depends "Unix Makefiles" /home/redacted/Sync/ThermoGPU /home/redacted/Sync/ThermoGPU /home/redacted/Sync/ThermoGPU/build /home/redacted/Sync/ThermoGPU/build /home/redacted/Sync/ThermoGPU/build/CMakeFiles/test_pr_batch_cuda.dir/DependInfo.cmake "--color=" test_pr_batch_cuda
+gmake[2]: Leaving directory '/nvme/Sync/ThermoGPU/build'
+/usr/bin/gmake  -f CMakeFiles/test_pr_batch_cuda.dir/build.make CMakeFiles/test_pr_batch_cuda.dir/build
+gmake[2]: Entering directory '/nvme/Sync/ThermoGPU/build'
+[ 56%] Building CXX object CMakeFiles/test_pr_batch_cuda.dir/tests/unit/test_batch_cuda.cpp.o
+/usr/bin/g++-13 -DTHERMOGPU_HAS_CUDA=1 -DTHERMOGPU_HAS_OPENMP=1 -I/home/redacted/Sync/ThermoGPU/include -O3 -DNDEBUG -std=c++20 -Wall -Wextra -Wpedantic -fopenmp -MD -MT CMakeFiles/test_pr_batch_cuda.dir/tests/unit/test_batch_cuda.cpp.o -MF CMakeFiles/test_pr_batch_cuda.dir/tests/unit/test_batch_cuda.cpp.o.d -o CMakeFiles/test_pr_batch_cuda.dir/tests/unit/test_batch_cuda.cpp.o -c /home/redacted/Sync/ThermoGPU/tests/unit/test_batch_cuda.cpp
+[ 60%] Linking CXX executable test_pr_batch_cuda
+/usr/bin/cmake -E cmake_link_script CMakeFiles/test_pr_batch_cuda.dir/link.txt --verbose=1
+/usr/bin/g++-13 -O3 -DNDEBUG -Wl,--dependency-file=CMakeFiles/test_pr_batch_cuda.dir/link.d CMakeFiles/test_pr_batch_cuda.dir/tests/unit/test_batch_cuda.cpp.o -o test_pr_batch_cuda   -L/usr/lib/x86_64-linux-gnu/stubs  libthermogpu_cuda.a libthermogpu_scalar.a /usr/lib/gcc/x86_64-linux-gnu/13/libgomp.so /usr/lib/x86_64-linux-gnu/libpthread.a -lcudadevrt -lcudart_static -lrt -lpthread -ldl
+gmake[2]: Leaving directory '/nvme/Sync/ThermoGPU/build'
+[ 60%] Built target test_pr_batch_cuda
+/usr/bin/gmake  -f CMakeFiles/thermogpu_validate_cuda.dir/build.make CMakeFiles/thermogpu_validate_cuda.dir/depend
+gmake[2]: Entering directory '/nvme/Sync/ThermoGPU/build'
+cd /home/redacted/Sync/ThermoGPU/build && /usr/bin/cmake -E cmake_depends "Unix Makefiles" /home/redacted/Sync/ThermoGPU /home/redacted/Sync/ThermoGPU /home/redacted/Sync/ThermoGPU/build /home/redacted/Sync/ThermoGPU/build /home/redacted/Sync/ThermoGPU/build/CMakeFiles/thermogpu_validate_cuda.dir/DependInfo.cmake "--color=" thermogpu_validate_cuda
+gmake[2]: Leaving directory '/nvme/Sync/ThermoGPU/build'
+/usr/bin/gmake  -f CMakeFiles/thermogpu_validate_cuda.dir/build.make CMakeFiles/thermogpu_validate_cuda.dir/build
+gmake[2]: Entering directory '/nvme/Sync/ThermoGPU/build'
+[ 63%] Building CXX object CMakeFiles/thermogpu_validate_cuda.dir/apps/thermogpu_validate_cuda.cpp.o
+/usr/bin/g++-13 -DTHERMOGPU_HAS_CUDA=1 -DTHERMOGPU_HAS_OPENMP=1 -I/home/redacted/Sync/ThermoGPU/include -O3 -DNDEBUG -std=c++20 -Wall -Wextra -Wpedantic -fopenmp -MD -MT CMakeFiles/thermogpu_validate_cuda.dir/apps/thermogpu_validate_cuda.cpp.o -MF CMakeFiles/thermogpu_validate_cuda.dir/apps/thermogpu_validate_cuda.cpp.o.d -o CMakeFiles/thermogpu_validate_cuda.dir/apps/thermogpu_validate_cuda.cpp.o -c /home/redacted/Sync/ThermoGPU/apps/thermogpu_validate_cuda.cpp
+[ 66%] Linking CXX executable thermogpu_validate_cuda
+/usr/bin/cmake -E cmake_link_script CMakeFiles/thermogpu_validate_cuda.dir/link.txt --verbose=1
+/usr/bin/g++-13 -O3 -DNDEBUG -Wl,--dependency-file=CMakeFiles/thermogpu_validate_cuda.dir/link.d CMakeFiles/thermogpu_validate_cuda.dir/apps/thermogpu_validate_cuda.cpp.o -o thermogpu_validate_cuda   -L/usr/lib/x86_64-linux-gnu/stubs  libthermogpu_cuda.a libthermogpu_scalar.a /usr/lib/gcc/x86_64-linux-gnu/13/libgomp.so /usr/lib/x86_64-linux-gnu/libpthread.a -lcudadevrt -lcudart_static -lrt -lpthread -ldl
+gmake[2]: Leaving directory '/nvme/Sync/ThermoGPU/build'
+[ 66%] Built target thermogpu_validate_cuda
+/usr/bin/gmake  -f CMakeFiles/thermogpu_diagnose_state.dir/build.make CMakeFiles/thermogpu_diagnose_state.dir/depend
+gmake[2]: Entering directory '/nvme/Sync/ThermoGPU/build'
+cd /home/redacted/Sync/ThermoGPU/build && /usr/bin/cmake -E cmake_depends "Unix Makefiles" /home/redacted/Sync/ThermoGPU /home/redacted/Sync/ThermoGPU /home/redacted/Sync/ThermoGPU/build /home/redacted/Sync/ThermoGPU/build /home/redacted/Sync/ThermoGPU/build/CMakeFiles/thermogpu_diagnose_state.dir/DependInfo.cmake "--color=" thermogpu_diagnose_state
+gmake[2]: Leaving directory '/nvme/Sync/ThermoGPU/build'
+/usr/bin/gmake  -f CMakeFiles/thermogpu_diagnose_state.dir/build.make CMakeFiles/thermogpu_diagnose_state.dir/build
+gmake[2]: Entering directory '/nvme/Sync/ThermoGPU/build'
+[ 70%] Building CXX object CMakeFiles/thermogpu_diagnose_state.dir/apps/thermogpu_diagnose_state.cpp.o
+/usr/bin/g++-13 -DTHERMOGPU_HAS_CUDA=1 -DTHERMOGPU_HAS_OPENMP=1 -I/home/redacted/Sync/ThermoGPU/include -O3 -DNDEBUG -std=c++20 -Wall -Wextra -Wpedantic -fopenmp -MD -MT CMakeFiles/thermogpu_diagnose_state.dir/apps/thermogpu_diagnose_state.cpp.o -MF CMakeFiles/thermogpu_diagnose_state.dir/apps/thermogpu_diagnose_state.cpp.o.d -o CMakeFiles/thermogpu_diagnose_state.dir/apps/thermogpu_diagnose_state.cpp.o -c /home/redacted/Sync/ThermoGPU/apps/thermogpu_diagnose_state.cpp
+[ 73%] Linking CXX executable thermogpu_diagnose_state
+/usr/bin/cmake -E cmake_link_script CMakeFiles/thermogpu_diagnose_state.dir/link.txt --verbose=1
+/usr/bin/g++-13 -O3 -DNDEBUG -Wl,--dependency-file=CMakeFiles/thermogpu_diagnose_state.dir/link.d CMakeFiles/thermogpu_diagnose_state.dir/apps/thermogpu_diagnose_state.cpp.o -o thermogpu_diagnose_state   -L/usr/lib/x86_64-linux-gnu/stubs  libthermogpu_cuda.a libthermogpu_scalar.a /usr/lib/gcc/x86_64-linux-gnu/13/libgomp.so /usr/lib/x86_64-linux-gnu/libpthread.a -lcudadevrt -lcudart_static -lrt -lpthread -ldl
+gmake[2]: Leaving directory '/nvme/Sync/ThermoGPU/build'
+[ 73%] Built target thermogpu_diagnose_state
+/usr/bin/gmake  -f CMakeFiles/test_pr_batch_openmp.dir/build.make CMakeFiles/test_pr_batch_openmp.dir/depend
+gmake[2]: Entering directory '/nvme/Sync/ThermoGPU/build'
+cd /home/redacted/Sync/ThermoGPU/build && /usr/bin/cmake -E cmake_depends "Unix Makefiles" /home/redacted/Sync/ThermoGPU /home/redacted/Sync/ThermoGPU /home/redacted/Sync/ThermoGPU/build /home/redacted/Sync/ThermoGPU/build /home/redacted/Sync/ThermoGPU/build/CMakeFiles/test_pr_batch_openmp.dir/DependInfo.cmake "--color=" test_pr_batch_openmp
+gmake[2]: Leaving directory '/nvme/Sync/ThermoGPU/build'
+/usr/bin/gmake  -f CMakeFiles/test_pr_batch_openmp.dir/build.make CMakeFiles/test_pr_batch_openmp.dir/build
+gmake[2]: Entering directory '/nvme/Sync/ThermoGPU/build'
+[ 76%] Building CXX object CMakeFiles/test_pr_batch_openmp.dir/tests/unit/test_batch_openmp.cpp.o
+/usr/bin/g++-13 -DTHERMOGPU_HAS_OPENMP=1 -I/home/redacted/Sync/ThermoGPU/include -O3 -DNDEBUG -std=c++20 -Wall -Wextra -Wpedantic -fopenmp -MD -MT CMakeFiles/test_pr_batch_openmp.dir/tests/unit/test_batch_openmp.cpp.o -MF CMakeFiles/test_pr_batch_openmp.dir/tests/unit/test_batch_openmp.cpp.o.d -o CMakeFiles/test_pr_batch_openmp.dir/tests/unit/test_batch_openmp.cpp.o -c /home/redacted/Sync/ThermoGPU/tests/unit/test_batch_openmp.cpp
+[ 80%] Linking CXX executable test_pr_batch_openmp
+/usr/bin/cmake -E cmake_link_script CMakeFiles/test_pr_batch_openmp.dir/link.txt --verbose=1
+/usr/bin/g++-13 -O3 -DNDEBUG -Wl,--dependency-file=CMakeFiles/test_pr_batch_openmp.dir/link.d CMakeFiles/test_pr_batch_openmp.dir/tests/unit/test_batch_openmp.cpp.o -o test_pr_batch_openmp  libthermogpu_scalar.a /usr/lib/gcc/x86_64-linux-gnu/13/libgomp.so /usr/lib/x86_64-linux-gnu/libpthread.a
+gmake[2]: Leaving directory '/nvme/Sync/ThermoGPU/build'
+[ 80%] Built target test_pr_batch_openmp
+/usr/bin/gmake  -f CMakeFiles/test_pr_reference.dir/build.make CMakeFiles/test_pr_reference.dir/depend
+gmake[2]: Entering directory '/nvme/Sync/ThermoGPU/build'
+cd /home/redacted/Sync/ThermoGPU/build && /usr/bin/cmake -E cmake_depends "Unix Makefiles" /home/redacted/Sync/ThermoGPU /home/redacted/Sync/ThermoGPU /home/redacted/Sync/ThermoGPU/build /home/redacted/Sync/ThermoGPU/build /home/redacted/Sync/ThermoGPU/build/CMakeFiles/test_pr_reference.dir/DependInfo.cmake "--color=" test_pr_reference
+gmake[2]: Leaving directory '/nvme/Sync/ThermoGPU/build'
+/usr/bin/gmake  -f CMakeFiles/test_pr_reference.dir/build.make CMakeFiles/test_pr_reference.dir/build
+gmake[2]: Entering directory '/nvme/Sync/ThermoGPU/build'
+[ 83%] Building CXX object CMakeFiles/test_pr_reference.dir/tests/reference/test_prmix_thermo_docs.cpp.o
+/usr/bin/g++-13 -DTHERMOGPU_HAS_OPENMP=1 -I/home/redacted/Sync/ThermoGPU/include -O3 -DNDEBUG -std=c++20 -Wall -Wextra -Wpedantic -fopenmp -MD -MT CMakeFiles/test_pr_reference.dir/tests/reference/test_prmix_thermo_docs.cpp.o -MF CMakeFiles/test_pr_reference.dir/tests/reference/test_prmix_thermo_docs.cpp.o.d -o CMakeFiles/test_pr_reference.dir/tests/reference/test_prmix_thermo_docs.cpp.o -c /home/redacted/Sync/ThermoGPU/tests/reference/test_prmix_thermo_docs.cpp
+[ 86%] Linking CXX executable test_pr_reference
+/usr/bin/cmake -E cmake_link_script CMakeFiles/test_pr_reference.dir/link.txt --verbose=1
+/usr/bin/g++-13 -O3 -DNDEBUG -Wl,--dependency-file=CMakeFiles/test_pr_reference.dir/link.d CMakeFiles/test_pr_reference.dir/tests/reference/test_prmix_thermo_docs.cpp.o -o test_pr_reference  libthermogpu_scalar.a /usr/lib/gcc/x86_64-linux-gnu/13/libgomp.so /usr/lib/x86_64-linux-gnu/libpthread.a
+gmake[2]: Leaving directory '/nvme/Sync/ThermoGPU/build'
+[ 86%] Built target test_pr_reference
+/usr/bin/gmake  -f CMakeFiles/test_pr_thermopack.dir/build.make CMakeFiles/test_pr_thermopack.dir/depend
+gmake[2]: Entering directory '/nvme/Sync/ThermoGPU/build'
+cd /home/redacted/Sync/ThermoGPU/build && /usr/bin/cmake -E cmake_depends "Unix Makefiles" /home/redacted/Sync/ThermoGPU /home/redacted/Sync/ThermoGPU /home/redacted/Sync/ThermoGPU/build /home/redacted/Sync/ThermoGPU/build /home/redacted/Sync/ThermoGPU/build/CMakeFiles/test_pr_thermopack.dir/DependInfo.cmake "--color=" test_pr_thermopack
+gmake[2]: Leaving directory '/nvme/Sync/ThermoGPU/build'
+/usr/bin/gmake  -f CMakeFiles/test_pr_thermopack.dir/build.make CMakeFiles/test_pr_thermopack.dir/build
+gmake[2]: Entering directory '/nvme/Sync/ThermoGPU/build'
+[ 90%] Building CXX object CMakeFiles/test_pr_thermopack.dir/tests/reference/test_thermopack_controlled.cpp.o
+/usr/bin/g++-13 -DTHERMOGPU_HAS_OPENMP=1 -I/home/redacted/Sync/ThermoGPU/include -O3 -DNDEBUG -std=c++20 -Wall -Wextra -Wpedantic -fopenmp -MD -MT CMakeFiles/test_pr_thermopack.dir/tests/reference/test_thermopack_controlled.cpp.o -MF CMakeFiles/test_pr_thermopack.dir/tests/reference/test_thermopack_controlled.cpp.o.d -o CMakeFiles/test_pr_thermopack.dir/tests/reference/test_thermopack_controlled.cpp.o -c /home/redacted/Sync/ThermoGPU/tests/reference/test_thermopack_controlled.cpp
+[ 93%] Linking CXX executable test_pr_thermopack
+/usr/bin/cmake -E cmake_link_script CMakeFiles/test_pr_thermopack.dir/link.txt --verbose=1
+/usr/bin/g++-13 -O3 -DNDEBUG -Wl,--dependency-file=CMakeFiles/test_pr_thermopack.dir/link.d CMakeFiles/test_pr_thermopack.dir/tests/reference/test_thermopack_controlled.cpp.o -o test_pr_thermopack  libthermogpu_scalar.a /usr/lib/gcc/x86_64-linux-gnu/13/libgomp.so /usr/lib/x86_64-linux-gnu/libpthread.a
+gmake[2]: Leaving directory '/nvme/Sync/ThermoGPU/build'
+[ 93%] Built target test_pr_thermopack
+/usr/bin/gmake  -f CMakeFiles/test_pr_frozen_oracle.dir/build.make CMakeFiles/test_pr_frozen_oracle.dir/depend
+gmake[2]: Entering directory '/nvme/Sync/ThermoGPU/build'
+cd /home/redacted/Sync/ThermoGPU/build && /usr/bin/cmake -E cmake_depends "Unix Makefiles" /home/redacted/Sync/ThermoGPU /home/redacted/Sync/ThermoGPU /home/redacted/Sync/ThermoGPU/build /home/redacted/Sync/ThermoGPU/build /home/redacted/Sync/ThermoGPU/build/CMakeFiles/test_pr_frozen_oracle.dir/DependInfo.cmake "--color=" test_pr_frozen_oracle
+gmake[2]: Leaving directory '/nvme/Sync/ThermoGPU/build'
+/usr/bin/gmake  -f CMakeFiles/test_pr_frozen_oracle.dir/build.make CMakeFiles/test_pr_frozen_oracle.dir/build
+gmake[2]: Entering directory '/nvme/Sync/ThermoGPU/build'
+[ 96%] Building CXX object CMakeFiles/test_pr_frozen_oracle.dir/tests/reference/test_frozen_oracle.cpp.o
+/usr/bin/g++-13 -DTHERMOGPU_HAS_OPENMP=1 -I/home/redacted/Sync/ThermoGPU/include -O3 -DNDEBUG -std=c++20 -Wall -Wextra -Wpedantic -fopenmp -MD -MT CMakeFiles/test_pr_frozen_oracle.dir/tests/reference/test_frozen_oracle.cpp.o -MF CMakeFiles/test_pr_frozen_oracle.dir/tests/reference/test_frozen_oracle.cpp.o.d -o CMakeFiles/test_pr_frozen_oracle.dir/tests/reference/test_frozen_oracle.cpp.o -c /home/redacted/Sync/ThermoGPU/tests/reference/test_frozen_oracle.cpp
+[100%] Linking CXX executable test_pr_frozen_oracle
+/usr/bin/cmake -E cmake_link_script CMakeFiles/test_pr_frozen_oracle.dir/link.txt --verbose=1
+/usr/bin/g++-13 -O3 -DNDEBUG -Wl,--dependency-file=CMakeFiles/test_pr_frozen_oracle.dir/link.d CMakeFiles/test_pr_frozen_oracle.dir/tests/reference/test_frozen_oracle.cpp.o -o test_pr_frozen_oracle  libthermogpu_scalar.a /usr/lib/gcc/x86_64-linux-gnu/13/libgomp.so /usr/lib/x86_64-linux-gnu/libpthread.a
+gmake[2]: Leaving directory '/nvme/Sync/ThermoGPU/build'
+[100%] Built target test_pr_frozen_oracle
+gmake[1]: Leaving directory '/nvme/Sync/ThermoGPU/build'
+/usr/bin/cmake -E cmake_progress_start /home/redacted/Sync/ThermoGPU/build/CMakeFiles 0
+

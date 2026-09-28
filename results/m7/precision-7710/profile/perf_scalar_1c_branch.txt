@@ -1,0 +1,12 @@
+
+ Performance counter stats for './build/thermogpu_scaling --profile scalar 1 100000':
+
+       915,233,521      branches                                                              
+           906,231      branch-misses                                                         
+
+       0.803881983 seconds time elapsed
+
+       0.773149000 seconds user
+       0.029967000 seconds sys
+
+

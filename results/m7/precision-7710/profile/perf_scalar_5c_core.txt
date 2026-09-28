@@ -1,0 +1,12 @@
+
+ Performance counter stats for './build/thermogpu_scaling --profile scalar 5 100000':
+
+     4,012,523,897      cycles                                                                
+    10,364,494,897      instructions                                                          
+
+       1.395562753 seconds time elapsed
+
+       1.370792000 seconds user
+       0.023978000 seconds sys
+
+

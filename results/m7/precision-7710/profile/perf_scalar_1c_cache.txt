@@ -1,0 +1,12 @@
+
+ Performance counter stats for './build/thermogpu_scaling --profile scalar 1 100000':
+
+        11,683,791      cache-references                                                      
+         6,403,992      cache-misses                                                          
+
+       0.798172217 seconds time elapsed
+
+       0.759595000 seconds user
+       0.036980000 seconds sys
+
+

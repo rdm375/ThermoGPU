@@ -1,0 +1,12 @@
+
+ Performance counter stats for './build/thermogpu_scaling --profile omp 5 100000 8':
+
+     7,579,321,721      branches                                                              
+         6,996,858      branch-misses                                                         
+
+       1.706925766 seconds time elapsed
+
+      13.154466000 seconds user
+       0.026821000 seconds sys
+
+
