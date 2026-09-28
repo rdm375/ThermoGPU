@@ -99,7 +99,15 @@ CubicRoots solve_z_cubic(double A, double B) {
     constexpr double eps = 1.0e-14;
     if (disc > eps) {
         const double s = std::sqrt(disc);
-        o.values[0] = std::cbrt(-q/2.0+s) + std::cbrt(-q/2.0-s) - a/3.0;
+        const double x1 = -q/2.0 + s;
+        const double x2 = -q/2.0 - s;
+        const double x = std::abs(x1) >= std::abs(x2) ? x1 : x2;
+        const double u = std::cbrt(x);
+        // For a depressed cubic, u*v = -p/3. Recovering the smaller
+        // Cardano term this way avoids catastrophic cancellation in x1/x2.
+        const double v = (u != 0.0) ? -p/(3.0*u)
+                                    : std::cbrt(x == x1 ? x2 : x1);
+        o.values[0] = u + v - a/3.0;
         o.count = 1;
         o.classification = RootClassification::one_real;
     } else if (std::abs(p) < eps && std::abs(q) < eps) {

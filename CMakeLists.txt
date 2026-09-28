@@ -48,6 +48,15 @@ if(THERMOGPU_ENABLE_CUDA)
   target_link_libraries(test_pr_batch_cuda PRIVATE thermogpu_cuda)
   target_compile_options(test_pr_batch_cuda PRIVATE -Wall -Wextra -Wpedantic)
   add_test(NAME pr_cuda_batch COMMAND test_pr_batch_cuda)
+
+  add_executable(thermogpu_validate_cuda apps/thermogpu_validate_cuda.cpp)
+  target_link_libraries(thermogpu_validate_cuda PRIVATE thermogpu_cuda)
+  target_compile_options(thermogpu_validate_cuda PRIVATE -Wall -Wextra -Wpedantic)
+  add_test(NAME pr_cuda_differential COMMAND thermogpu_validate_cuda)
+
+  add_executable(thermogpu_diagnose_state apps/thermogpu_diagnose_state.cpp)
+  target_link_libraries(thermogpu_diagnose_state PRIVATE thermogpu_cuda)
+  target_compile_options(thermogpu_diagnose_state PRIVATE -Wall -Wextra -Wpedantic)
 endif()
 
 if(THERMOGPU_ENABLE_OPENMP)

@@ -44,6 +44,17 @@ int main(){
  check(br.ln_phi.size()==2 && std::isfinite(br.ln_phi[0]) && std::isfinite(br.ln_phi[1]),"binary finite fugacities");
  check(std::abs(br.cubic_residual)<1e-12,"binary cubic residual");
 
+ // Regression: cancellation-sensitive one-real-root state found by M6 CPU/CUDA
+ // differential validation. Stable Cardano should solve the original cubic
+ // to near machine precision without cancellation-driven root error.
+ const Mixture m6_regression{{{"methane",190.56,4.5992e6,.01142,.016043},
+                              {"ethane",305.32,4.872e6,.09950,.030070}},
+                             {4.35330595297648837e-1,5.64669404702351163e-1},
+                             {0.0,0.0,0.0,0.0}};
+ const auto m6r=evaluate_mixture(m6_regression,{7.68069763952790573e6,2.96542617046818691e2});
+ check(std::abs(m6r.cubic_residual)<1e-15,"M6 cancellation-sensitive cubic residual");
+ check(std::abs(m6r.Z-5.508474699412217e-1)<5e-15,"M6 cancellation-sensitive stable Z");
+
  // Full five-component workload with an explicit dense zero-kij matrix.
  const Mixture gas{{methane,ethane,propane,nitrogen,co2},
                    {0.80,0.08,0.04,0.04,0.04},

@@ -23,3 +23,13 @@ Run the complete validation suite with:
 ```bash
 ctest --test-dir build --output-on-failure
 ```
+
+## M6 CPU/CUDA differential validation
+
+M6 validates CUDA against the scalar implementation independently anchored to ThermoPack in M2. It is a backend-differential test, not a second external EOS oracle.
+
+`thermogpu_validate_cuda` runs a 20,000-state broad CH4/C2H6 campaign over 0.01--20 MPa, 180--500 K, and nearly the full composition interval, plus a structured critical/root stress grid. It compares `Z`, density, cubic residual, every `ln(phi_i)`, root classification, and root-selection ambiguity. The report records maximum absolute, relative, and ULP differences and the state producing each maximum relative discrepancy.
+
+Acceptance limits are explicit and quantity-specific. ULP counts are diagnostic rather than acceptance criteria near zero. Root metadata must match exactly. An unexplained failure is localized and investigated; tolerances are not widened merely to make it pass.
+
+Run directly with `./build/thermogpu_validate_cuda` or through `ctest --test-dir build --output-on-failure`.

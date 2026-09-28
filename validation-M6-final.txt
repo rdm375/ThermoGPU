@@ -1,0 +1,27 @@
+ThermoGPU M6 CPU/CUDA differential validation
+
+Campaign: broad deterministic domain states=20000 one-real=19583 three-real=417 ambiguous=417
+root-class mismatches=0 ambiguity mismatches=0
+               Z max_abs=3.053113e-15 max_rel=7.792114e-15 max_ulp=55
+  max-rel state=19783 P=5.08747599519903958e+06 T=2.64017607042817133e+02 z=[4.16925072536268093e-01,5.83074927463731907e-01] comp=0
+         density max_abs=2.160050e-12 max_rel=7.736791e-15 max_ulp=39
+  max-rel state=19783 P=5.08747599519903958e+06 T=2.64017607042817133e+02 z=[4.16925072536268093e-01,5.83074927463731907e-01] comp=0
+  cubic_residual max_abs=3.108624e-15 max_rel=2.000000e+00 max_ulp=8770760274304040961
+  max-rel state=16 P=6.72998299659932032e+06 T=2.77222889155662244e+02 z=[2.75682691345672803e-01,7.24317308654327197e-01] comp=0
+          ln_phi max_abs=9.131584e-15 max_rel=3.035968e-11 max_ulp=224442
+  max-rel state=16001 P=1.09337212442488503e+07 T=2.44105642256902769e+02 z=[1.63548774387193563e-02,9.83645122561280671e-01] comp=0
+Structured state rejected by scalar admissibility check: P=4.59920000000000000e+06 T=1.90560000000000002e+02 z=[9.99998999999999971e-01,1.00000000002875566e-06] reason="selected PR root requires Z > B"
+Structured campaign construction: accepted=1727 rejected-as-nonadmissible=1
+
+Campaign: structured critical/root stress states=1727 one-real=1549 three-real=178 ambiguous=178
+root-class mismatches=0 ambiguity mismatches=0
+               Z max_abs=8.881784e-16 max_rel=3.449375e-15 max_ulp=24
+  max-rel state=461 P=2.00000000000000000e+06 T=1.90000000000000000e+02 z=[5.00000000000000028e-02,9.49999999999999956e-01] comp=0
+         density max_abs=2.046363e-12 max_rel=3.542879e-15 max_ulp=25
+  max-rel state=461 P=2.00000000000000000e+06 T=1.90000000000000000e+02 z=[5.00000000000000028e-02,9.49999999999999956e-01] comp=0
+  cubic_residual max_abs=3.552714e-15 max_rel=2.000000e+00 max_ulp=8771886174210883585
+  max-rel state=453 P=2.00000000000000000e+06 T=1.85000000000000000e+02 z=[2.00000000000000011e-01,8.00000000000000044e-01] comp=0
+          ln_phi max_abs=7.771561e-15 max_rel=5.728522e-13 max_ulp=3550
+  max-rel state=1118 P=4.87200000000000000e+06 T=3.30000000000000000e+02 z=[2.00000000000000011e-01,8.00000000000000044e-01] comp=0
+
+M6 differential validation PASSED
