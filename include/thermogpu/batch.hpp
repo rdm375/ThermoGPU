@@ -38,5 +38,9 @@ MixtureBatchResult evaluate_mixture_batch_scalar(const Mixture& mixture,
 MixtureBatchResult evaluate_mixture_batch_openmp(const Mixture& mixture,
                                                  const MixtureBatch& batch);
 #endif
+#ifdef THERMOGPU_HAS_CUDA
+MixtureBatchResult evaluate_mixture_batch_cuda(const Mixture& mixture,
+                                               const MixtureBatch& batch);
+#endif
 
 } // namespace thermogpu
