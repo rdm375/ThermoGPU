@@ -1,0 +1,25 @@
+cff-version: 1.2.0
+message: "If you use ThermoGPU in research or technical work, please cite the software."
+title: "ThermoGPU"
+type: software
+authors:
+  - family-names: "Myers"
+    given-names: "Richard"
+version: 1.0.0
+date-released: 2026-09-29
+url: "https://github.com/rdm375/ThermoGPU"
+repository-code: "https://github.com/rdm375/ThermoGPU"
+license: GPL-3.0-or-later
+abstract: >-
+  ThermoGPU is a validated C++/OpenMP/CUDA implementation of the
+  Peng-Robinson equation of state for batched single-phase,
+  multicomponent thermodynamic calculations, with CPU/GPU
+  differential validation and performance characterization.
+keywords:
+  - Peng-Robinson
+  - equation of state
+  - thermodynamics
+  - CUDA
+  - OpenMP
+  - scientific computing
+  - GPU computing

@@ -236,6 +236,7 @@ Analysis and external-validation tools use a separate Python environment and are
 
 ## Documentation map
 
+- `docs/V1_REPORT.md` — final V1.0 technical report and engineering conclusions
 - `docs/V1_SPEC.md` — complete V1.0 scope and definition of done
 - `docs/theory.md` — Peng–Robinson formulation and units
 - `docs/batch_design.md` — batch representation and layout
