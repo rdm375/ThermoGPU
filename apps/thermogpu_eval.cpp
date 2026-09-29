@@ -6,6 +6,7 @@
 #include <iomanip>
 #include <iostream>
 #include <string_view>
+#include <string>
 
 using namespace thermogpu;
 
@@ -19,7 +20,18 @@ const char* classification_name(RootClassification c) {
 }
 }
 
-int main() {
+int main(int argc, char** argv) {
+    if (argc > 1) {
+        const std::string arg = argv[1];
+        if ((arg == "--help" || arg == "-h") && argc == 2) {
+            std::cout
+                << "Usage: thermogpu_eval\n"
+                << "Runs the built-in five-component Peng-Robinson example.\n";
+            return 0;
+        }
+        std::cerr << "Usage: thermogpu_eval\n";
+        return 1;
+    }
     const Component methane{"methane",190.564,4599200.0,0.01142,0.01604246};
     const Component ethane{"ethane",305.322,4872200.0,0.0995,0.03006904};
     const Component propane{"propane",369.83,4248000.0,0.1523,0.04409562};

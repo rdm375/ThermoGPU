@@ -314,6 +314,16 @@ void print_row(const std::string& backend, int threads, std::size_t states,
 
 int main(int argc, char** argv) {
     try {
+        if (argc == 2 &&
+            (std::string(argv[1]) == "--help" || std::string(argv[1]) == "-h")) {
+            std::cout
+                << "Usage: thermogpu_benchmark [BATCH_SIZE ...]\n"
+                << "       thermogpu_benchmark --crossover\n"
+                << "       thermogpu_benchmark --gpu-crossover\n"
+                << "       thermogpu_benchmark --gpu-e2e-crossover\n";
+            return EXIT_SUCCESS;
+        }
+
         std::vector<std::size_t> sizes{1, 10, 100, 1000, 10000, 100000, 1000000};
         if (argc > 1) {
             sizes.clear();

@@ -103,6 +103,16 @@ void row(std::size_t nc,std::size_t n,const std::string& backend,int threads,con
 }
 
 int main(int argc,char**argv){try{
+    if(argc==2 && (std::string(argv[1])=="--help" || std::string(argv[1])=="-h")){
+        std::cout
+            <<"Usage: thermogpu_scaling [BATCH_SIZE ...]\n"
+            <<"       thermogpu_scaling --quick\n"
+            <<"       thermogpu_scaling --crossover\n"
+            <<"       thermogpu_scaling --profile [cuda|scalar] COMPONENTS STATES\n"
+            <<"       thermogpu_scaling --profile omp COMPONENTS STATES THREADS\n";
+        return EXIT_SUCCESS;
+    }
+
     // Profiling modes deliberately bypass benchmark calibration and reporting.
     // Legacy `--profile NC STATES` remains an alias for the CUDA resident path.
     if(argc>=2 && std::string(argv[1])=="--profile"){

@@ -64,7 +64,9 @@ The two M7 systems used different CUDA architectures:
 
 ThermoGPU intentionally does not hard-code a CUDA architecture in `CMakeLists.txt`. The architecture should describe the GPU on which the build will run.
 
-If the CUDA toolkit requires a particular host compiler, it can be selected at configure time. For example:
+For CUDA builds, use a C++ compiler compatible with the CUDA toolkit and use the same compiler as the CUDA host compiler. Mixing GCC major versions between ordinary C++ compilation and CUDA host compilation can produce C++ runtime/ABI link failures.
+
+The V1.0 release build on the Precision 7710 used GCC 13.4.0 for both ordinary C++ compilation and CUDA host compilation. For example:
 
 ```bash
 cmake -S . -B build \
