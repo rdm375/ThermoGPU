@@ -4,6 +4,10 @@ ThermoGPU is a scientific-computing project investigating whether GPUs can mater
 
 V1.0 targets single-phase, multicomponent Peng–Robinson (PR) calculations and compares scalar C++, OpenMP, and CUDA backends. The project is designed to produce a reproducible computational result: thermodynamic correctness is established first, optimized backends are differentially validated against that reference, and performance claims are retained with the machine-specific evidence that supports them.
 
+**V1.0 final report:** [`docs/V1_REPORT.md`](docs/V1_REPORT.md)
+
+The final report consolidates the numerical validation, CPU/GPU differential testing, performance characterization, cross-machine reproduction, profiling results, limitations, and engineering conclusions from the V1.0 study.
+
 ## Current status
 
 **ThermoGPU V1.0 is complete and tagged `v1.0.0`.**
