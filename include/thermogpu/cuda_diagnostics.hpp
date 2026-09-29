@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: GPL-3.0-or-later
+// Copyright (C) 2026 Richard Myers
+
 #pragma once
 #include "mixture.hpp"
 #include "state.hpp"

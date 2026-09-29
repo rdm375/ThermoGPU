@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: GPL-3.0-or-later
+// Copyright (C) 2026 Richard Myers
+
 #include "thermogpu/peng_robinson.hpp"
 #include "thermogpu/cuda_diagnostics.hpp"
 #include <algorithm>

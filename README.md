@@ -6,9 +6,9 @@ V1.0 targets single-phase, multicomponent Peng–Robinson (PR) calculations and 
 
 ## Current status
 
-**M7 is complete. V1.0 integration and release preparation (M8) are in progress.**
+**ThermoGPU V1.0 is complete and tagged `v1.0.0`.**
 
-The frozen M7 implementation is tagged `v0.7.0`. A subsequent commit reproduces that unchanged implementation on a second, substantially different CPU/GPU platform and adds the cross-machine evidence without moving the tag.
+V1.0 implements and validates the scalar C++, OpenMP, and CUDA backends, completes CPU/GPU differential validation and performance characterization, and reproduces the numerical implementation on a second, substantially different CPU/GPU platform. The frozen M7 implementation remains tagged `v0.7.0`; the subsequent cross-machine evidence and V1 release integration are included in `v1.0.0`.
 
 Implemented and validated:
 
