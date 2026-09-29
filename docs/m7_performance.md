@@ -167,16 +167,17 @@ The measurements do **not** establish which GM204 execution resource causes the 
 
 ## Cross-machine replication
 
-The Precision 7710 results are a characterization, not a universal performance law. A second machine should repeat the same committed benchmark and profile commands without changing EOS code or benchmark methodology. In particular, retain:
+The frozen `v0.7.0` implementation was reproduced unchanged on a Dell Precision 7680 with an Intel i9-13950HX and NVIDIA RTX 4090 Laptop GPU (Ada, compute capability 8.9) under WSL2 / Ubuntu 24.04 with CUDA 13.0. The complete configured eight-test suite passed unchanged. This is portability/reproducibility evidence across a substantially different GPU generation, CUDA toolkit, CPU, and operating environment; it is not a hardware-only controlled comparison.
 
-- the broad production component-count sweep;
-- the focused crossover sweep;
-- resident versus end-to-end CUDA separation;
-- controlled 1c/5c CUDA profiling;
-- scalar and OpenMP 1c/5c CPU profiling; and
-- the exact compiler, CUDA toolkit, driver, CPU, GPU, and profiler versions.
+Focused resident crossover brackets on the 7680 were 400–600, 500–600, 500–1200, and 500–900 states for 1/2/3/5 components respectively. These are later than the 7710 focused resident brackets even though the newer system measured much larger large-batch resident speedups. Crossover location and asymptotic throughput are therefore separate machine/workload characteristics.
 
-A Dell Precision 7680 is planned as the second-machine replication target. Its results should be stored separately (for example `results/m7/precision-7680/`) and compared with the 7710 rather than replacing the 7710 evidence. Of particular interest are whether (1) resident and end-to-end crossover locations move, (2) the decline in resident GPU speedup with component count persists, and (3) a newer supported GPU permits Nsight Compute hardware-counter measurements that were unavailable on GM204.
+The 7680 CPU/end-to-end crossover measurements require additional qualification. The i9-13950HX is physically hybrid, while WSL2 exposed 32 logical processors as 16 homogeneous SMT core pairs. The fastest stable CPU baseline also varied non-monotonically with batch size. WSL-visible `taskset` affinity worked and the computation remained deterministic, but Linux could not establish physical P-core/E-core placement. The raw measurements are retained, but focused end-to-end interpolations are not promoted as robust dispatch thresholds.
+
+The Ada GPU also permitted Nsight Compute hardware-counter profiling that was unavailable on GM204. At 100,000 states, the one-component kernel measured about 269 us and the five-component kernel about 942 us, a ~3.50x increase. Both cases used 56 registers/thread, 75% theoretical occupancy, about 56% achieved occupancy, 1.14 waves/SM, and roughly 80% Compute (SM) throughput. DRAM throughput remained very low (~1.9–2.0% at 1c and ~1.3% at 5c).
+
+Thus the 1c-to-5c kernel-time increase on Ada is not accompanied by increasing register pressure, occupancy collapse, changing launch geometry, DRAM saturation, or loss of overall compute utilization. The evidence supports increased per-state computational work as the primary explanation. The ~3.50x Ada duration ratio is also close to the ~3.40x Maxwell timing ratio, providing cross-platform evidence that the component-scaling behavior is associated with the PR workload/kernel structure rather than being unique to the older GPU.
+
+The complete cross-machine synthesis and qualifications are in `results/m7/CROSS_MACHINE_ANALYSIS.md`. Raw 7680 evidence is retained under `results/m7/precision-7680/`.
 
 ## Reproduction
 
@@ -203,4 +204,4 @@ For static CUDA resources, reconfigure with `-DTHERMOGPU_PTXAS_VERBOSE=ON` and r
 
 ## M7 status
 
-M7a broad component scaling, M7b focused crossover sweeps, and M7c CPU/GPU profiling are complete on the Precision 7710. M7d interpretation is captured in this document. Final M7 closure requires the full test suite, review of the retained artifacts/diff, and the `v0.7.0` commit/tag. Cross-machine Precision 7680 measurements are valuable replication evidence but are not required to invalidate or overwrite the completed 7710 characterization.
+M7 is complete. The primary Precision 7710 characterization was accepted and tagged `v0.7.0`; the subsequent Precision 7680 replication reproduced that frozen implementation without changing the tag. The two-machine evidence is retained separately so the replication extends rather than overwrites the original characterization.

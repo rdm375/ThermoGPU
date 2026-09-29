@@ -177,4 +177,8 @@ Repeat the same commands for five components and for the desired OpenMP thread c
 
 ### Cross-machine replication
 
-Do not reuse Precision 7710 crossover values as expectations or dispatch thresholds on another machine. Run the same broad/focused benchmark grids and fixed profile workloads, record the complete hardware/toolchain environment, and store each machine's raw evidence separately. A planned Precision 7680 replication should therefore add a new results directory rather than replacing the 7710 results.
+Do not reuse Precision 7710 crossover values as expectations or dispatch thresholds on another machine. Run the same broad/focused benchmark grids and fixed profile workloads, record the complete hardware/toolchain environment, and store each machine's raw evidence separately.
+
+The Precision 7680 replication is complete and is retained under `results/m7/precision-7680/`. It reproduced the frozen `v0.7.0` implementation on an i9-13950HX / RTX 4090 Laptop GPU system under WSL2 with CUDA 13.0. The full configured test suite passed unchanged. Nsight Compute hardware counters were available on Ada and provide the controlled 1c/5c evidence summarized in `docs/m7_performance.md` and `results/m7/CROSS_MACHINE_ANALYSIS.md`.
+
+The 7680 CPU/end-to-end crossover measurements are retained with an explicit qualification: WSL2 exposes the hybrid 13950HX as a flattened homogeneous SMT topology, and the selected stable CPU baseline varied across batch sizes. The raw data remain useful evidence, but the focused end-to-end interpolations are not treated as robust dispatch thresholds.
