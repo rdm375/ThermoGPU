@@ -228,7 +228,7 @@ The repository retains machine-specific benchmark CSVs, generated plots, profile
 
 The two characterized environments intentionally differ. The cross-machine experiment therefore demonstrates numerical portability and repeatability of qualitative workload behavior, not a controlled hardware-only speed comparison.
 
-Analysis plots require Python and Matplotlib. Formal declaration of the analysis environment is part of the remaining V1.0 reproducibility/tooling cleanup rather than an implicit runtime dependency of the C++ library.
+Analysis and external-validation tools use a separate Python environment and are not runtime dependencies of the C++ library. See `requirements-analysis.txt` and `docs/reproducibility.md` for setup and reproducibility instructions.
 
 ## Documentation map
 
@@ -240,6 +240,7 @@ Analysis plots require Python and Matplotlib. Formal declaration of the analysis
 - `docs/m6_validation.md` — CPU/CUDA differential-validation campaign
 - `docs/benchmarking.md` — benchmark and profiler workflow
 - `docs/m7_performance.md` — detailed M7 performance analysis
+- `docs/reproducibility.md` — build, validation, analysis, and cross-machine reproducibility
 - `results/m7/CROSS_MACHINE_ANALYSIS.md` — two-machine synthesis
 - `tests/reference/README.md` — reference-case provenance
 

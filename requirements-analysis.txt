@@ -1,0 +1,4 @@
+# ThermoGPU validation and analysis tools
+numpy
+matplotlib
+thermopack

@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.20)
-project(ThermoGPU VERSION 0.1.0 LANGUAGES CXX)
+project(ThermoGPU VERSION 1.0.0 LANGUAGES CXX)
 option(THERMOGPU_ENABLE_OPENMP "Build OpenMP backend" ON)
 option(THERMOGPU_ENABLE_CUDA "Build CUDA backend" OFF)
 option(THERMOGPU_PTXAS_VERBOSE "Report CUDA ptxas resource usage during compilation" OFF)
