@@ -1,0 +1,94 @@
+=== ThermoGPU revision ===
+a756178f4bd4d131abd6a3ccd548b0eac97a98cc
+v0.7.0
+
+=== OS ===
+Linux DESKTOP-O6VU4DR 6.6.87.2-microsoft-standard-WSL2 #1 SMP PREEMPT_DYNAMIC Thu Jun  5 18:30:46 UTC 2025 x86_64 x86_64 x86_64 GNU/Linux
+PRETTY_NAME="Ubuntu 24.04.4 LTS"
+NAME="Ubuntu"
+VERSION="24.04.4 LTS (Noble Numbat)"
+
+=== CPU ===
+Architecture:                         x86_64
+CPU op-mode(s):                       32-bit, 64-bit
+Address sizes:                        46 bits physical, 48 bits virtual
+Byte Order:                           Little Endian
+CPU(s):                               32
+On-line CPU(s) list:                  0-31
+Vendor ID:                            GenuineIntel
+Model name:                           13th Gen Intel(R) Core(TM) i9-13950HX
+CPU family:                           6
+Model:                                183
+Thread(s) per core:                   2
+Core(s) per socket:                   16
+Socket(s):                            1
+Stepping:                             1
+BogoMIPS:                             4838.41
+Flags:                                fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ss ht syscall nx pdpe1gb rdtscp lm constant_tsc rep_good nopl xtopology tsc_reliable nonstop_tsc cpuid tsc_known_freq pni pclmulqdq vmx ssse3 fma cx16 pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand hypervisor lahf_lm abm 3dnowprefetch ssbd ibrs ibpb stibp ibrs_enhanced tpr_shadow ept vpid ept_ad fsgsbase tsc_adjust bmi1 avx2 smep bmi2 erms invpcid rdseed adx smap clflushopt clwb sha_ni xsaveopt xsavec xgetbv1 xsaves avx_vnni vnmi umip waitpkg gfni vaes vpclmulqdq rdpid movdiri movdir64b fsrm md_clear serialize flush_l1d arch_capabilities
+Virtualization:                       VT-x
+Hypervisor vendor:                    Microsoft
+Virtualization type:                  full
+L1d cache:                            768 KiB (16 instances)
+L1i cache:                            512 KiB (16 instances)
+L2 cache:                             32 MiB (16 instances)
+L3 cache:                             36 MiB (1 instance)
+NUMA node(s):                         1
+NUMA node0 CPU(s):                    0-31
+Vulnerability Gather data sampling:   Not affected
+Vulnerability Itlb multihit:          Not affected
+Vulnerability L1tf:                   Not affected
+Vulnerability Mds:                    Not affected
+Vulnerability Meltdown:               Not affected
+Vulnerability Mmio stale data:        Not affected
+Vulnerability Reg file data sampling: Mitigation; Clear Register File
+Vulnerability Retbleed:               Mitigation; Enhanced IBRS
+Vulnerability Spec rstack overflow:   Not affected
+Vulnerability Spec store bypass:      Mitigation; Speculative Store Bypass disabled via prctl
+Vulnerability Spectre v1:             Mitigation; usercopy/swapgs barriers and __user pointer sanitization
+Vulnerability Spectre v2:             Mitigation; Enhanced / Automatic IBRS; IBPB conditional; RSB filling; PBRSB-eIBRS SW sequence; BHI BHI_DIS_S
+Vulnerability Srbds:                  Not affected
+Vulnerability Tsx async abort:        Not affected
+
+=== C++ compiler ===
+g++-13 (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0
+Copyright (C) 2023 Free Software Foundation, Inc.
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+
+=== CUDA compiler ===
+nvcc: NVIDIA (R) Cuda compiler driver
+Copyright (c) 2005-2025 NVIDIA Corporation
+Built on Wed_Aug_20_01:58:59_PM_PDT_2025
+Cuda compilation tools, release 13.0, V13.0.88
+Build cuda_13.0.r13.0/compiler.36424714_0
+
+=== GPU ===
+Mon Sep 28 17:50:48 2026       
++-----------------------------------------------------------------------------------------+
+| NVIDIA-SMI 580.73                 Driver Version: 580.92         CUDA Version: 13.0     |
++-----------------------------------------+------------------------+----------------------+
+| GPU  Name                 Persistence-M | Bus-Id          Disp.A | Volatile Uncorr. ECC |
+| Fan  Temp   Perf          Pwr:Usage/Cap |           Memory-Usage | GPU-Util  Compute M. |
+|                                         |                        |               MIG M. |
+|=========================================+========================+======================|
+|   0  NVIDIA GeForce RTX 4090 ...    On  |   00000000:01:00.0 Off |                  N/A |
+| N/A   47C    P3             23W /  105W |       0MiB /  16376MiB |      0%      Default |
+|                                         |                        |                  N/A |
++-----------------------------------------+------------------------+----------------------+
+
++-----------------------------------------------------------------------------------------+
+| Processes:                                                                              |
+|  GPU   GI   CI              PID   Type   Process name                        GPU Memory |
+|        ID   ID                                                               Usage      |
+|=========================================================================================|
+|  No running processes found                                                             |
++-----------------------------------------------------------------------------------------+
+
+=== Nsight Systems ===
+NVIDIA Nsight Systems version 2025.3.2.474-253236389321v0
+
+=== Nsight Compute ===
+NVIDIA (R) Nsight Compute Command Line Profiler
+Copyright (c) 2018-2025 NVIDIA Corporation
+Version 2025.3.1.0 (build 36398880) (public-release)
