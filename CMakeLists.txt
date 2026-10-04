@@ -6,7 +6,12 @@ option(THERMOGPU_PTXAS_VERBOSE "Report CUDA ptxas resource usage during compilat
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
-add_library(thermogpu_scalar src/cpu/pr_scalar.cpp src/cpu/pr_batch_scalar.cpp)
+add_library(thermogpu_scalar
+  src/cpu/pr_scalar.cpp
+  src/cpu/pr_batch_scalar.cpp
+  src/cpu/tdar_oracle.cpp
+  src/cpu/mixture_benchmark.cpp
+)
 target_include_directories(thermogpu_scalar PUBLIC include)
 target_compile_options(thermogpu_scalar PRIVATE -Wall -Wextra -Wpedantic)
 if(THERMOGPU_ENABLE_OPENMP)
@@ -30,6 +35,16 @@ add_executable(thermogpu_eval apps/thermogpu_eval.cpp)
 target_link_libraries(thermogpu_eval PRIVATE thermogpu_scalar)
 target_compile_options(thermogpu_eval PRIVATE -Wall -Wextra -Wpedantic)
 
+add_executable(thermogpu_tdar_oracle apps/thermogpu_tdar_oracle.cpp)
+target_link_libraries(thermogpu_tdar_oracle PRIVATE thermogpu_scalar)
+target_compile_options(thermogpu_tdar_oracle PRIVATE -Wall -Wextra -Wpedantic)
+
+add_executable(thermogpu_verify_benchmark_mixtures
+    apps/thermogpu_verify_benchmark_mixtures.cpp)
+target_link_libraries(thermogpu_verify_benchmark_mixtures PRIVATE thermogpu_scalar)
+target_compile_options(thermogpu_verify_benchmark_mixtures
+    PRIVATE -Wall -Wextra -Wpedantic)
+
 add_executable(thermogpu_benchmark apps/thermogpu_benchmark.cpp)
 target_link_libraries(thermogpu_benchmark PRIVATE thermogpu_scalar)
 if(THERMOGPU_ENABLE_CUDA)
@@ -49,12 +64,21 @@ add_executable(test_pr tests/unit/test_pr.cpp)
 target_link_libraries(test_pr PRIVATE thermogpu_scalar)
 add_test(NAME pr_scalar_unit COMMAND test_pr)
 
+add_executable(test_tdar_oracle tests/unit/test_tdar_oracle.cpp)
+target_link_libraries(test_tdar_oracle PRIVATE thermogpu_scalar)
+target_compile_options(test_tdar_oracle PRIVATE -Wall -Wextra -Wpedantic)
+add_test(NAME pr_tdar_oracle COMMAND test_tdar_oracle)
+
 add_executable(test_pr_batch tests/unit/test_batch.cpp)
 target_link_libraries(test_pr_batch PRIVATE thermogpu_scalar)
 target_compile_options(test_pr_batch PRIVATE -Wall -Wextra -Wpedantic)
 add_test(NAME pr_scalar_batch COMMAND test_pr_batch)
 
 if(THERMOGPU_ENABLE_CUDA)
+  add_executable(thermogpu_fixed_composition_benchmark apps/thermogpu_fixed_composition_benchmark.cpp)
+  target_link_libraries(thermogpu_fixed_composition_benchmark PRIVATE thermogpu_cuda)
+  target_compile_options(thermogpu_fixed_composition_benchmark PRIVATE -Wall -Wextra -Wpedantic)
+
   add_executable(test_pr_batch_cuda tests/unit/test_batch_cuda.cpp)
   target_link_libraries(test_pr_batch_cuda PRIVATE thermogpu_cuda)
   target_compile_options(test_pr_batch_cuda PRIVATE -Wall -Wextra -Wpedantic)

@@ -48,3 +48,6 @@ __pycache__/
 # OS metadata
 .DS_Store
 Thumbs.db
+
+# Generated benchmark results
+benchmarks/results-*/

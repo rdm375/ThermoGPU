@@ -72,7 +72,7 @@ __device__ int largest_root(double A, double B, double& Z) {
 }
 
 __global__ void pr_batch_kernel(const DeviceComponent* c, const double* kij, int nc,
-                                const double* P, const double* T, const double* z, std::size_t ns,
+                                const double* P, const double* T, const double* z, std::size_t ns, bool fixed_z,
                                 double* Zout,double* rho,double* cres,double* lnphi,
                                 int* rootclass,unsigned char* ambiguous,int* status) {
     const std::size_t s=blockIdx.x*blockDim.x+threadIdx.x;
@@ -86,13 +86,16 @@ __global__ void pr_batch_kernel(const DeviceComponent* c, const double* kij, int
         aalpha[i]=(omega_a*x*x/c[i].Pc)*q*q;
         bi[i]=omega_b*gas_constant*c[i].Tc/c[i].Pc;
         sumza[i]=0.0;
-        bm += z[s*nc+i]*bi[i];
-        mw += z[s*nc+i]*c[i].mw;
+        const double zi = z[(fixed_z ? 0 : s*nc) + i];
+        bm += zi*bi[i];
+        mw += zi*c[i].mw;
     }
     for(int i=0;i<nc;++i) for(int j=0;j<nc;++j) {
         const double aij=sqrt(aalpha[i]*aalpha[j])*(1.0-kij[i*nc+j]);
-        sumza[i] += z[s*nc+j]*aij;
-        am += z[s*nc+i]*z[s*nc+j]*aij;
+        const double zj = z[(fixed_z ? 0 : s*nc) + j];
+        const double zi = z[(fixed_z ? 0 : s*nc) + i];
+        sumza[i] += zj*aij;
+        am += zi*zj*aij;
     }
     const double A=am*P[s]/(gas_constant*gas_constant*T[s]*T[s]);
     const double B=bm*P[s]/(gas_constant*T[s]);
@@ -181,7 +184,7 @@ struct CudaBatchWorkspace::Impl {
     void run() {
         if(ns==0) return;
         constexpr int threads=128; const int blocks=static_cast<int>((ns+threads-1)/threads);
-        pr_batch_kernel<<<blocks,threads>>>(dc.p,dk.p,static_cast<int>(nc),dP.p,dT.p,dz.p,ns,dZ.p,dr.p,dres.p,dln.p,drc.p,damb.p,dst.p);
+        pr_batch_kernel<<<blocks,threads>>>(dc.p,dk.p,static_cast<int>(nc),dP.p,dT.p,dz.p,ns,false,dZ.p,dr.p,dres.p,dln.p,drc.p,damb.p,dst.p);
         cuda_check(cudaGetLastError(),"launch PR CUDA kernel");
         cuda_check(cudaDeviceSynchronize(),"execute PR CUDA kernel");
     }
@@ -214,6 +217,40 @@ CudaBatchWorkspace::CudaBatchWorkspace(CudaBatchWorkspace&&) noexcept = default;
 CudaBatchWorkspace& CudaBatchWorkspace::operator=(CudaBatchWorkspace&&) noexcept = default;
 void CudaBatchWorkspace::run() { impl_->run(); }
 MixtureBatchResult CudaBatchWorkspace::download() const { return impl_->download(); }
+
+
+struct FixedCompositionCudaWorkspace::Impl {
+    std::size_t ns{}, nc{};
+    DeviceBuffer<DeviceComponent> dc;
+    DeviceBuffer<double> dk, dP, dT, dz, dZ, dr, dres, dln;
+    DeviceBuffer<int> drc, dst;
+    DeviceBuffer<unsigned char> damb;
+    Impl(const Mixture& m, const std::vector<double>& P, const std::vector<double>& T)
+      : ns(P.size()), nc(m.size()), dc(nc), dk(nc*nc), dP(ns), dT(ns), dz(nc),
+        dZ(ns), dr(ns), dres(ns), dln(ns*nc), drc(ns), dst(ns), damb(ns) {
+        validate_mixture(m);
+        if (T.size()!=ns) throw std::invalid_argument("P/T size mismatch");
+        if(nc>max_components) throw std::invalid_argument("CUDA V1 baseline supports at most 32 mixture components");
+        if(!ns) return;
+        std::vector<DeviceComponent> hc(nc);
+        for(std::size_t i=0;i<nc;++i) hc[i]={m.components[i].critical_temperature_K,m.components[i].critical_pressure_Pa,m.components[i].acentric_factor,m.components[i].molar_mass_kg_per_mol};
+        cuda_check(cudaMemcpy(dc.p,hc.data(),nc*sizeof(DeviceComponent),cudaMemcpyHostToDevice),"copy components H2D");
+        cuda_check(cudaMemcpy(dk.p,m.binary_interactions.data(),nc*nc*sizeof(double),cudaMemcpyHostToDevice),"copy kij H2D");
+        cuda_check(cudaMemcpy(dP.p,P.data(),ns*sizeof(double),cudaMemcpyHostToDevice),"copy P H2D");
+        cuda_check(cudaMemcpy(dT.p,T.data(),ns*sizeof(double),cudaMemcpyHostToDevice),"copy T H2D");
+        cuda_check(cudaMemcpy(dz.p,m.mole_fractions.data(),nc*sizeof(double),cudaMemcpyHostToDevice),"copy fixed z H2D");
+    }
+    void run(){ if(!ns)return; constexpr int threads=128; const int blocks=(int)((ns+threads-1)/threads);
+        pr_batch_kernel<<<blocks,threads>>>(dc.p,dk.p,(int)nc,dP.p,dT.p,dz.p,ns,true,dZ.p,dr.p,dres.p,dln.p,drc.p,damb.p,dst.p);
+        cuda_check(cudaGetLastError(),"launch fixed-composition PR CUDA kernel"); cuda_check(cudaDeviceSynchronize(),"execute fixed-composition PR CUDA kernel"); }
+    std::vector<double> download_z() const { std::vector<double> z(ns); if(ns) cuda_check(cudaMemcpy(z.data(),dZ.p,ns*sizeof(double),cudaMemcpyDeviceToHost),"copy fixed Z D2H"); return z; }
+};
+FixedCompositionCudaWorkspace::FixedCompositionCudaWorkspace(const Mixture&m,const std::vector<double>&P,const std::vector<double>&T):impl_(std::make_unique<Impl>(m,P,T)){}
+FixedCompositionCudaWorkspace::~FixedCompositionCudaWorkspace()=default;
+FixedCompositionCudaWorkspace::FixedCompositionCudaWorkspace(FixedCompositionCudaWorkspace&&) noexcept=default;
+FixedCompositionCudaWorkspace& FixedCompositionCudaWorkspace::operator=(FixedCompositionCudaWorkspace&&) noexcept=default;
+void FixedCompositionCudaWorkspace::run(){impl_->run();}
+std::vector<double> FixedCompositionCudaWorkspace::download_z() const{return impl_->download_z();}
 
 MixtureBatchResult evaluate_mixture_batch_cuda(const Mixture& mixture, const MixtureBatch& batch) {
     CudaBatchWorkspace workspace(mixture,batch);

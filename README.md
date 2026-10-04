@@ -252,3 +252,22 @@ Analysis and external-validation tools use a separate Python environment and are
 ## License
 
 ThermoGPU is free software licensed under the GNU General Public License, version 3 or, at your option, any later version (`GPL-3.0-or-later`). See `LICENSE` for the full license text.
+
+### TDAR oracle bridge
+
+`thermogpu_tdar_oracle` exposes the validated pure-methane Peng--Robinson
+compressibility factor as a small machine-readable oracle for adaptive surrogate
+sampling. It reports `Z` together with centered finite-difference derivatives
+with respect to temperature and pressure:
+
+```bash
+thermogpu_tdar_oracle 300 5000000
+printf '300 5000000\n320 8000000\n' | thermogpu_tdar_oracle --stdin
+```
+
+The tab-separated columns are `T_K`, `P_Pa`, `Z`, `dZ_dT`, `dZ_dP`, root
+classification, and cubic residual. `--stdin` is intended for a persistent
+Python subprocess so TDAR can issue many oracle evaluations without paying a
+process-launch cost for every sample. The first integration experiment uses the
+smooth supercritical rectangle `250 <= T <= 350 K`, `1 <= P <= 10 MPa`; its
+one-real-root classification is covered by the test suite.

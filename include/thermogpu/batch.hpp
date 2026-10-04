@@ -62,6 +62,24 @@ private:
     struct Impl;
     std::unique_ptr<Impl> impl_;
 };
+
+// Resident CUDA path specialized for a composition that is invariant across
+// every state. It stores one z vector instead of state_count copies and the
+// kernel indexes that invariant directly.
+class FixedCompositionCudaWorkspace {
+public:
+    FixedCompositionCudaWorkspace(const Mixture&, const std::vector<double>& pressure_Pa,
+                                  const std::vector<double>& temperature_K);
+    ~FixedCompositionCudaWorkspace();
+    FixedCompositionCudaWorkspace(FixedCompositionCudaWorkspace&&) noexcept;
+    FixedCompositionCudaWorkspace& operator=(FixedCompositionCudaWorkspace&&) noexcept;
+    FixedCompositionCudaWorkspace(const FixedCompositionCudaWorkspace&) = delete;
+    FixedCompositionCudaWorkspace& operator=(const FixedCompositionCudaWorkspace&) = delete;
+    void run();
+    std::vector<double> download_z() const;
+private:
+    struct Impl; std::unique_ptr<Impl> impl_;
+};
 #endif
 
 } // namespace thermogpu
