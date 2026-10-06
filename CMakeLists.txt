@@ -79,6 +79,10 @@ if(THERMOGPU_ENABLE_CUDA)
   target_link_libraries(thermogpu_fixed_composition_benchmark PRIVATE thermogpu_cuda)
   target_compile_options(thermogpu_fixed_composition_benchmark PRIVATE -Wall -Wextra -Wpedantic)
 
+  add_executable(thermogpu_distinct_composition_benchmark apps/thermogpu_distinct_composition_benchmark.cpp)
+  target_link_libraries(thermogpu_distinct_composition_benchmark PRIVATE thermogpu_cuda)
+  target_compile_options(thermogpu_distinct_composition_benchmark PRIVATE -Wall -Wextra -Wpedantic)
+
   add_executable(test_pr_batch_cuda tests/unit/test_batch_cuda.cpp)
   target_link_libraries(test_pr_batch_cuda PRIVATE thermogpu_cuda)
   target_compile_options(test_pr_batch_cuda PRIVATE -Wall -Wextra -Wpedantic)

@@ -10,6 +10,7 @@
 #include <iostream>
 #include <string>
 #include <string_view>
+#include <vector>
 
 using namespace thermogpu;
 
@@ -31,20 +32,28 @@ bool parse_double(std::string_view text, double& value) {
     return result.ec == std::errc{} && result.ptr == last;
 }
 
+std::string default_family() {
+    if (const char* value = std::getenv("THERMOGPU_TDAR_MIXTURE")) return value;
+    return "fixed";
+}
+
 std::size_t default_components() {
-    if (const char* value = std::getenv("THERMOGPU_TDAR_COMPONENTS")) {
-        const auto n = std::stoull(value);
-        if (n != 1 && n != 2 && n != 4 && n != 8 && n != 16)
-            throw std::invalid_argument("THERMOGPU_TDAR_COMPONENTS must be one of 1,2,4,8,16");
-        return n;
-    }
+    if (const char* value = std::getenv("THERMOGPU_TDAR_COMPONENTS")) return std::stoull(value);
     return 1;
 }
 
-void emit(double T, double P, std::size_t components=0) {
+Mixture benchmark_mixture(std::string_view family, std::size_t components) {
+    if (family == "fixed") return make_fixed_benchmark_mixture(components);
+    if (family == "distinct") return make_distinct_benchmark_mixture(components);
+    throw std::invalid_argument("mixture family must be 'fixed' or 'distinct'");
+}
+
+void emit(double T, double P, std::size_t components=0, std::string family={}) {
     if (components == 0) components = default_components();
-    const auto r = components == 1 ? evaluate_z_oracle(methane, {P, T})
-                                   : evaluate_z_oracle(make_fixed_benchmark_mixture(components), {P, T});
+    if (family.empty()) family = default_family();
+    const auto r = (family == "fixed" && components == 1)
+        ? evaluate_z_oracle(methane, {P, T})
+        : evaluate_z_oracle(benchmark_mixture(family, components), {P, T});
     std::cout << std::setprecision(17)
               << T << '\t' << P << '\t' << r.Z << '\t'
               << r.dZ_dT << '\t' << r.dZ_dP << '\t'
@@ -55,8 +64,8 @@ void emit(double T, double P, std::size_t components=0) {
 void usage(std::ostream& out) {
     out << "Usage:\n"
         << "  thermogpu_tdar_oracle T_K P_Pa\n"
-        << "  thermogpu_tdar_oracle --stdin [--components N]\n"
-        << "  thermogpu_tdar_oracle --components N T_K P_Pa\n\n"
+        << "  thermogpu_tdar_oracle --stdin [--family fixed|distinct] [--components N]\n"
+        << "  thermogpu_tdar_oracle [--family fixed|distinct] [--components N] T_K P_Pa\n\n"
         << "Output columns (TSV): T_K P_Pa Z dZ_dT dZ_dP root_classification cubic_residual\n"
         << "In --stdin mode, read whitespace-separated T_K P_Pa pairs until EOF.\n";
 }
@@ -65,40 +74,35 @@ void usage(std::ostream& out) {
 int main(int argc, char** argv) {
     try {
         if (argc == 2 && (std::string_view(argv[1]) == "--help" || std::string_view(argv[1]) == "-h")) {
-            usage(std::cout);
-            return 0;
+            usage(std::cout); return 0;
         }
-        if ((argc == 2 || argc == 4) && std::string_view(argv[1]) == "--stdin") {
-            std::size_t components = default_components();
-            if (argc == 4) {
-                if (std::string_view(argv[2]) != "--components") { usage(std::cerr); return 2; }
-                components = std::stoull(argv[3]);
-            }
-            double T = 0.0, P = 0.0;
-            while (std::cin >> T >> P) emit(T, P, components);
-            if (!std::cin.eof()) {
-                std::cerr << "invalid input: expected T_K P_Pa pairs\n";
-                return 2;
-            }
-            return 0;
+        bool stdin_mode = false;
+        std::size_t components = default_components();
+        std::string family = default_family();
+        std::vector<std::string_view> positional;
+        for (int i=1; i<argc; ++i) {
+            const std::string_view arg(argv[i]);
+            if (arg == "--stdin") stdin_mode = true;
+            else if (arg == "--components" && i+1 < argc) components = std::stoull(argv[++i]);
+            else if (arg == "--family" && i+1 < argc) family = argv[++i];
+            else if (arg.size() >= 2 && arg.substr(0,2) == "--") { usage(std::cerr); return 2; }
+            else positional.push_back(arg);
         }
-        if (argc == 5 && std::string_view(argv[1]) == "--components") {
-            const std::size_t components = std::stoull(argv[2]);
+        // Validate the requested family/count even before reading stdin.
+        (void)benchmark_mixture(family, components);
+        if (stdin_mode) {
+            if (!positional.empty()) { usage(std::cerr); return 2; }
             double T=0.0, P=0.0;
-            if (!parse_double(argv[3], T) || !parse_double(argv[4], P)) return 2;
-            emit(T, P, components); return 0;
-        }
-        if (argc == 3) {
-            double T = 0.0, P = 0.0;
-            if (!parse_double(argv[1], T) || !parse_double(argv[2], P)) {
-                std::cerr << "invalid numeric argument\n";
-                return 2;
-            }
-            emit(T, P);
+            while (std::cin >> T >> P) emit(T, P, components, family);
+            if (!std::cin.eof()) { std::cerr << "invalid input: expected T_K P_Pa pairs\n"; return 2; }
             return 0;
         }
-        usage(std::cerr);
-        return 2;
+        if (positional.size() != 2) { usage(std::cerr); return 2; }
+        double T=0.0, P=0.0;
+        if (!parse_double(positional[0], T) || !parse_double(positional[1], P)) {
+            std::cerr << "invalid numeric argument\n"; return 2;
+        }
+        emit(T, P, components, family); return 0;
     } catch (const std::exception& e) {
         std::cerr << "thermogpu_tdar_oracle: " << e.what() << '\n';
         return 1;

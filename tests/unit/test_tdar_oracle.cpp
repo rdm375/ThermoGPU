@@ -2,6 +2,7 @@
 // Copyright (C) 2026 Richard Myers
 
 #include "thermogpu/peng_robinson.hpp"
+#include "thermogpu/mixture_benchmark.hpp"
 #include "thermogpu/tdar_oracle.hpp"
 
 #include <algorithm>
@@ -38,6 +39,27 @@ int main() {
     const auto half = evaluate_z_oracle(methane, state, 5.0e-6, 5.0e-6);
     check(close(r.dZ_dT, half.dZ_dT, 1e-10, 2e-8), "dZ/dT step-halving agreement");
     check(close(r.dZ_dP, half.dZ_dP, 1e-16, 2e-8), "dZ/dP step-halving agreement");
+
+    // The distinct family is a nested prefix of the canonical C5 composition.
+    const double expected[5][5] = {
+        {1.0,0,0,0,0},
+        {10.0/11.0,1.0/11.0,0,0,0},
+        {20.0/23.0,2.0/23.0,1.0/23.0,0,0},
+        {5.0/6.0,1.0/12.0,1.0/24.0,1.0/24.0,0},
+        {0.80,0.08,0.04,0.04,0.04}
+    };
+    for (std::size_t n=1; n<=5; ++n) {
+        const auto mix=make_distinct_benchmark_mixture(n);
+        check(mix.size()==n, "distinct mixture component count");
+        for (std::size_t i=0; i<n; ++i)
+            check(close(mix.mole_fractions[i],expected[n-1][i],1e-15,1e-15),
+                  "distinct mixture mole fraction");
+        const auto z=evaluate_z_oracle(mix,state);
+        check(std::isfinite(z.Z), "distinct mixture finite Z");
+    }
+    const auto c5=evaluate_z_oracle(make_distinct_benchmark_mixture(5),state);
+    check(close(c5.Z,0.8645668727595472,1e-14,1e-14),
+          "distinct C5 reference Z at 300 K, 5 MPa");
 
     // A small supercritical rectangle intended for the first TDAR experiment
     // must stay on the smooth one-real-root branch.

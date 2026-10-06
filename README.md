@@ -271,3 +271,32 @@ Python subprocess so TDAR can issue many oracle evaluations without paying a
 process-launch cost for every sample. The first integration experiment uses the
 smooth supercritical rectangle `250 <= T <= 350 K`, `1 <= P <= 10 MPa`; its
 one-real-root classification is covered by the test suite.
+
+### Distinct-mixture TDAR geometry experiment
+
+The TDAR oracle supports two benchmark families. `fixed` preserves the existing
+C1/C2/C4/C8/C16 workload family (C8/C16 duplicate C4 pseudo-species), while
+`distinct` provides genuinely different nested C1..C5 mixtures.  The distinct
+family uses prefixes of `(CH4,C2H6,C3H8,N2,CO2) = (0.80,0.08,0.04,0.04,0.04)`,
+renormalized at each prefix.
+
+Examples:
+
+```bash
+./build/thermogpu_tdar_oracle --family distinct --components 5 300 5000000
+./build/thermogpu_tdar_oracle --stdin --family distinct --components 3
+```
+
+To measure TDAR approximation geometry before introducing CPWA lowering or GPU
+code generation:
+
+```bash
+python benchmarks/run_distinct_mixture_tdar.py \
+    --tdar ../tdar \
+    --components 1 2 3 4 5 \
+    --budgets 16 24 32 48 64 96 128 \
+    --validation-points 10000
+```
+
+The driver verifies that every mixture uses the identical frozen validation
+point design and writes a combined CSV, JSON metadata, and Markdown report.
