@@ -1,0 +1,29 @@
+acquired_utc=2026-10-07T03:31:54Z
+hostname=dell7710
+thermogpu_commit=e233f02e48b0ecffc385c8f3258d47c2139b744d
+thermogpu_describe=v1.1.0-1-ge233f02
+tdar_commit=2fa54807c2239284fcfd730e4147a215fb0e9cb2
+tdar_describe=tdar-method-v1-1-g2fa5480
+cpwa_relu_commit=6ac34968992ae17c079f92ba37c0deacd5b69a19
+cpwa_relu_describe=v0.2.0
+
+Tue Oct  6 22:31:54 2026
++-----------------------------------------------------------------------------------------+
+| NVIDIA-SMI 580.178.04             Driver Version: 580.178.04     CUDA Version: 13.0     |
++-----------------------------------------+------------------------+----------------------+
+| GPU  Name                 Persistence-M | Bus-Id          Disp.A | Volatile Uncorr. ECC |
+| Fan  Temp   Perf          Pwr:Usage/Cap |           Memory-Usage | GPU-Util  Compute M. |
+|                                         |                        |               MIG M. |
+|=========================================+========================+======================|
+|   0  Quadro M3000M                  Off |   00000000:01:00.0 Off |                  N/A |
+| N/A   37C    P8              6W /   75W |       7MiB /   4096MiB |      0%      Default |
+|                                         |                        |                  N/A |
++-----------------------------------------+------------------------+----------------------+
+
++-----------------------------------------------------------------------------------------+
+| Processes:                                                                              |
+|  GPU   GI   CI              PID   Type   Process name                        GPU Memory |
+|        ID   ID                                                               Usage      |
+|=========================================================================================|
+|    0   N/A  N/A            9596      G   /usr/bin/gnome-shell                      0MiB |
++-----------------------------------------------------------------------------------------+

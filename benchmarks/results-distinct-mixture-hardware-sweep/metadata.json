@@ -1,0 +1,35 @@
+{
+  "experiment": "distinct-mixture complete CPWA hardware sweep",
+  "components": [
+    1,
+    2,
+    3,
+    4,
+    5
+  ],
+  "budgets": [
+    16,
+    24,
+    32,
+    48,
+    64,
+    96,
+    128
+  ],
+  "batches": [
+    1,
+    10,
+    100,
+    1000,
+    10000,
+    100000,
+    1000000
+  ],
+  "cpsat_time_limit": 60.0,
+  "cpsat_workers": 8,
+  "arch": null,
+  "tdar_results": "/nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-tdar",
+  "tdar_rerun": false,
+  "selection": "all requested measured TDAR budgets; no accuracy-threshold selection",
+  "expected_rows": 245
+}

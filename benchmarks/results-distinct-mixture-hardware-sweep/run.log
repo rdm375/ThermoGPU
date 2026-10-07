@@ -1,0 +1,1860 @@
+
+===== C1 B16: exact CPWA synthesis =====
++ /nvme/Sync/cpwa-relu/.venv/bin/python benchmarks/build_native_dag_artifact.py --source /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-tdar/c1/artifacts/methane-z-b16.npz --output /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c1-b16/c1-b16-native.cpwa
+artifact:        /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c1-b16/c1-b16-native.cpwa
+pieces:          26
+subsets:         12
+lattice time:    0.025766855804249644
+DAG time:        0.00025285989977419376
+nodes:           101
+affine nodes:    26
+min nodes:       64
+max nodes:       11
+binary ops:      75
++ /nvme/Sync/cpwa-relu/.venv/bin/python benchmarks/synthesize_bottom_up.py --artifact /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c1-b16/c1-b16-native.cpwa --check-points 0 --output /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c1-b16/c1-b16-bottom-up.cpwa
+=== bottom-up exact min-circuit synthesis ===
+targets:                  12
+baseline min nodes:       64
+selected factors:         16
+synthesized min nodes:    35
+min-node reduction:       29
+reduction percent:        45.312%
+initial target parts:     103
+final target parts:       31
+predicted min nodes:      35
+maximum pair uses:        12
+synthesis seconds:        0.001
+
+wrote: /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c1-b16/c1-b16-bottom-up.cpwa
++ /nvme/Sync/cpwa-relu/.venv/bin/python benchmarks/optimize_min_circuit_cpsat.py --artifact /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c1-b16/c1-b16-bottom-up.cpwa --intersections 0 --time-limit 60.0 --workers 8 --output /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c1-b16/c1-b16-cpsat.cpwa
+=== CP-SAT exact finite-library min-circuit extraction ===
+status:                       OPTIMAL
+targets:                      12
+library factors:              61
+binary decomposition choices: 36
+incumbent min nodes:          35
+best lower bound:             35.0
+optimality gap:               0.000%
+wall seconds:                 0.008
+input min nodes:              35
+output min nodes:             35
+wrote:                        /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c1-b16/c1-b16-cpsat.cpwa
++ /nvme/Sync/cpwa-relu/.venv/bin/python benchmarks/benchmark_register_schedules.py /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c1-b16/c1-b16-cpsat.cpwa --schedules min-live --batches 1 10 100 1000 10000 100000 1000000 --output /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c1-b16/cuda
+SCHEDULE c1-b16-cpsat-min-live: 0.001 s
+COMPILE c1-b16-cpsat-min-live: nodes=72 live_slots=17
+  registers=26 spills=0/0 stack=0
+  batch=      1 5056.000 ns/eval delta=0
+  batch=     10 492.800 ns/eval delta=0
+  batch=    100 49.280 ns/eval delta=0
+  batch=   1000 5.120 ns/eval delta=0
+  batch=  10000 0.669 ns/eval delta=0
+  batch= 100000 0.224 ns/eval delta=0
+  batch=1000000 0.184 ns/eval delta=0
+wrote: /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c1-b16/cuda/summary.csv
+
+===== C1 B24: exact CPWA synthesis =====
++ /nvme/Sync/cpwa-relu/.venv/bin/python benchmarks/build_native_dag_artifact.py --source /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-tdar/c1/artifacts/methane-z-b24.npz --output /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c1-b24/c1-b24-native.cpwa
+artifact:        /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c1-b24/c1-b24-native.cpwa
+pieces:          40
+subsets:         21
+lattice time:    0.062848238972947
+DAG time:        0.00052992207929492
+nodes:           233
+affine nodes:    40
+min nodes:       173
+max nodes:       20
+binary ops:      193
++ /nvme/Sync/cpwa-relu/.venv/bin/python benchmarks/synthesize_bottom_up.py --artifact /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c1-b24/c1-b24-native.cpwa --check-points 0 --output /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c1-b24/c1-b24-bottom-up.cpwa
+=== bottom-up exact min-circuit synthesis ===
+targets:                  21
+baseline min nodes:       173
+selected factors:         37
+synthesized min nodes:    92
+min-node reduction:       81
+reduction percent:        46.821%
+initial target parts:     294
+final target parts:       76
+predicted min nodes:      92
+maximum pair uses:        21
+synthesis seconds:        0.007
+
+wrote: /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c1-b24/c1-b24-bottom-up.cpwa
++ /nvme/Sync/cpwa-relu/.venv/bin/python benchmarks/optimize_min_circuit_cpsat.py --artifact /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c1-b24/c1-b24-bottom-up.cpwa --intersections 0 --time-limit 60.0 --workers 8 --output /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c1-b24/c1-b24-cpsat.cpwa
+=== CP-SAT exact finite-library min-circuit extraction ===
+status:                       OPTIMAL
+targets:                      21
+library factors:              132
+binary decomposition choices: 95
+incumbent min nodes:          92
+best lower bound:             92.0
+optimality gap:               0.000%
+wall seconds:                 0.009
+input min nodes:              92
+output min nodes:             92
+wrote:                        /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c1-b24/c1-b24-cpsat.cpwa
++ /nvme/Sync/cpwa-relu/.venv/bin/python benchmarks/benchmark_register_schedules.py /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c1-b24/c1-b24-cpsat.cpwa --schedules min-live --batches 1 10 100 1000 10000 100000 1000000 --output /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c1-b24/cuda
+SCHEDULE c1-b24-cpsat-min-live: 0.002 s
+COMPILE c1-b24-cpsat-min-live: nodes=152 live_slots=35
+  registers=31 spills=0/0 stack=0
+  batch=      1 5120.000 ns/eval delta=0
+  batch=     10 508.800 ns/eval delta=0
+  batch=    100 52.800 ns/eval delta=0
+  batch=   1000 5.600 ns/eval delta=0
+  batch=  10000 0.941 ns/eval delta=0
+  batch= 100000 0.388 ns/eval delta=0
+  batch=1000000 0.343 ns/eval delta=0
+wrote: /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c1-b24/cuda/summary.csv
+
+===== C1 B32: exact CPWA synthesis =====
++ /nvme/Sync/cpwa-relu/.venv/bin/python benchmarks/build_native_dag_artifact.py --source /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-tdar/c1/artifacts/methane-z-b32.npz --output /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c1-b32/c1-b32-native.cpwa
+artifact:        /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c1-b32/c1-b32-native.cpwa
+pieces:          52
+subsets:         36
+lattice time:    0.1592463841661811
+DAG time:        0.0012923178728669882
+nodes:           462
+affine nodes:    52
+min nodes:       375
+max nodes:       35
+binary ops:      410
++ /nvme/Sync/cpwa-relu/.venv/bin/python benchmarks/synthesize_bottom_up.py --artifact /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c1-b32/c1-b32-native.cpwa --check-points 0 --output /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c1-b32/c1-b32-bottom-up.cpwa
+=== bottom-up exact min-circuit synthesis ===
+targets:                  36
+baseline min nodes:       375
+selected factors:         76
+synthesized min nodes:    167
+min-node reduction:       208
+reduction percent:        55.467%
+initial target parts:     791
+final target parts:       127
+predicted min nodes:      167
+maximum pair uses:        36
+synthesis seconds:        0.037
+
+wrote: /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c1-b32/c1-b32-bottom-up.cpwa
++ /nvme/Sync/cpwa-relu/.venv/bin/python benchmarks/optimize_min_circuit_cpsat.py --artifact /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c1-b32/c1-b32-bottom-up.cpwa --intersections 0 --time-limit 60.0 --workers 8 --output /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c1-b32/c1-b32-cpsat.cpwa
+=== CP-SAT exact finite-library min-circuit extraction ===
+status:                       OPTIMAL
+targets:                      36
+library factors:              219
+binary decomposition choices: 176
+incumbent min nodes:          167
+best lower bound:             167.0
+optimality gap:               0.000%
+wall seconds:                 0.011
+input min nodes:              167
+output min nodes:             167
+wrote:                        /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c1-b32/c1-b32-cpsat.cpwa
++ /nvme/Sync/cpwa-relu/.venv/bin/python benchmarks/benchmark_register_schedules.py /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c1-b32/c1-b32-cpsat.cpwa --schedules min-live --batches 1 10 100 1000 10000 100000 1000000 --output /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c1-b32/cuda
+SCHEDULE c1-b32-cpsat-min-live: 0.004 s
+COMPILE c1-b32-cpsat-min-live: nodes=254 live_slots=52
+  registers=48 spills=0/0 stack=0
+  batch=      1 5632.000 ns/eval delta=0
+  batch=     10 560.000 ns/eval delta=0
+  batch=    100 55.680 ns/eval delta=0
+  batch=   1000 6.112 ns/eval delta=0
+  batch=  10000 1.027 ns/eval delta=0
+  batch= 100000 0.595 ns/eval delta=0
+  batch=1000000 0.550 ns/eval delta=0
+wrote: /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c1-b32/cuda/summary.csv
+
+===== C1 B48: exact CPWA synthesis =====
++ /nvme/Sync/cpwa-relu/.venv/bin/python benchmarks/build_native_dag_artifact.py --source /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-tdar/c1/artifacts/methane-z-b48.npz --output /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c1-b48/c1-b48-native.cpwa
+artifact:        /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c1-b48/c1-b48-native.cpwa
+pieces:          80
+subsets:         68
+lattice time:    0.45614792383275926
+DAG time:        0.0031501110643148422
+nodes:           1108
+affine nodes:    80
+min nodes:       961
+max nodes:       67
+binary ops:      1028
++ /nvme/Sync/cpwa-relu/.venv/bin/python benchmarks/synthesize_bottom_up.py --artifact /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c1-b48/c1-b48-native.cpwa --check-points 0 --output /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c1-b48/c1-b48-bottom-up.cpwa
+=== bottom-up exact min-circuit synthesis ===
+targets:                  68
+baseline min nodes:       961
+selected factors:         161
+synthesized min nodes:    381
+min-node reduction:       580
+reduction percent:        60.354%
+initial target parts:     2500
+final target parts:       288
+predicted min nodes:      381
+maximum pair uses:        61
+synthesis seconds:        0.292
+
+wrote: /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c1-b48/c1-b48-bottom-up.cpwa
++ /nvme/Sync/cpwa-relu/.venv/bin/python benchmarks/optimize_min_circuit_cpsat.py --artifact /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c1-b48/c1-b48-bottom-up.cpwa --intersections 0 --time-limit 60.0 --workers 8 --output /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c1-b48/c1-b48-cpsat.cpwa
+=== CP-SAT exact finite-library min-circuit extraction ===
+status:                       OPTIMAL
+targets:                      68
+library factors:              461
+binary decomposition choices: 409
+incumbent min nodes:          380
+best lower bound:             380.0
+optimality gap:               0.000%
+wall seconds:                 0.015
+input min nodes:              381
+output min nodes:             380
+wrote:                        /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c1-b48/c1-b48-cpsat.cpwa
++ /nvme/Sync/cpwa-relu/.venv/bin/python benchmarks/benchmark_register_schedules.py /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c1-b48/c1-b48-cpsat.cpwa --schedules min-live --batches 1 10 100 1000 10000 100000 1000000 --output /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c1-b48/cuda
+SCHEDULE c1-b48-cpsat-min-live: 0.013 s
+COMPILE c1-b48-cpsat-min-live: nodes=527 live_slots=120
+  registers=125 spills=0/0 stack=0
+  batch=      1 6336.000 ns/eval delta=0
+  batch=     10 656.000 ns/eval delta=0
+  batch=    100 64.000 ns/eval delta=0
+  batch=   1000 7.776 ns/eval delta=0
+  batch=  10000 1.747 ns/eval delta=0
+  batch= 100000 1.302 ns/eval delta=0
+  batch=1000000 1.239 ns/eval delta=0
+wrote: /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c1-b48/cuda/summary.csv
+
+===== C1 B64: exact CPWA synthesis =====
++ /nvme/Sync/cpwa-relu/.venv/bin/python benchmarks/build_native_dag_artifact.py --source /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-tdar/c1/artifacts/methane-z-b64.npz --output /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c1-b64/c1-b64-native.cpwa
+artifact:        /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c1-b64/c1-b64-native.cpwa
+pieces:          108
+subsets:         96
+lattice time:    0.6132388007827103
+DAG time:        0.00614704005420208
+nodes:           1826
+affine nodes:    108
+min nodes:       1623
+max nodes:       95
+binary ops:      1718
++ /nvme/Sync/cpwa-relu/.venv/bin/python benchmarks/synthesize_bottom_up.py --artifact /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c1-b64/c1-b64-native.cpwa --check-points 0 --output /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c1-b64/c1-b64-bottom-up.cpwa
+=== bottom-up exact min-circuit synthesis ===
+targets:                  96
+baseline min nodes:       1623
+selected factors:         281
+synthesized min nodes:    596
+min-node reduction:       1027
+reduction percent:        63.278%
+initial target parts:     4690
+final target parts:       411
+predicted min nodes:      596
+maximum pair uses:        77
+synthesis seconds:        1.055
+
+wrote: /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c1-b64/c1-b64-bottom-up.cpwa
++ /nvme/Sync/cpwa-relu/.venv/bin/python benchmarks/optimize_min_circuit_cpsat.py --artifact /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c1-b64/c1-b64-bottom-up.cpwa --intersections 0 --time-limit 60.0 --workers 8 --output /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c1-b64/c1-b64-cpsat.cpwa
+=== CP-SAT exact finite-library min-circuit extraction ===
+status:                       OPTIMAL
+targets:                      96
+library factors:              704
+binary decomposition choices: 673
+incumbent min nodes:          591
+best lower bound:             591.0
+optimality gap:               0.000%
+wall seconds:                 0.024
+input min nodes:              596
+output min nodes:             591
+wrote:                        /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c1-b64/c1-b64-cpsat.cpwa
++ /nvme/Sync/cpwa-relu/.venv/bin/python benchmarks/benchmark_register_schedules.py /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c1-b64/c1-b64-cpsat.cpwa --schedules min-live --batches 1 10 100 1000 10000 100000 1000000 --output /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c1-b64/cuda
+SCHEDULE c1-b64-cpsat-min-live: 0.025 s
+COMPILE c1-b64-cpsat-min-live: nodes=794 live_slots=164
+  registers=167 spills=0/0 stack=0
+  batch=      1 9632.000 ns/eval delta=0
+  batch=     10 953.600 ns/eval delta=0
+  batch=    100 89.280 ns/eval delta=0
+  batch=   1000 8.960 ns/eval delta=0
+  batch=  10000 2.739 ns/eval delta=0
+  batch= 100000 2.116 ns/eval delta=0
+  batch=1000000 2.144 ns/eval delta=0
+wrote: /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c1-b64/cuda/summary.csv
+
+===== C1 B96: exact CPWA synthesis =====
++ /nvme/Sync/cpwa-relu/.venv/bin/python benchmarks/build_native_dag_artifact.py --source /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-tdar/c1/artifacts/methane-z-b96.npz --output /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c1-b96/c1-b96-native.cpwa
+artifact:        /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c1-b96/c1-b96-native.cpwa
+pieces:          164
+subsets:         168
+lattice time:    1.9177919151261449
+DAG time:        0.015225820941850543
+nodes:           3868
+affine nodes:    164
+min nodes:       3537
+max nodes:       167
+binary ops:      3704
++ /nvme/Sync/cpwa-relu/.venv/bin/python benchmarks/synthesize_bottom_up.py --artifact /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c1-b96/c1-b96-native.cpwa --check-points 0 --output /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c1-b96/c1-b96-bottom-up.cpwa
+=== bottom-up exact min-circuit synthesis ===
+targets:                  168
+baseline min nodes:       3537
+selected factors:         521
+synthesized min nodes:    1021
+min-node reduction:       2516
+reduction percent:        71.134%
+initial target parts:     13585
+final target parts:       668
+predicted min nodes:      1021
+maximum pair uses:        150
+synthesis seconds:        7.265
+
+wrote: /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c1-b96/c1-b96-bottom-up.cpwa
++ /nvme/Sync/cpwa-relu/.venv/bin/python benchmarks/optimize_min_circuit_cpsat.py --artifact /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c1-b96/c1-b96-bottom-up.cpwa --intersections 0 --time-limit 60.0 --workers 8 --output /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c1-b96/c1-b96-cpsat.cpwa
+=== CP-SAT exact finite-library min-circuit extraction ===
+status:                       OPTIMAL
+targets:                      168
+library factors:              1185
+binary decomposition choices: 1126
+incumbent min nodes:          1014
+best lower bound:             1014.0
+optimality gap:               0.000%
+wall seconds:                 0.029
+input min nodes:              1021
+output min nodes:             1014
+wrote:                        /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c1-b96/c1-b96-cpsat.cpwa
++ /nvme/Sync/cpwa-relu/.venv/bin/python benchmarks/benchmark_register_schedules.py /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c1-b96/c1-b96-cpsat.cpwa --schedules min-live --batches 1 10 100 1000 10000 100000 1000000 --output /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c1-b96/cuda
+SCHEDULE c1-b96-cpsat-min-live: 0.048 s
+COMPILE c1-b96-cpsat-min-live: nodes=1345 live_slots=297
+  registers=255 spills=8/8 stack=8
+  batch=      1 12928.000 ns/eval delta=0
+  batch=     10 1292.800 ns/eval delta=0
+  batch=    100 118.080 ns/eval delta=0
+  batch=   1000 11.712 ns/eval delta=0
+  batch=  10000 4.074 ns/eval delta=0
+  batch= 100000 3.300 ns/eval delta=0
+  batch=1000000 3.317 ns/eval delta=0
+wrote: /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c1-b96/cuda/summary.csv
+
+===== C1 B128: exact CPWA synthesis =====
++ /nvme/Sync/cpwa-relu/.venv/bin/python benchmarks/build_native_dag_artifact.py --source /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-tdar/c1/artifacts/methane-z-b128.npz --output /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c1-b128/c1-b128-native.cpwa
+artifact:        /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c1-b128/c1-b128-native.cpwa
+pieces:          221
+subsets:         245
+lattice time:    4.940810539061204
+DAG time:        0.028656474081799388
+nodes:           6383
+affine nodes:    221
+min nodes:       5918
+max nodes:       244
+binary ops:      6162
++ /nvme/Sync/cpwa-relu/.venv/bin/python benchmarks/synthesize_bottom_up.py --artifact /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c1-b128/c1-b128-native.cpwa --check-points 0 --output /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c1-b128/c1-b128-bottom-up.cpwa
+=== bottom-up exact min-circuit synthesis ===
+targets:                  245
+baseline min nodes:       5918
+selected factors:         814
+synthesized min nodes:    1573
+min-node reduction:       4345
+reduction percent:        73.420%
+initial target parts:     26856
+final target parts:       1004
+predicted min nodes:      1573
+maximum pair uses:        219
+synthesis seconds:        24.414
+
+wrote: /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c1-b128/c1-b128-bottom-up.cpwa
++ /nvme/Sync/cpwa-relu/.venv/bin/python benchmarks/optimize_min_circuit_cpsat.py --artifact /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c1-b128/c1-b128-bottom-up.cpwa --intersections 0 --time-limit 60.0 --workers 8 --output /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c1-b128/c1-b128-cpsat.cpwa
+=== CP-SAT exact finite-library min-circuit extraction ===
+status:                       OPTIMAL
+targets:                      245
+library factors:              1794
+binary decomposition choices: 1735
+incumbent min nodes:          1566
+best lower bound:             1566.0
+optimality gap:               0.000%
+wall seconds:                 0.041
+input min nodes:              1573
+output min nodes:             1566
+wrote:                        /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c1-b128/c1-b128-cpsat.cpwa
++ /nvme/Sync/cpwa-relu/.venv/bin/python benchmarks/benchmark_register_schedules.py /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c1-b128/c1-b128-cpsat.cpwa --schedules min-live --batches 1 10 100 1000 10000 100000 1000000 --output /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c1-b128/cuda
+SCHEDULE c1-b128-cpsat-min-live: 0.098 s
+COMPILE c1-b128-cpsat-min-live: nodes=2031 live_slots=444
+  registers=255 spills=676/676 stack=680
+  batch=      1 24032.000 ns/eval delta=0
+  batch=     10 2448.000 ns/eval delta=0
+  batch=    100 223.040 ns/eval delta=0
+  batch=   1000 22.752 ns/eval delta=0
+  batch=  10000 9.984 ns/eval delta=0
+  batch= 100000 9.351 ns/eval delta=0
+  batch=1000000 9.257 ns/eval delta=0
+wrote: /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c1-b128/cuda/summary.csv
+
+===== C2 B16: exact CPWA synthesis =====
++ /nvme/Sync/cpwa-relu/.venv/bin/python benchmarks/build_native_dag_artifact.py --source /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-tdar/c2/artifacts/methane-z-b16.npz --output /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c2-b16/c2-b16-native.cpwa
+artifact:        /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c2-b16/c2-b16-native.cpwa
+pieces:          26
+subsets:         13
+lattice time:    0.030537808081135154
+DAG time:        0.0002755559980869293
+nodes:           111
+affine nodes:    26
+min nodes:       73
+max nodes:       12
+binary ops:      85
++ /nvme/Sync/cpwa-relu/.venv/bin/python benchmarks/synthesize_bottom_up.py --artifact /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c2-b16/c2-b16-native.cpwa --check-points 0 --output /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c2-b16/c2-b16-bottom-up.cpwa
+=== bottom-up exact min-circuit synthesis ===
+targets:                  13
+baseline min nodes:       73
+selected factors:         18
+synthesized min nodes:    39
+min-node reduction:       34
+reduction percent:        46.575%
+initial target parts:     119
+final target parts:       34
+predicted min nodes:      39
+maximum pair uses:        13
+synthesis seconds:        0.002
+
+wrote: /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c2-b16/c2-b16-bottom-up.cpwa
++ /nvme/Sync/cpwa-relu/.venv/bin/python benchmarks/optimize_min_circuit_cpsat.py --artifact /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c2-b16/c2-b16-bottom-up.cpwa --intersections 0 --time-limit 60.0 --workers 8 --output /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c2-b16/c2-b16-cpsat.cpwa
+=== CP-SAT exact finite-library min-circuit extraction ===
+status:                       OPTIMAL
+targets:                      13
+library factors:              65
+binary decomposition choices: 40
+incumbent min nodes:          39
+best lower bound:             39.0
+optimality gap:               0.000%
+wall seconds:                 0.008
+input min nodes:              39
+output min nodes:             39
+wrote:                        /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c2-b16/c2-b16-cpsat.cpwa
++ /nvme/Sync/cpwa-relu/.venv/bin/python benchmarks/benchmark_register_schedules.py /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c2-b16/c2-b16-cpsat.cpwa --schedules min-live --batches 1 10 100 1000 10000 100000 1000000 --output /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c2-b16/cuda
+SCHEDULE c2-b16-cpsat-min-live: 0.002 s
+COMPILE c2-b16-cpsat-min-live: nodes=77 live_slots=19
+  registers=22 spills=0/0 stack=0
+  batch=      1 4672.000 ns/eval delta=0
+  batch=     10 448.000 ns/eval delta=0
+  batch=    100 47.040 ns/eval delta=0
+  batch=   1000 4.800 ns/eval delta=0
+  batch=  10000 0.611 ns/eval delta=0
+  batch= 100000 0.208 ns/eval delta=0
+  batch=1000000 0.173 ns/eval delta=0
+wrote: /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c2-b16/cuda/summary.csv
+
+===== C2 B24: exact CPWA synthesis =====
++ /nvme/Sync/cpwa-relu/.venv/bin/python benchmarks/build_native_dag_artifact.py --source /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-tdar/c2/artifacts/methane-z-b24.npz --output /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c2-b24/c2-b24-native.cpwa
+artifact:        /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c2-b24/c2-b24-native.cpwa
+pieces:          40
+subsets:         18
+lattice time:    0.03188327606767416
+DAG time:        0.0005091910716146231
+nodes:           216
+affine nodes:    40
+min nodes:       159
+max nodes:       17
+binary ops:      176
++ /nvme/Sync/cpwa-relu/.venv/bin/python benchmarks/synthesize_bottom_up.py --artifact /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c2-b24/c2-b24-native.cpwa --check-points 0 --output /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c2-b24/c2-b24-bottom-up.cpwa
+=== bottom-up exact min-circuit synthesis ===
+targets:                  18
+baseline min nodes:       159
+selected factors:         38
+synthesized min nodes:    76
+min-node reduction:       83
+reduction percent:        52.201%
+initial target parts:     259
+final target parts:       56
+predicted min nodes:      76
+maximum pair uses:        18
+synthesis seconds:        0.007
+
+wrote: /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c2-b24/c2-b24-bottom-up.cpwa
++ /nvme/Sync/cpwa-relu/.venv/bin/python benchmarks/optimize_min_circuit_cpsat.py --artifact /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c2-b24/c2-b24-bottom-up.cpwa --intersections 0 --time-limit 60.0 --workers 8 --output /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c2-b24/c2-b24-cpsat.cpwa
+=== CP-SAT exact finite-library min-circuit extraction ===
+status:                       OPTIMAL
+targets:                      18
+library factors:              116
+binary decomposition choices: 79
+incumbent min nodes:          76
+best lower bound:             76.0
+optimality gap:               0.000%
+wall seconds:                 0.008
+input min nodes:              76
+output min nodes:             76
+wrote:                        /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c2-b24/c2-b24-cpsat.cpwa
++ /nvme/Sync/cpwa-relu/.venv/bin/python benchmarks/benchmark_register_schedules.py /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c2-b24/c2-b24-cpsat.cpwa --schedules min-live --batches 1 10 100 1000 10000 100000 1000000 --output /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c2-b24/cuda
+SCHEDULE c2-b24-cpsat-min-live: 0.002 s
+COMPILE c2-b24-cpsat-min-live: nodes=133 live_slots=33
+  registers=31 spills=0/0 stack=0
+  batch=      1 5248.000 ns/eval delta=0
+  batch=     10 528.000 ns/eval delta=0
+  batch=    100 50.880 ns/eval delta=0
+  batch=   1000 5.344 ns/eval delta=0
+  batch=  10000 0.787 ns/eval delta=0
+  batch= 100000 0.354 ns/eval delta=0
+  batch=1000000 0.309 ns/eval delta=0
+wrote: /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c2-b24/cuda/summary.csv
+
+===== C2 B32: exact CPWA synthesis =====
++ /nvme/Sync/cpwa-relu/.venv/bin/python benchmarks/build_native_dag_artifact.py --source /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-tdar/c2/artifacts/methane-z-b32.npz --output /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c2-b32/c2-b32-native.cpwa
+artifact:        /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c2-b32/c2-b32-native.cpwa
+pieces:          53
+subsets:         32
+lattice time:    0.11162280198186636
+DAG time:        0.0011043669655919075
+nodes:           415
+affine nodes:    53
+min nodes:       331
+max nodes:       31
+binary ops:      362
++ /nvme/Sync/cpwa-relu/.venv/bin/python benchmarks/synthesize_bottom_up.py --artifact /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c2-b32/c2-b32-native.cpwa --check-points 0 --output /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c2-b32/c2-b32-bottom-up.cpwa
+=== bottom-up exact min-circuit synthesis ===
+targets:                  32
+baseline min nodes:       331
+selected factors:         68
+synthesized min nodes:    146
+min-node reduction:       185
+reduction percent:        55.891%
+initial target parts:     707
+final target parts:       110
+predicted min nodes:      146
+maximum pair uses:        32
+synthesis seconds:        0.039
+
+wrote: /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c2-b32/c2-b32-bottom-up.cpwa
++ /nvme/Sync/cpwa-relu/.venv/bin/python benchmarks/optimize_min_circuit_cpsat.py --artifact /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c2-b32/c2-b32-bottom-up.cpwa --intersections 0 --time-limit 60.0 --workers 8 --output /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c2-b32/c2-b32-cpsat.cpwa
+=== CP-SAT exact finite-library min-circuit extraction ===
+status:                       OPTIMAL
+targets:                      32
+library factors:              199
+binary decomposition choices: 162
+incumbent min nodes:          144
+best lower bound:             144.0
+optimality gap:               0.000%
+wall seconds:                 0.010
+input min nodes:              146
+output min nodes:             144
+wrote:                        /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c2-b32/c2-b32-cpsat.cpwa
++ /nvme/Sync/cpwa-relu/.venv/bin/python benchmarks/benchmark_register_schedules.py /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c2-b32/c2-b32-cpsat.cpwa --schedules min-live --batches 1 10 100 1000 10000 100000 1000000 --output /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c2-b32/cuda
+SCHEDULE c2-b32-cpsat-min-live: 0.006 s
+COMPILE c2-b32-cpsat-min-live: nodes=228 live_slots=48
+  registers=48 spills=0/0 stack=0
+  batch=      1 5664.000 ns/eval delta=0
+  batch=     10 540.800 ns/eval delta=0
+  batch=    100 56.000 ns/eval delta=0
+  batch=   1000 5.920 ns/eval delta=0
+  batch=  10000 1.027 ns/eval delta=0
+  batch= 100000 0.563 ns/eval delta=0
+  batch=1000000 0.517 ns/eval delta=0
+wrote: /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c2-b32/cuda/summary.csv
+
+===== C2 B48: exact CPWA synthesis =====
++ /nvme/Sync/cpwa-relu/.venv/bin/python benchmarks/build_native_dag_artifact.py --source /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-tdar/c2/artifacts/methane-z-b48.npz --output /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c2-b48/c2-b48-native.cpwa
+artifact:        /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c2-b48/c2-b48-native.cpwa
+pieces:          82
+subsets:         64
+lattice time:    0.44928089901804924
+DAG time:        0.003127769101411104
+nodes:           1122
+affine nodes:    82
+min nodes:       977
+max nodes:       63
+binary ops:      1040
++ /nvme/Sync/cpwa-relu/.venv/bin/python benchmarks/synthesize_bottom_up.py --artifact /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c2-b48/c2-b48-native.cpwa --check-points 0 --output /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c2-b48/c2-b48-bottom-up.cpwa
+=== bottom-up exact min-circuit synthesis ===
+targets:                  64
+baseline min nodes:       977
+selected factors:         168
+synthesized min nodes:    346
+min-node reduction:       631
+reduction percent:        64.585%
+initial target parts:     2441
+final target parts:       242
+predicted min nodes:      346
+maximum pair uses:        57
+synthesis seconds:        0.314
+
+wrote: /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c2-b48/c2-b48-bottom-up.cpwa
++ /nvme/Sync/cpwa-relu/.venv/bin/python benchmarks/optimize_min_circuit_cpsat.py --artifact /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c2-b48/c2-b48-bottom-up.cpwa --intersections 0 --time-limit 60.0 --workers 8 --output /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c2-b48/c2-b48-cpsat.cpwa
+=== CP-SAT exact finite-library min-circuit extraction ===
+status:                       OPTIMAL
+targets:                      64
+library factors:              428
+binary decomposition choices: 370
+incumbent min nodes:          344
+best lower bound:             344.0
+optimality gap:               0.000%
+wall seconds:                 0.014
+input min nodes:              346
+output min nodes:             344
+wrote:                        /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c2-b48/c2-b48-cpsat.cpwa
++ /nvme/Sync/cpwa-relu/.venv/bin/python benchmarks/benchmark_register_schedules.py /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c2-b48/c2-b48-cpsat.cpwa --schedules min-live --batches 1 10 100 1000 10000 100000 1000000 --output /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c2-b48/cuda
+SCHEDULE c2-b48-cpsat-min-live: 0.012 s
+COMPILE c2-b48-cpsat-min-live: nodes=489 live_slots=103
+  registers=95 spills=0/0 stack=0
+  batch=      1 6432.000 ns/eval delta=0
+  batch=     10 636.800 ns/eval delta=0
+  batch=    100 65.280 ns/eval delta=0
+  batch=   1000 7.424 ns/eval delta=0
+  batch=  10000 1.664 ns/eval delta=0
+  batch= 100000 1.221 ns/eval delta=0
+  batch=1000000 1.172 ns/eval delta=0
+wrote: /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c2-b48/cuda/summary.csv
+
+===== C2 B64: exact CPWA synthesis =====
++ /nvme/Sync/cpwa-relu/.venv/bin/python benchmarks/build_native_dag_artifact.py --source /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-tdar/c2/artifacts/methane-z-b64.npz --output /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c2-b64/c2-b64-native.cpwa
+artifact:        /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c2-b64/c2-b64-native.cpwa
+pieces:          110
+subsets:         114
+lattice time:    1.098974283784628
+DAG time:        0.007482761982828379
+nodes:           2180
+affine nodes:    110
+min nodes:       1957
+max nodes:       113
+binary ops:      2070
++ /nvme/Sync/cpwa-relu/.venv/bin/python benchmarks/synthesize_bottom_up.py --artifact /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c2-b64/c2-b64-native.cpwa --check-points 0 --output /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c2-b64/c2-b64-bottom-up.cpwa
+=== bottom-up exact min-circuit synthesis ===
+targets:                  114
+baseline min nodes:       1957
+selected factors:         292
+synthesized min nodes:    664
+min-node reduction:       1293
+reduction percent:        66.071%
+initial target parts:     6659
+final target parts:       486
+predicted min nodes:      664
+maximum pair uses:        96
+synthesis seconds:        2.016
+
+wrote: /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c2-b64/c2-b64-bottom-up.cpwa
++ /nvme/Sync/cpwa-relu/.venv/bin/python benchmarks/optimize_min_circuit_cpsat.py --artifact /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c2-b64/c2-b64-bottom-up.cpwa --intersections 0 --time-limit 60.0 --workers 8 --output /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c2-b64/c2-b64-cpsat.cpwa
+=== CP-SAT exact finite-library min-circuit extraction ===
+status:                       OPTIMAL
+targets:                      114
+library factors:              774
+binary decomposition choices: 758
+incumbent min nodes:          658
+best lower bound:             658.0
+optimality gap:               0.000%
+wall seconds:                 0.021
+input min nodes:              664
+output min nodes:             658
+wrote:                        /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c2-b64/c2-b64-cpsat.cpwa
++ /nvme/Sync/cpwa-relu/.venv/bin/python benchmarks/benchmark_register_schedules.py /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c2-b64/c2-b64-cpsat.cpwa --schedules min-live --batches 1 10 100 1000 10000 100000 1000000 --output /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c2-b64/cuda
+SCHEDULE c2-b64-cpsat-min-live: 0.026 s
+COMPILE c2-b64-cpsat-min-live: nodes=881 live_slots=190
+  registers=202 spills=0/0 stack=0
+  batch=      1 10144.000 ns/eval delta=0
+  batch=     10 1017.600 ns/eval delta=0
+  batch=    100 95.360 ns/eval delta=0
+  batch=   1000 9.440 ns/eval delta=0
+  batch=  10000 2.976 ns/eval delta=0
+  batch= 100000 2.358 ns/eval delta=0
+  batch=1000000 2.384 ns/eval delta=0
+wrote: /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c2-b64/cuda/summary.csv
+
+===== C2 B96: exact CPWA synthesis =====
++ /nvme/Sync/cpwa-relu/.venv/bin/python benchmarks/build_native_dag_artifact.py --source /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-tdar/c2/artifacts/methane-z-b96.npz --output /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c2-b96/c2-b96-native.cpwa
+artifact:        /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c2-b96/c2-b96-native.cpwa
+pieces:          166
+subsets:         146
+lattice time:    1.7856795960105956
+DAG time:        0.01284904801286757
+nodes:           3707
+affine nodes:    166
+min nodes:       3396
+max nodes:       145
+binary ops:      3541
++ /nvme/Sync/cpwa-relu/.venv/bin/python benchmarks/synthesize_bottom_up.py --artifact /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c2-b96/c2-b96-native.cpwa --check-points 0 --output /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c2-b96/c2-b96-bottom-up.cpwa
+=== bottom-up exact min-circuit synthesis ===
+targets:                  146
+baseline min nodes:       3396
+selected factors:         498
+synthesized min nodes:    985
+min-node reduction:       2411
+reduction percent:        70.995%
+initial target parts:     11476
+final target parts:       633
+predicted min nodes:      985
+maximum pair uses:        129
+synthesis seconds:        5.582
+
+wrote: /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c2-b96/c2-b96-bottom-up.cpwa
++ /nvme/Sync/cpwa-relu/.venv/bin/python benchmarks/optimize_min_circuit_cpsat.py --artifact /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c2-b96/c2-b96-bottom-up.cpwa --intersections 0 --time-limit 60.0 --workers 8 --output /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c2-b96/c2-b96-cpsat.cpwa
+=== CP-SAT exact finite-library min-circuit extraction ===
+status:                       OPTIMAL
+targets:                      146
+library factors:              1151
+binary decomposition choices: 1083
+incumbent min nodes:          976
+best lower bound:             976.0
+optimality gap:               0.000%
+wall seconds:                 0.031
+input min nodes:              985
+output min nodes:             976
+wrote:                        /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c2-b96/c2-b96-cpsat.cpwa
++ /nvme/Sync/cpwa-relu/.venv/bin/python benchmarks/benchmark_register_schedules.py /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c2-b96/c2-b96-cpsat.cpwa --schedules min-live --batches 1 10 100 1000 10000 100000 1000000 --output /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c2-b96/cuda
+SCHEDULE c2-b96-cpsat-min-live: 0.056 s
+COMPILE c2-b96-cpsat-min-live: nodes=1287 live_slots=269
+  registers=255 spills=0/0 stack=0
+  batch=      1 12320.000 ns/eval delta=0
+  batch=     10 1232.000 ns/eval delta=0
+  batch=    100 112.960 ns/eval delta=0
+  batch=   1000 11.232 ns/eval delta=0
+  batch=  10000 3.866 ns/eval delta=0
+  batch= 100000 3.114 ns/eval delta=0
+  batch=1000000 3.129 ns/eval delta=0
+wrote: /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c2-b96/cuda/summary.csv
+
+===== C2 B128: exact CPWA synthesis =====
++ /nvme/Sync/cpwa-relu/.venv/bin/python benchmarks/build_native_dag_artifact.py --source /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-tdar/c2/artifacts/methane-z-b128.npz --output /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c2-b128/c2-b128-native.cpwa
+artifact:        /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c2-b128/c2-b128-native.cpwa
+pieces:          225
+subsets:         217
+lattice time:    3.4556908989325166
+DAG time:        0.02854427183046937
+nodes:           6330
+affine nodes:    225
+min nodes:       5889
+max nodes:       216
+binary ops:      6105
++ /nvme/Sync/cpwa-relu/.venv/bin/python benchmarks/synthesize_bottom_up.py --artifact /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c2-b128/c2-b128-native.cpwa --check-points 0 --output /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c2-b128/c2-b128-bottom-up.cpwa
+=== bottom-up exact min-circuit synthesis ===
+targets:                  217
+baseline min nodes:       5889
+selected factors:         820
+synthesized min nodes:    1560
+min-node reduction:       4329
+reduction percent:        73.510%
+initial target parts:     23803
+final target parts:       957
+predicted min nodes:      1560
+maximum pair uses:        181
+synthesis seconds:        20.561
+
+wrote: /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c2-b128/c2-b128-bottom-up.cpwa
++ /nvme/Sync/cpwa-relu/.venv/bin/python benchmarks/optimize_min_circuit_cpsat.py --artifact /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c2-b128/c2-b128-bottom-up.cpwa --intersections 0 --time-limit 60.0 --workers 8 --output /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c2-b128/c2-b128-cpsat.cpwa
+=== CP-SAT exact finite-library min-circuit extraction ===
+status:                       OPTIMAL
+targets:                      217
+library factors:              1785
+binary decomposition choices: 1701
+incumbent min nodes:          1558
+best lower bound:             1558.0
+optimality gap:               0.000%
+wall seconds:                 0.039
+input min nodes:              1560
+output min nodes:             1558
+wrote:                        /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c2-b128/c2-b128-cpsat.cpwa
++ /nvme/Sync/cpwa-relu/.venv/bin/python benchmarks/benchmark_register_schedules.py /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c2-b128/c2-b128-cpsat.cpwa --schedules min-live --batches 1 10 100 1000 10000 100000 1000000 --output /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c2-b128/cuda
+SCHEDULE c2-b128-cpsat-min-live: 0.102 s
+COMPILE c2-b128-cpsat-min-live: nodes=1999 live_slots=382
+  registers=255 spills=564/564 stack=568
+  batch=      1 25536.001 ns/eval delta=0
+  batch=     10 2550.400 ns/eval delta=0
+  batch=    100 236.160 ns/eval delta=0
+  batch=   1000 23.360 ns/eval delta=0
+  batch=  10000 9.680 ns/eval delta=0
+  batch= 100000 8.929 ns/eval delta=0
+  batch=1000000 7.924 ns/eval delta=0
+wrote: /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c2-b128/cuda/summary.csv
+
+===== C3 B16: exact CPWA synthesis =====
++ /nvme/Sync/cpwa-relu/.venv/bin/python benchmarks/build_native_dag_artifact.py --source /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-tdar/c3/artifacts/methane-z-b16.npz --output /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c3-b16/c3-b16-native.cpwa
+artifact:        /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c3-b16/c3-b16-native.cpwa
+pieces:          26
+subsets:         12
+lattice time:    0.032342457910999656
+DAG time:        0.00028075696900486946
+nodes:           119
+affine nodes:    26
+min nodes:       82
+max nodes:       11
+binary ops:      93
++ /nvme/Sync/cpwa-relu/.venv/bin/python benchmarks/synthesize_bottom_up.py --artifact /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c3-b16/c3-b16-native.cpwa --check-points 0 --output /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c3-b16/c3-b16-bottom-up.cpwa
+=== bottom-up exact min-circuit synthesis ===
+targets:                  12
+baseline min nodes:       82
+selected factors:         20
+synthesized min nodes:    42
+min-node reduction:       40
+reduction percent:        48.780%
+initial target parts:     128
+final target parts:       34
+predicted min nodes:      42
+maximum pair uses:        12
+synthesis seconds:        0.002
+
+wrote: /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c3-b16/c3-b16-bottom-up.cpwa
++ /nvme/Sync/cpwa-relu/.venv/bin/python benchmarks/optimize_min_circuit_cpsat.py --artifact /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c3-b16/c3-b16-bottom-up.cpwa --intersections 0 --time-limit 60.0 --workers 8 --output /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c3-b16/c3-b16-cpsat.cpwa
+=== CP-SAT exact finite-library min-circuit extraction ===
+status:                       OPTIMAL
+targets:                      12
+library factors:              68
+binary decomposition choices: 44
+incumbent min nodes:          42
+best lower bound:             42.0
+optimality gap:               0.000%
+wall seconds:                 0.008
+input min nodes:              42
+output min nodes:             42
+wrote:                        /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c3-b16/c3-b16-cpsat.cpwa
++ /nvme/Sync/cpwa-relu/.venv/bin/python benchmarks/benchmark_register_schedules.py /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c3-b16/c3-b16-cpsat.cpwa --schedules min-live --batches 1 10 100 1000 10000 100000 1000000 --output /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c3-b16/cuda
+SCHEDULE c3-b16-cpsat-min-live: 0.001 s
+COMPILE c3-b16-cpsat-min-live: nodes=79 live_slots=19
+  registers=25 spills=0/0 stack=0
+  batch=      1 4384.000 ns/eval delta=0
+  batch=     10 428.800 ns/eval delta=0
+  batch=    100 45.120 ns/eval delta=0
+  batch=   1000 4.576 ns/eval delta=0
+  batch=  10000 0.566 ns/eval delta=0
+  batch= 100000 0.201 ns/eval delta=0
+  batch=1000000 0.168 ns/eval delta=0
+wrote: /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c3-b16/cuda/summary.csv
+
+===== C3 B24: exact CPWA synthesis =====
++ /nvme/Sync/cpwa-relu/.venv/bin/python benchmarks/build_native_dag_artifact.py --source /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-tdar/c3/artifacts/methane-z-b24.npz --output /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c3-b24/c3-b24-native.cpwa
+artifact:        /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c3-b24/c3-b24-native.cpwa
+pieces:          40
+subsets:         24
+lattice time:    0.07575857103802264
+DAG time:        0.0007184629794210196
+nodes:           286
+affine nodes:    40
+min nodes:       223
+max nodes:       23
+binary ops:      246
++ /nvme/Sync/cpwa-relu/.venv/bin/python benchmarks/synthesize_bottom_up.py --artifact /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c3-b24/c3-b24-native.cpwa --check-points 0 --output /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c3-b24/c3-b24-bottom-up.cpwa
+=== bottom-up exact min-circuit synthesis ===
+targets:                  24
+baseline min nodes:       223
+selected factors:         52
+synthesized min nodes:    101
+min-node reduction:       122
+reduction percent:        54.709%
+initial target parts:     452
+final target parts:       73
+predicted min nodes:      101
+maximum pair uses:        24
+synthesis seconds:        0.016
+
+wrote: /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c3-b24/c3-b24-bottom-up.cpwa
++ /nvme/Sync/cpwa-relu/.venv/bin/python benchmarks/optimize_min_circuit_cpsat.py --artifact /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c3-b24/c3-b24-bottom-up.cpwa --intersections 0 --time-limit 60.0 --workers 8 --output /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c3-b24/c3-b24-cpsat.cpwa
+=== CP-SAT exact finite-library min-circuit extraction ===
+status:                       OPTIMAL
+targets:                      24
+library factors:              141
+binary decomposition choices: 106
+incumbent min nodes:          101
+best lower bound:             101.0
+optimality gap:               0.000%
+wall seconds:                 0.009
+input min nodes:              101
+output min nodes:             101
+wrote:                        /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c3-b24/c3-b24-cpsat.cpwa
++ /nvme/Sync/cpwa-relu/.venv/bin/python benchmarks/benchmark_register_schedules.py /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c3-b24/c3-b24-cpsat.cpwa --schedules min-live --batches 1 10 100 1000 10000 100000 1000000 --output /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c3-b24/cuda
+SCHEDULE c3-b24-cpsat-min-live: 0.002 s
+COMPILE c3-b24-cpsat-min-live: nodes=164 live_slots=37
+  registers=38 spills=0/0 stack=0
+  batch=      1 4640.000 ns/eval delta=0
+  batch=     10 441.600 ns/eval delta=0
+  batch=    100 46.720 ns/eval delta=0
+  batch=   1000 4.832 ns/eval delta=0
+  batch=  10000 0.720 ns/eval delta=0
+  batch= 100000 0.340 ns/eval delta=0
+  batch=1000000 0.302 ns/eval delta=0
+wrote: /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c3-b24/cuda/summary.csv
+
+===== C3 B32: exact CPWA synthesis =====
++ /nvme/Sync/cpwa-relu/.venv/bin/python benchmarks/build_native_dag_artifact.py --source /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-tdar/c3/artifacts/methane-z-b32.npz --output /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c3-b32/c3-b32-native.cpwa
+artifact:        /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c3-b32/c3-b32-native.cpwa
+pieces:          52
+subsets:         40
+lattice time:    0.24013468599878252
+DAG time:        0.001465607900172472
+nodes:           512
+affine nodes:    52
+min nodes:       421
+max nodes:       39
+binary ops:      460
++ /nvme/Sync/cpwa-relu/.venv/bin/python benchmarks/synthesize_bottom_up.py --artifact /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c3-b32/c3-b32-native.cpwa --check-points 0 --output /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c3-b32/c3-b32-bottom-up.cpwa
+=== bottom-up exact min-circuit synthesis ===
+targets:                  40
+baseline min nodes:       421
+selected factors:         87
+synthesized min nodes:    175
+min-node reduction:       246
+reduction percent:        58.432%
+initial target parts:     1154
+final target parts:       128
+predicted min nodes:      175
+maximum pair uses:        40
+synthesis seconds:        0.077
+
+wrote: /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c3-b32/c3-b32-bottom-up.cpwa
++ /nvme/Sync/cpwa-relu/.venv/bin/python benchmarks/optimize_min_circuit_cpsat.py --artifact /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c3-b32/c3-b32-bottom-up.cpwa --intersections 0 --time-limit 60.0 --workers 8 --output /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c3-b32/c3-b32-cpsat.cpwa
+=== CP-SAT exact finite-library min-circuit extraction ===
+status:                       OPTIMAL
+targets:                      40
+library factors:              227
+binary decomposition choices: 186
+incumbent min nodes:          174
+best lower bound:             174.0
+optimality gap:               0.000%
+wall seconds:                 0.011
+input min nodes:              175
+output min nodes:             174
+wrote:                        /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c3-b32/c3-b32-cpsat.cpwa
++ /nvme/Sync/cpwa-relu/.venv/bin/python benchmarks/benchmark_register_schedules.py /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c3-b32/c3-b32-cpsat.cpwa --schedules min-live --batches 1 10 100 1000 10000 100000 1000000 --output /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c3-b32/cuda
+SCHEDULE c3-b32-cpsat-min-live: 0.005 s
+COMPILE c3-b32-cpsat-min-live: nodes=265 live_slots=57
+  registers=62 spills=0/0 stack=0
+  batch=      1 4832.000 ns/eval delta=0
+  batch=     10 486.400 ns/eval delta=0
+  batch=    100 48.960 ns/eval delta=0
+  batch=   1000 5.440 ns/eval delta=0
+  batch=  10000 1.018 ns/eval delta=0
+  batch= 100000 0.524 ns/eval delta=0
+  batch=1000000 0.486 ns/eval delta=0
+wrote: /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c3-b32/cuda/summary.csv
+
+===== C3 B48: exact CPWA synthesis =====
++ /nvme/Sync/cpwa-relu/.venv/bin/python benchmarks/build_native_dag_artifact.py --source /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-tdar/c3/artifacts/methane-z-b48.npz --output /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c3-b48/c3-b48-native.cpwa
+artifact:        /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c3-b48/c3-b48-native.cpwa
+pieces:          81
+subsets:         77
+lattice time:    0.4554218160919845
+DAG time:        0.003682487877085805
+nodes:           1200
+affine nodes:    81
+min nodes:       1043
+max nodes:       76
+binary ops:      1119
++ /nvme/Sync/cpwa-relu/.venv/bin/python benchmarks/synthesize_bottom_up.py --artifact /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c3-b48/c3-b48-native.cpwa --check-points 0 --output /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c3-b48/c3-b48-bottom-up.cpwa
+=== bottom-up exact min-circuit synthesis ===
+targets:                  77
+baseline min nodes:       1043
+selected factors:         189
+synthesized min nodes:    381
+min-node reduction:       662
+reduction percent:        63.471%
+initial target parts:     3093
+final target parts:       269
+predicted min nodes:      381
+maximum pair uses:        68
+synthesis seconds:        0.464
+
+wrote: /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c3-b48/c3-b48-bottom-up.cpwa
++ /nvme/Sync/cpwa-relu/.venv/bin/python benchmarks/optimize_min_circuit_cpsat.py --artifact /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c3-b48/c3-b48-bottom-up.cpwa --intersections 0 --time-limit 60.0 --workers 8 --output /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c3-b48/c3-b48-cpsat.cpwa
+=== CP-SAT exact finite-library min-circuit extraction ===
+status:                       OPTIMAL
+targets:                      77
+library factors:              462
+binary decomposition choices: 419
+incumbent min nodes:          376
+best lower bound:             376.0
+optimality gap:               0.000%
+wall seconds:                 0.016
+input min nodes:              381
+output min nodes:             376
+wrote:                        /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c3-b48/c3-b48-cpsat.cpwa
++ /nvme/Sync/cpwa-relu/.venv/bin/python benchmarks/benchmark_register_schedules.py /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c3-b48/c3-b48-cpsat.cpwa --schedules min-live --batches 1 10 100 1000 10000 100000 1000000 --output /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c3-b48/cuda
+SCHEDULE c3-b48-cpsat-min-live: 0.012 s
+COMPILE c3-b48-cpsat-min-live: nodes=533 live_slots=102
+  registers=96 spills=0/0 stack=0
+  batch=      1 5600.000 ns/eval delta=0
+  batch=     10 550.400 ns/eval delta=0
+  batch=    100 55.680 ns/eval delta=0
+  batch=   1000 6.592 ns/eval delta=0
+  batch=  10000 1.437 ns/eval delta=0
+  batch= 100000 1.045 ns/eval delta=0
+  batch=1000000 1.011 ns/eval delta=0
+wrote: /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c3-b48/cuda/summary.csv
+
+===== C3 B64: exact CPWA synthesis =====
++ /nvme/Sync/cpwa-relu/.venv/bin/python benchmarks/build_native_dag_artifact.py --source /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-tdar/c3/artifacts/methane-z-b64.npz --output /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c3-b64/c3-b64-native.cpwa
+artifact:        /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c3-b64/c3-b64-native.cpwa
+pieces:          109
+subsets:         107
+lattice time:    0.6652111141011119
+DAG time:        0.00734492507763207
+nodes:           1978
+affine nodes:    109
+min nodes:       1763
+max nodes:       106
+binary ops:      1869
++ /nvme/Sync/cpwa-relu/.venv/bin/python benchmarks/synthesize_bottom_up.py --artifact /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c3-b64/c3-b64-native.cpwa --check-points 0 --output /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c3-b64/c3-b64-bottom-up.cpwa
+=== bottom-up exact min-circuit synthesis ===
+targets:                  107
+baseline min nodes:       1763
+selected factors:         289
+synthesized min nodes:    621
+min-node reduction:       1142
+reduction percent:        64.776%
+initial target parts:     6136
+final target parts:       439
+predicted min nodes:      621
+maximum pair uses:        94
+synthesis seconds:        1.720
+
+wrote: /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c3-b64/c3-b64-bottom-up.cpwa
++ /nvme/Sync/cpwa-relu/.venv/bin/python benchmarks/optimize_min_circuit_cpsat.py --artifact /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c3-b64/c3-b64-bottom-up.cpwa --intersections 0 --time-limit 60.0 --workers 8 --output /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c3-b64/c3-b64-cpsat.cpwa
+=== CP-SAT exact finite-library min-circuit extraction ===
+status:                       OPTIMAL
+targets:                      107
+library factors:              730
+binary decomposition choices: 676
+incumbent min nodes:          620
+best lower bound:             620.0
+optimality gap:               0.000%
+wall seconds:                 0.020
+input min nodes:              621
+output min nodes:             620
+wrote:                        /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c3-b64/c3-b64-cpsat.cpwa
++ /nvme/Sync/cpwa-relu/.venv/bin/python benchmarks/benchmark_register_schedules.py /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c3-b64/c3-b64-cpsat.cpwa --schedules min-live --batches 1 10 100 1000 10000 100000 1000000 --output /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c3-b64/cuda
+SCHEDULE c3-b64-cpsat-min-live: 0.028 s
+COMPILE c3-b64-cpsat-min-live: nodes=835 live_slots=158
+  registers=166 spills=0/0 stack=0
+  batch=      1 8448.000 ns/eval delta=0
+  batch=     10 841.600 ns/eval delta=0
+  batch=    100 77.760 ns/eval delta=0
+  batch=   1000 7.744 ns/eval delta=0
+  batch=  10000 2.387 ns/eval delta=0
+  batch= 100000 1.813 ns/eval delta=0
+  batch=1000000 1.848 ns/eval delta=0
+wrote: /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c3-b64/cuda/summary.csv
+
+===== C3 B96: exact CPWA synthesis =====
++ /nvme/Sync/cpwa-relu/.venv/bin/python benchmarks/build_native_dag_artifact.py --source /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-tdar/c3/artifacts/methane-z-b96.npz --output /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c3-b96/c3-b96-native.cpwa
+artifact:        /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c3-b96/c3-b96-native.cpwa
+pieces:          165
+subsets:         170
+lattice time:    2.204019149998203
+DAG time:        0.01621065102517605
+nodes:           4199
+affine nodes:    165
+min nodes:       3865
+max nodes:       169
+binary ops:      4034
++ /nvme/Sync/cpwa-relu/.venv/bin/python benchmarks/synthesize_bottom_up.py --artifact /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c3-b96/c3-b96-native.cpwa --check-points 0 --output /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c3-b96/c3-b96-bottom-up.cpwa
+=== bottom-up exact min-circuit synthesis ===
+targets:                  170
+baseline min nodes:       3865
+selected factors:         528
+synthesized min nodes:    1083
+min-node reduction:       2782
+reduction percent:        71.979%
+initial target parts:     14994
+final target parts:       725
+predicted min nodes:      1083
+maximum pair uses:        156
+synthesis seconds:        8.946
+
+wrote: /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c3-b96/c3-b96-bottom-up.cpwa
++ /nvme/Sync/cpwa-relu/.venv/bin/python benchmarks/optimize_min_circuit_cpsat.py --artifact /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c3-b96/c3-b96-bottom-up.cpwa --intersections 0 --time-limit 60.0 --workers 8 --output /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c3-b96/c3-b96-cpsat.cpwa
+=== CP-SAT exact finite-library min-circuit extraction ===
+status:                       OPTIMAL
+targets:                      170
+library factors:              1248
+binary decomposition choices: 1175
+incumbent min nodes:          1078
+best lower bound:             1078.0
+optimality gap:               0.000%
+wall seconds:                 0.029
+input min nodes:              1083
+output min nodes:             1078
+wrote:                        /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c3-b96/c3-b96-cpsat.cpwa
++ /nvme/Sync/cpwa-relu/.venv/bin/python benchmarks/benchmark_register_schedules.py /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c3-b96/c3-b96-cpsat.cpwa --schedules min-live --batches 1 10 100 1000 10000 100000 1000000 --output /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c3-b96/cuda
+SCHEDULE c3-b96-cpsat-min-live: 0.054 s
+COMPILE c3-b96-cpsat-min-live: nodes=1412 live_slots=291
+  registers=255 spills=48/48 stack=48
+  batch=      1 13248.000 ns/eval delta=0
+  batch=     10 1340.800 ns/eval delta=0
+  batch=    100 126.720 ns/eval delta=0
+  batch=   1000 10.400 ns/eval delta=0
+  batch=  10000 3.651 ns/eval delta=0
+  batch= 100000 2.971 ns/eval delta=0
+  batch=1000000 2.992 ns/eval delta=0
+wrote: /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c3-b96/cuda/summary.csv
+
+===== C3 B128: exact CPWA synthesis =====
++ /nvme/Sync/cpwa-relu/.venv/bin/python benchmarks/build_native_dag_artifact.py --source /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-tdar/c3/artifacts/methane-z-b128.npz --output /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c3-b128/c3-b128-native.cpwa
+artifact:        /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c3-b128/c3-b128-native.cpwa
+pieces:          223
+subsets:         278
+lattice time:    6.096635201014578
+DAG time:        0.035575712099671364
+nodes:           7042
+affine nodes:    223
+min nodes:       6542
+max nodes:       277
+binary ops:      6819
++ /nvme/Sync/cpwa-relu/.venv/bin/python benchmarks/synthesize_bottom_up.py --artifact /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c3-b128/c3-b128-native.cpwa --check-points 0 --output /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c3-b128/c3-b128-bottom-up.cpwa
+=== bottom-up exact min-circuit synthesis ===
+targets:                  278
+baseline min nodes:       6542
+selected factors:         843
+synthesized min nodes:    1649
+min-node reduction:       4893
+reduction percent:        74.794%
+initial target parts:     34098
+final target parts:       1084
+predicted min nodes:      1649
+maximum pair uses:        266
+synthesis seconds:        36.501
+
+wrote: /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c3-b128/c3-b128-bottom-up.cpwa
++ /nvme/Sync/cpwa-relu/.venv/bin/python benchmarks/optimize_min_circuit_cpsat.py --artifact /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c3-b128/c3-b128-bottom-up.cpwa --intersections 0 --time-limit 60.0 --workers 8 --output /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c3-b128/c3-b128-cpsat.cpwa
+=== CP-SAT exact finite-library min-circuit extraction ===
+status:                       OPTIMAL
+targets:                      278
+library factors:              1872
+binary decomposition choices: 1858
+incumbent min nodes:          1630
+best lower bound:             1630.0
+optimality gap:               0.000%
+wall seconds:                 0.061
+input min nodes:              1649
+output min nodes:             1630
+wrote:                        /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c3-b128/c3-b128-cpsat.cpwa
++ /nvme/Sync/cpwa-relu/.venv/bin/python benchmarks/benchmark_register_schedules.py /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c3-b128/c3-b128-cpsat.cpwa --schedules min-live --batches 1 10 100 1000 10000 100000 1000000 --output /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c3-b128/cuda
+SCHEDULE c3-b128-cpsat-min-live: 0.097 s
+COMPILE c3-b128-cpsat-min-live: nodes=2130 live_slots=439
+  registers=255 spills=420/420 stack=424
+  batch=      1 26848.000 ns/eval delta=0
+  batch=     10 2700.800 ns/eval delta=0
+  batch=    100 247.040 ns/eval delta=0
+  batch=   1000 24.608 ns/eval delta=0
+  batch=  10000 9.462 ns/eval delta=0
+  batch= 100000 8.637 ns/eval delta=0
+  batch=1000000 8.477 ns/eval delta=0
+wrote: /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c3-b128/cuda/summary.csv
+
+===== C4 B16: exact CPWA synthesis =====
++ /nvme/Sync/cpwa-relu/.venv/bin/python benchmarks/build_native_dag_artifact.py --source /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-tdar/c4/artifacts/methane-z-b16.npz --output /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c4-b16/c4-b16-native.cpwa
+artifact:        /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c4-b16/c4-b16-native.cpwa
+pieces:          26
+subsets:         13
+lattice time:    0.03091182792559266
+DAG time:        0.00027728197164833546
+nodes:           112
+affine nodes:    26
+min nodes:       74
+max nodes:       12
+binary ops:      86
++ /nvme/Sync/cpwa-relu/.venv/bin/python benchmarks/synthesize_bottom_up.py --artifact /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c4-b16/c4-b16-native.cpwa --check-points 0 --output /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c4-b16/c4-b16-bottom-up.cpwa
+=== bottom-up exact min-circuit synthesis ===
+targets:                  13
+baseline min nodes:       74
+selected factors:         18
+synthesized min nodes:    40
+min-node reduction:       34
+reduction percent:        45.946%
+initial target parts:     120
+final target parts:       35
+predicted min nodes:      40
+maximum pair uses:        13
+synthesis seconds:        0.002
+
+wrote: /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c4-b16/c4-b16-bottom-up.cpwa
++ /nvme/Sync/cpwa-relu/.venv/bin/python benchmarks/optimize_min_circuit_cpsat.py --artifact /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c4-b16/c4-b16-bottom-up.cpwa --intersections 0 --time-limit 60.0 --workers 8 --output /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c4-b16/c4-b16-cpsat.cpwa
+=== CP-SAT exact finite-library min-circuit extraction ===
+status:                       OPTIMAL
+targets:                      13
+library factors:              66
+binary decomposition choices: 41
+incumbent min nodes:          40
+best lower bound:             40.0
+optimality gap:               0.000%
+wall seconds:                 0.008
+input min nodes:              40
+output min nodes:             40
+wrote:                        /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c4-b16/c4-b16-cpsat.cpwa
++ /nvme/Sync/cpwa-relu/.venv/bin/python benchmarks/benchmark_register_schedules.py /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c4-b16/c4-b16-cpsat.cpwa --schedules min-live --batches 1 10 100 1000 10000 100000 1000000 --output /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c4-b16/cuda
+SCHEDULE c4-b16-cpsat-min-live: 0.001 s
+COMPILE c4-b16-cpsat-min-live: nodes=78 live_slots=19
+  registers=26 spills=0/0 stack=0
+  batch=      1 4736.000 ns/eval delta=0
+  batch=     10 454.400 ns/eval delta=0
+  batch=    100 48.960 ns/eval delta=0
+  batch=   1000 4.896 ns/eval delta=0
+  batch=  10000 0.630 ns/eval delta=0
+  batch= 100000 0.219 ns/eval delta=0
+  batch=1000000 0.185 ns/eval delta=0
+wrote: /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c4-b16/cuda/summary.csv
+
+===== C4 B24: exact CPWA synthesis =====
++ /nvme/Sync/cpwa-relu/.venv/bin/python benchmarks/build_native_dag_artifact.py --source /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-tdar/c4/artifacts/methane-z-b24.npz --output /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c4-b24/c4-b24-native.cpwa
+artifact:        /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c4-b24/c4-b24-native.cpwa
+pieces:          40
+subsets:         23
+lattice time:    0.060628185980021954
+DAG time:        0.0006893279496580362
+nodes:           268
+affine nodes:    40
+min nodes:       206
+max nodes:       22
+binary ops:      228
++ /nvme/Sync/cpwa-relu/.venv/bin/python benchmarks/synthesize_bottom_up.py --artifact /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c4-b24/c4-b24-native.cpwa --check-points 0 --output /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c4-b24/c4-b24-bottom-up.cpwa
+=== bottom-up exact min-circuit synthesis ===
+targets:                  23
+baseline min nodes:       206
+selected factors:         50
+synthesized min nodes:    97
+min-node reduction:       109
+reduction percent:        52.913%
+initial target parts:     407
+final target parts:       70
+predicted min nodes:      97
+maximum pair uses:        23
+synthesis seconds:        0.014
+
+wrote: /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c4-b24/c4-b24-bottom-up.cpwa
++ /nvme/Sync/cpwa-relu/.venv/bin/python benchmarks/optimize_min_circuit_cpsat.py --artifact /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c4-b24/c4-b24-bottom-up.cpwa --intersections 0 --time-limit 60.0 --workers 8 --output /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c4-b24/c4-b24-cpsat.cpwa
+=== CP-SAT exact finite-library min-circuit extraction ===
+status:                       OPTIMAL
+targets:                      23
+library factors:              137
+binary decomposition choices: 105
+incumbent min nodes:          97
+best lower bound:             97.0
+optimality gap:               0.000%
+wall seconds:                 0.009
+input min nodes:              97
+output min nodes:             97
+wrote:                        /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c4-b24/c4-b24-cpsat.cpwa
++ /nvme/Sync/cpwa-relu/.venv/bin/python benchmarks/benchmark_register_schedules.py /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c4-b24/c4-b24-cpsat.cpwa --schedules min-live --batches 1 10 100 1000 10000 100000 1000000 --output /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c4-b24/cuda
+SCHEDULE c4-b24-cpsat-min-live: 0.002 s
+COMPILE c4-b24-cpsat-min-live: nodes=159 live_slots=35
+  registers=39 spills=0/0 stack=0
+  batch=      1 5120.000 ns/eval delta=0
+  batch=     10 512.000 ns/eval delta=0
+  batch=    100 52.480 ns/eval delta=0
+  batch=   1000 5.568 ns/eval delta=0
+  batch=  10000 0.848 ns/eval delta=0
+  batch= 100000 0.413 ns/eval delta=0
+  batch=1000000 0.369 ns/eval delta=0
+wrote: /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c4-b24/cuda/summary.csv
+
+===== C4 B32: exact CPWA synthesis =====
++ /nvme/Sync/cpwa-relu/.venv/bin/python benchmarks/build_native_dag_artifact.py --source /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-tdar/c4/artifacts/methane-z-b32.npz --output /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c4-b32/c4-b32-native.cpwa
+artifact:        /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c4-b32/c4-b32-native.cpwa
+pieces:          52
+subsets:         36
+lattice time:    0.2028470418881625
+DAG time:        0.0013065689709037542
+nodes:           469
+affine nodes:    52
+min nodes:       382
+max nodes:       35
+binary ops:      417
++ /nvme/Sync/cpwa-relu/.venv/bin/python benchmarks/synthesize_bottom_up.py --artifact /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c4-b32/c4-b32-native.cpwa --check-points 0 --output /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c4-b32/c4-b32-bottom-up.cpwa
+=== bottom-up exact min-circuit synthesis ===
+targets:                  36
+baseline min nodes:       382
+selected factors:         92
+synthesized min nodes:    167
+min-node reduction:       215
+reduction percent:        56.283%
+initial target parts:     973
+final target parts:       111
+predicted min nodes:      167
+maximum pair uses:        36
+synthesis seconds:        0.059
+
+wrote: /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c4-b32/c4-b32-bottom-up.cpwa
++ /nvme/Sync/cpwa-relu/.venv/bin/python benchmarks/optimize_min_circuit_cpsat.py --artifact /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c4-b32/c4-b32-bottom-up.cpwa --intersections 0 --time-limit 60.0 --workers 8 --output /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c4-b32/c4-b32-cpsat.cpwa
+=== CP-SAT exact finite-library min-circuit extraction ===
+status:                       OPTIMAL
+targets:                      36
+library factors:              219
+binary decomposition choices: 174
+incumbent min nodes:          166
+best lower bound:             166.0
+optimality gap:               0.000%
+wall seconds:                 0.011
+input min nodes:              167
+output min nodes:             166
+wrote:                        /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c4-b32/c4-b32-cpsat.cpwa
++ /nvme/Sync/cpwa-relu/.venv/bin/python benchmarks/benchmark_register_schedules.py /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c4-b32/c4-b32-cpsat.cpwa --schedules min-live --batches 1 10 100 1000 10000 100000 1000000 --output /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c4-b32/cuda
+SCHEDULE c4-b32-cpsat-min-live: 0.004 s
+COMPILE c4-b32-cpsat-min-live: nodes=253 live_slots=58
+  registers=63 spills=0/0 stack=0
+  batch=      1 5536.000 ns/eval delta=0
+  batch=     10 534.400 ns/eval delta=0
+  batch=    100 55.680 ns/eval delta=0
+  batch=   1000 6.016 ns/eval delta=0
+  batch=  10000 1.181 ns/eval delta=0
+  batch= 100000 0.622 ns/eval delta=0
+  batch=1000000 0.589 ns/eval delta=0
+wrote: /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c4-b32/cuda/summary.csv
+
+===== C4 B48: exact CPWA synthesis =====
++ /nvme/Sync/cpwa-relu/.venv/bin/python benchmarks/build_native_dag_artifact.py --source /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-tdar/c4/artifacts/methane-z-b48.npz --output /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c4-b48/c4-b48-native.cpwa
+artifact:        /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c4-b48/c4-b48-native.cpwa
+pieces:          81
+subsets:         73
+lattice time:    0.42019203095696867
+DAG time:        0.0034436110872775316
+nodes:           1140
+affine nodes:    81
+min nodes:       987
+max nodes:       72
+binary ops:      1059
++ /nvme/Sync/cpwa-relu/.venv/bin/python benchmarks/synthesize_bottom_up.py --artifact /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c4-b48/c4-b48-native.cpwa --check-points 0 --output /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c4-b48/c4-b48-bottom-up.cpwa
+=== bottom-up exact min-circuit synthesis ===
+targets:                  73
+baseline min nodes:       987
+selected factors:         186
+synthesized min nodes:    391
+min-node reduction:       596
+reduction percent:        60.385%
+initial target parts:     2850
+final target parts:       278
+predicted min nodes:      391
+maximum pair uses:        64
+synthesis seconds:        0.385
+
+wrote: /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c4-b48/c4-b48-bottom-up.cpwa
++ /nvme/Sync/cpwa-relu/.venv/bin/python benchmarks/optimize_min_circuit_cpsat.py --artifact /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c4-b48/c4-b48-bottom-up.cpwa --intersections 0 --time-limit 60.0 --workers 8 --output /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c4-b48/c4-b48-cpsat.cpwa
+=== CP-SAT exact finite-library min-circuit extraction ===
+status:                       OPTIMAL
+targets:                      73
+library factors:              472
+binary decomposition choices: 423
+incumbent min nodes:          391
+best lower bound:             391.0
+optimality gap:               0.000%
+wall seconds:                 0.015
+input min nodes:              391
+output min nodes:             391
+wrote:                        /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c4-b48/c4-b48-cpsat.cpwa
++ /nvme/Sync/cpwa-relu/.venv/bin/python benchmarks/benchmark_register_schedules.py /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c4-b48/c4-b48-cpsat.cpwa --schedules min-live --batches 1 10 100 1000 10000 100000 1000000 --output /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c4-b48/cuda
+SCHEDULE c4-b48-cpsat-min-live: 0.012 s
+COMPILE c4-b48-cpsat-min-live: nodes=544 live_slots=109
+  registers=122 spills=0/0 stack=0
+  batch=      1 6368.000 ns/eval delta=0
+  batch=     10 627.200 ns/eval delta=0
+  batch=    100 65.280 ns/eval delta=0
+  batch=   1000 7.488 ns/eval delta=0
+  batch=  10000 1.760 ns/eval delta=0
+  batch= 100000 1.306 ns/eval delta=0
+  batch=1000000 1.265 ns/eval delta=0
+wrote: /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c4-b48/cuda/summary.csv
+
+===== C4 B64: exact CPWA synthesis =====
++ /nvme/Sync/cpwa-relu/.venv/bin/python benchmarks/build_native_dag_artifact.py --source /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-tdar/c4/artifacts/methane-z-b64.npz --output /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c4-b64/c4-b64-native.cpwa
+artifact:        /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c4-b64/c4-b64-native.cpwa
+pieces:          110
+subsets:         109
+lattice time:    0.6168627510778606
+DAG time:        0.007242262829095125
+nodes:           1995
+affine nodes:    110
+min nodes:       1777
+max nodes:       108
+binary ops:      1885
++ /nvme/Sync/cpwa-relu/.venv/bin/python benchmarks/synthesize_bottom_up.py --artifact /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c4-b64/c4-b64-native.cpwa --check-points 0 --output /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c4-b64/c4-b64-bottom-up.cpwa
+=== bottom-up exact min-circuit synthesis ===
+targets:                  109
+baseline min nodes:       1777
+selected factors:         303
+synthesized min nodes:    639
+min-node reduction:       1138
+reduction percent:        64.041%
+initial target parts:     6351
+final target parts:       445
+predicted min nodes:      639
+maximum pair uses:        90
+synthesis seconds:        1.842
+
+wrote: /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c4-b64/c4-b64-bottom-up.cpwa
++ /nvme/Sync/cpwa-relu/.venv/bin/python benchmarks/optimize_min_circuit_cpsat.py --artifact /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c4-b64/c4-b64-bottom-up.cpwa --intersections 0 --time-limit 60.0 --workers 8 --output /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c4-b64/c4-b64-cpsat.cpwa
+=== CP-SAT exact finite-library min-circuit extraction ===
+status:                       OPTIMAL
+targets:                      109
+library factors:              749
+binary decomposition choices: 714
+incumbent min nodes:          635
+best lower bound:             635.0
+optimality gap:               0.000%
+wall seconds:                 0.020
+input min nodes:              639
+output min nodes:             635
+wrote:                        /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c4-b64/c4-b64-cpsat.cpwa
++ /nvme/Sync/cpwa-relu/.venv/bin/python benchmarks/benchmark_register_schedules.py /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c4-b64/c4-b64-cpsat.cpwa --schedules min-live --batches 1 10 100 1000 10000 100000 1000000 --output /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c4-b64/cuda
+SCHEDULE c4-b64-cpsat-min-live: 0.025 s
+COMPILE c4-b64-cpsat-min-live: nodes=853 live_slots=165
+  registers=166 spills=0/0 stack=0
+  batch=      1 10048.000 ns/eval delta=0
+  batch=     10 995.200 ns/eval delta=0
+  batch=    100 91.520 ns/eval delta=0
+  batch=   1000 9.184 ns/eval delta=0
+  batch=  10000 2.883 ns/eval delta=0
+  batch= 100000 2.268 ns/eval delta=0
+  batch=1000000 2.293 ns/eval delta=0
+wrote: /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c4-b64/cuda/summary.csv
+
+===== C4 B96: exact CPWA synthesis =====
++ /nvme/Sync/cpwa-relu/.venv/bin/python benchmarks/build_native_dag_artifact.py --source /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-tdar/c4/artifacts/methane-z-b96.npz --output /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c4-b96/c4-b96-native.cpwa
+artifact:        /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c4-b96/c4-b96-native.cpwa
+pieces:          166
+subsets:         157
+lattice time:    1.4888284660410136
+DAG time:        0.01438572397455573
+nodes:           3855
+affine nodes:    166
+min nodes:       3533
+max nodes:       156
+binary ops:      3689
++ /nvme/Sync/cpwa-relu/.venv/bin/python benchmarks/synthesize_bottom_up.py --artifact /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c4-b96/c4-b96-native.cpwa --check-points 0 --output /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c4-b96/c4-b96-bottom-up.cpwa
+=== bottom-up exact min-circuit synthesis ===
+targets:                  157
+baseline min nodes:       3533
+selected factors:         490
+synthesized min nodes:    989
+min-node reduction:       2544
+reduction percent:        72.007%
+initial target parts:     13491
+final target parts:       656
+predicted min nodes:      989
+maximum pair uses:        141
+synthesis seconds:        7.281
+
+wrote: /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c4-b96/c4-b96-bottom-up.cpwa
++ /nvme/Sync/cpwa-relu/.venv/bin/python benchmarks/optimize_min_circuit_cpsat.py --artifact /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c4-b96/c4-b96-bottom-up.cpwa --intersections 0 --time-limit 60.0 --workers 8 --output /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c4-b96/c4-b96-cpsat.cpwa
+=== CP-SAT exact finite-library min-circuit extraction ===
+status:                       OPTIMAL
+targets:                      157
+library factors:              1155
+binary decomposition choices: 1091
+incumbent min nodes:          986
+best lower bound:             986.0
+optimality gap:               0.000%
+wall seconds:                 0.028
+input min nodes:              989
+output min nodes:             986
+wrote:                        /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c4-b96/c4-b96-cpsat.cpwa
++ /nvme/Sync/cpwa-relu/.venv/bin/python benchmarks/benchmark_register_schedules.py /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c4-b96/c4-b96-cpsat.cpwa --schedules min-live --batches 1 10 100 1000 10000 100000 1000000 --output /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c4-b96/cuda
+SCHEDULE c4-b96-cpsat-min-live: 0.052 s
+COMPILE c4-b96-cpsat-min-live: nodes=1308 live_slots=254
+  registers=255 spills=0/0 stack=0
+  batch=      1 12672.000 ns/eval delta=0
+  batch=     10 1264.000 ns/eval delta=0
+  batch=    100 128.000 ns/eval delta=0
+  batch=   1000 11.424 ns/eval delta=0
+  batch=  10000 3.990 ns/eval delta=0
+  batch= 100000 3.203 ns/eval delta=0
+  batch=1000000 3.214 ns/eval delta=0
+wrote: /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c4-b96/cuda/summary.csv
+
+===== C4 B128: exact CPWA synthesis =====
++ /nvme/Sync/cpwa-relu/.venv/bin/python benchmarks/build_native_dag_artifact.py --source /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-tdar/c4/artifacts/methane-z-b128.npz --output /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c4-b128/c4-b128-native.cpwa
+artifact:        /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c4-b128/c4-b128-native.cpwa
+pieces:          224
+subsets:         249
+lattice time:    5.235798045061529
+DAG time:        0.0376094370149076
+nodes:           6931
+affine nodes:    224
+min nodes:       6459
+max nodes:       248
+binary ops:      6707
++ /nvme/Sync/cpwa-relu/.venv/bin/python benchmarks/synthesize_bottom_up.py --artifact /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c4-b128/c4-b128-native.cpwa --check-points 0 --output /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c4-b128/c4-b128-bottom-up.cpwa
+=== bottom-up exact min-circuit synthesis ===
+targets:                  249
+baseline min nodes:       6459
+selected factors:         831
+synthesized min nodes:    1582
+min-node reduction:       4877
+reduction percent:        75.507%
+initial target parts:     28660
+final target parts:       1000
+predicted min nodes:      1582
+maximum pair uses:        234
+synthesis seconds:        28.086
+
+wrote: /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c4-b128/c4-b128-bottom-up.cpwa
++ /nvme/Sync/cpwa-relu/.venv/bin/python benchmarks/optimize_min_circuit_cpsat.py --artifact /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c4-b128/c4-b128-bottom-up.cpwa --intersections 0 --time-limit 60.0 --workers 8 --output /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c4-b128/c4-b128-cpsat.cpwa
+=== CP-SAT exact finite-library min-circuit extraction ===
+status:                       OPTIMAL
+targets:                      249
+library factors:              1806
+binary decomposition choices: 1743
+incumbent min nodes:          1571
+best lower bound:             1571.0
+optimality gap:               0.000%
+wall seconds:                 0.041
+input min nodes:              1582
+output min nodes:             1571
+wrote:                        /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c4-b128/c4-b128-cpsat.cpwa
++ /nvme/Sync/cpwa-relu/.venv/bin/python benchmarks/benchmark_register_schedules.py /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c4-b128/c4-b128-cpsat.cpwa --schedules min-live --batches 1 10 100 1000 10000 100000 1000000 --output /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c4-b128/cuda
+SCHEDULE c4-b128-cpsat-min-live: 0.104 s
+COMPILE c4-b128-cpsat-min-live: nodes=2043 live_slots=392
+  registers=255 spills=124/124 stack=128
+  batch=      1 15648.000 ns/eval delta=0
+  batch=     10 1568.000 ns/eval delta=0
+  batch=    100 140.480 ns/eval delta=0
+  batch=   1000 15.040 ns/eval delta=0
+  batch=  10000 5.104 ns/eval delta=0
+  batch= 100000 4.207 ns/eval delta=0
+  batch=1000000 4.192 ns/eval delta=0
+wrote: /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c4-b128/cuda/summary.csv
+
+===== C5 B16: exact CPWA synthesis =====
++ /nvme/Sync/cpwa-relu/.venv/bin/python benchmarks/build_native_dag_artifact.py --source /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-tdar/c5/artifacts/methane-z-b16.npz --output /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c5-b16/c5-b16-native.cpwa
+artifact:        /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c5-b16/c5-b16-native.cpwa
+pieces:          26
+subsets:         13
+lattice time:    0.0514462748542428
+DAG time:        0.0003185619134455919
+nodes:           123
+affine nodes:    26
+min nodes:       85
+max nodes:       12
+binary ops:      97
++ /nvme/Sync/cpwa-relu/.venv/bin/python benchmarks/synthesize_bottom_up.py --artifact /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c5-b16/c5-b16-native.cpwa --check-points 0 --output /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c5-b16/c5-b16-bottom-up.cpwa
+=== bottom-up exact min-circuit synthesis ===
+targets:                  13
+baseline min nodes:       85
+selected factors:         21
+synthesized min nodes:    44
+min-node reduction:       41
+reduction percent:        48.235%
+initial target parts:     139
+final target parts:       36
+predicted min nodes:      44
+maximum pair uses:        13
+synthesis seconds:        0.003
+
+wrote: /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c5-b16/c5-b16-bottom-up.cpwa
++ /nvme/Sync/cpwa-relu/.venv/bin/python benchmarks/optimize_min_circuit_cpsat.py --artifact /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c5-b16/c5-b16-bottom-up.cpwa --intersections 0 --time-limit 60.0 --workers 8 --output /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c5-b16/c5-b16-cpsat.cpwa
+=== CP-SAT exact finite-library min-circuit extraction ===
+status:                       OPTIMAL
+targets:                      13
+library factors:              70
+binary decomposition choices: 46
+incumbent min nodes:          44
+best lower bound:             44.0
+optimality gap:               0.000%
+wall seconds:                 0.008
+input min nodes:              44
+output min nodes:             44
+wrote:                        /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c5-b16/c5-b16-cpsat.cpwa
++ /nvme/Sync/cpwa-relu/.venv/bin/python benchmarks/benchmark_register_schedules.py /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c5-b16/c5-b16-cpsat.cpwa --schedules min-live --batches 1 10 100 1000 10000 100000 1000000 --output /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c5-b16/cuda
+SCHEDULE c5-b16-cpsat-min-live: 0.001 s
+COMPILE c5-b16-cpsat-min-live: nodes=82 live_slots=20
+  registers=26 spills=0/0 stack=0
+  batch=      1 4992.000 ns/eval delta=0
+  batch=     10 496.000 ns/eval delta=0
+  batch=    100 50.240 ns/eval delta=0
+  batch=   1000 5.152 ns/eval delta=0
+  batch=  10000 0.675 ns/eval delta=0
+  batch= 100000 0.250 ns/eval delta=0
+  batch=1000000 0.206 ns/eval delta=0
+wrote: /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c5-b16/cuda/summary.csv
+
+===== C5 B24: exact CPWA synthesis =====
++ /nvme/Sync/cpwa-relu/.venv/bin/python benchmarks/build_native_dag_artifact.py --source /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-tdar/c5/artifacts/methane-z-b24.npz --output /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c5-b24/c5-b24-native.cpwa
+artifact:        /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c5-b24/c5-b24-native.cpwa
+pieces:          40
+subsets:         24
+lattice time:    0.07922204909846187
+DAG time:        0.0007206739392131567
+nodes:           284
+affine nodes:    40
+min nodes:       221
+max nodes:       23
+binary ops:      244
++ /nvme/Sync/cpwa-relu/.venv/bin/python benchmarks/synthesize_bottom_up.py --artifact /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c5-b24/c5-b24-native.cpwa --check-points 0 --output /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c5-b24/c5-b24-bottom-up.cpwa
+=== bottom-up exact min-circuit synthesis ===
+targets:                  24
+baseline min nodes:       221
+selected factors:         53
+synthesized min nodes:    103
+min-node reduction:       118
+reduction percent:        53.394%
+initial target parts:     460
+final target parts:       74
+predicted min nodes:      103
+maximum pair uses:        24
+synthesis seconds:        0.019
+
+wrote: /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c5-b24/c5-b24-bottom-up.cpwa
++ /nvme/Sync/cpwa-relu/.venv/bin/python benchmarks/optimize_min_circuit_cpsat.py --artifact /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c5-b24/c5-b24-bottom-up.cpwa --intersections 0 --time-limit 60.0 --workers 8 --output /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c5-b24/c5-b24-cpsat.cpwa
+=== CP-SAT exact finite-library min-circuit extraction ===
+status:                       OPTIMAL
+targets:                      24
+library factors:              143
+binary decomposition choices: 108
+incumbent min nodes:          102
+best lower bound:             102.0
+optimality gap:               0.000%
+wall seconds:                 0.009
+input min nodes:              103
+output min nodes:             102
+wrote:                        /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c5-b24/c5-b24-cpsat.cpwa
++ /nvme/Sync/cpwa-relu/.venv/bin/python benchmarks/benchmark_register_schedules.py /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c5-b24/c5-b24-cpsat.cpwa --schedules min-live --batches 1 10 100 1000 10000 100000 1000000 --output /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c5-b24/cuda
+SCHEDULE c5-b24-cpsat-min-live: 0.002 s
+COMPILE c5-b24-cpsat-min-live: nodes=165 live_slots=39
+  registers=40 spills=0/0 stack=0
+  batch=      1 5216.000 ns/eval delta=0
+  batch=     10 521.600 ns/eval delta=0
+  batch=    100 53.440 ns/eval delta=0
+  batch=   1000 5.728 ns/eval delta=0
+  batch=  10000 0.899 ns/eval delta=0
+  batch= 100000 0.439 ns/eval delta=0
+  batch=1000000 0.394 ns/eval delta=0
+wrote: /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c5-b24/cuda/summary.csv
+
+===== C5 B32: exact CPWA synthesis =====
++ /nvme/Sync/cpwa-relu/.venv/bin/python benchmarks/build_native_dag_artifact.py --source /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-tdar/c5/artifacts/methane-z-b32.npz --output /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c5-b32/c5-b32-native.cpwa
+artifact:        /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c5-b32/c5-b32-native.cpwa
+pieces:          52
+subsets:         37
+lattice time:    0.29406919912435114
+DAG time:        0.0014107180759310722
+nodes:           496
+affine nodes:    52
+min nodes:       408
+max nodes:       36
+binary ops:      444
++ /nvme/Sync/cpwa-relu/.venv/bin/python benchmarks/synthesize_bottom_up.py --artifact /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c5-b32/c5-b32-native.cpwa --check-points 0 --output /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c5-b32/c5-b32-bottom-up.cpwa
+=== bottom-up exact min-circuit synthesis ===
+targets:                  37
+baseline min nodes:       408
+selected factors:         89
+synthesized min nodes:    176
+min-node reduction:       232
+reduction percent:        56.863%
+initial target parts:     1044
+final target parts:       124
+predicted min nodes:      176
+maximum pair uses:        37
+synthesis seconds:        0.089
+
+wrote: /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c5-b32/c5-b32-bottom-up.cpwa
++ /nvme/Sync/cpwa-relu/.venv/bin/python benchmarks/optimize_min_circuit_cpsat.py --artifact /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c5-b32/c5-b32-bottom-up.cpwa --intersections 0 --time-limit 60.0 --workers 8 --output /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c5-b32/c5-b32-cpsat.cpwa
+=== CP-SAT exact finite-library min-circuit extraction ===
+status:                       OPTIMAL
+targets:                      37
+library factors:              228
+binary decomposition choices: 192
+incumbent min nodes:          176
+best lower bound:             176.0
+optimality gap:               0.000%
+wall seconds:                 0.011
+input min nodes:              176
+output min nodes:             176
+wrote:                        /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c5-b32/c5-b32-cpsat.cpwa
++ /nvme/Sync/cpwa-relu/.venv/bin/python benchmarks/benchmark_register_schedules.py /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c5-b32/c5-b32-cpsat.cpwa --schedules min-live --batches 1 10 100 1000 10000 100000 1000000 --output /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c5-b32/cuda
+SCHEDULE c5-b32-cpsat-min-live: 0.005 s
+COMPILE c5-b32-cpsat-min-live: nodes=264 live_slots=59
+  registers=62 spills=0/0 stack=0
+  batch=      1 5568.000 ns/eval delta=0
+  batch=     10 553.600 ns/eval delta=0
+  batch=    100 59.840 ns/eval delta=0
+  batch=   1000 6.208 ns/eval delta=0
+  batch=  10000 1.203 ns/eval delta=0
+  batch= 100000 0.644 ns/eval delta=0
+  batch=1000000 0.600 ns/eval delta=0
+wrote: /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c5-b32/cuda/summary.csv
+
+===== C5 B48: exact CPWA synthesis =====
++ /nvme/Sync/cpwa-relu/.venv/bin/python benchmarks/build_native_dag_artifact.py --source /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-tdar/c5/artifacts/methane-z-b48.npz --output /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c5-b48/c5-b48-native.cpwa
+artifact:        /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c5-b48/c5-b48-native.cpwa
+pieces:          81
+subsets:         78
+lattice time:    0.43727871612645686
+DAG time:        0.0037674519699066877
+nodes:           1228
+affine nodes:    81
+min nodes:       1070
+max nodes:       77
+binary ops:      1147
++ /nvme/Sync/cpwa-relu/.venv/bin/python benchmarks/synthesize_bottom_up.py --artifact /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c5-b48/c5-b48-native.cpwa --check-points 0 --output /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c5-b48/c5-b48-bottom-up.cpwa
+=== bottom-up exact min-circuit synthesis ===
+targets:                  78
+baseline min nodes:       1070
+selected factors:         191
+synthesized min nodes:    404
+min-node reduction:       666
+reduction percent:        62.243%
+initial target parts:     3159
+final target parts:       291
+predicted min nodes:      404
+maximum pair uses:        69
+synthesis seconds:        0.450
+
+wrote: /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c5-b48/c5-b48-bottom-up.cpwa
++ /nvme/Sync/cpwa-relu/.venv/bin/python benchmarks/optimize_min_circuit_cpsat.py --artifact /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c5-b48/c5-b48-bottom-up.cpwa --intersections 0 --time-limit 60.0 --workers 8 --output /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c5-b48/c5-b48-cpsat.cpwa
+=== CP-SAT exact finite-library min-circuit extraction ===
+status:                       OPTIMAL
+targets:                      78
+library factors:              485
+binary decomposition choices: 447
+incumbent min nodes:          401
+best lower bound:             401.0
+optimality gap:               0.000%
+wall seconds:                 0.015
+input min nodes:              404
+output min nodes:             401
+wrote:                        /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c5-b48/c5-b48-cpsat.cpwa
++ /nvme/Sync/cpwa-relu/.venv/bin/python benchmarks/benchmark_register_schedules.py /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c5-b48/c5-b48-cpsat.cpwa --schedules min-live --batches 1 10 100 1000 10000 100000 1000000 --output /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c5-b48/cuda
+SCHEDULE c5-b48-cpsat-min-live: 0.014 s
+COMPILE c5-b48-cpsat-min-live: nodes=559 live_slots=120
+  registers=126 spills=0/0 stack=0
+  batch=      1 6464.000 ns/eval delta=0
+  batch=     10 665.600 ns/eval delta=0
+  batch=    100 65.600 ns/eval delta=0
+  batch=   1000 7.584 ns/eval delta=0
+  batch=  10000 1.830 ns/eval delta=0
+  batch= 100000 1.362 ns/eval delta=0
+  batch=1000000 1.315 ns/eval delta=0
+wrote: /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c5-b48/cuda/summary.csv
+
+===== C5 B64: exact CPWA synthesis =====
++ /nvme/Sync/cpwa-relu/.venv/bin/python benchmarks/build_native_dag_artifact.py --source /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-tdar/c5/artifacts/methane-z-b64.npz --output /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c5-b64/c5-b64-native.cpwa
+artifact:        /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c5-b64/c5-b64-native.cpwa
+pieces:          110
+subsets:         107
+lattice time:    0.5975846229121089
+DAG time:        0.007372520864009857
+nodes:           2066
+affine nodes:    110
+min nodes:       1850
+max nodes:       106
+binary ops:      1956
++ /nvme/Sync/cpwa-relu/.venv/bin/python benchmarks/synthesize_bottom_up.py --artifact /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c5-b64/c5-b64-native.cpwa --check-points 0 --output /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c5-b64/c5-b64-bottom-up.cpwa
+=== bottom-up exact min-circuit synthesis ===
+targets:                  107
+baseline min nodes:       1850
+selected factors:         310
+synthesized min nodes:    652
+min-node reduction:       1198
+reduction percent:        64.757%
+initial target parts:     6297
+final target parts:       449
+predicted min nodes:      652
+maximum pair uses:        91
+synthesis seconds:        1.880
+
+wrote: /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c5-b64/c5-b64-bottom-up.cpwa
++ /nvme/Sync/cpwa-relu/.venv/bin/python benchmarks/optimize_min_circuit_cpsat.py --artifact /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c5-b64/c5-b64-bottom-up.cpwa --intersections 0 --time-limit 60.0 --workers 8 --output /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c5-b64/c5-b64-cpsat.cpwa
+=== CP-SAT exact finite-library min-circuit extraction ===
+status:                       OPTIMAL
+targets:                      107
+library factors:              762
+binary decomposition choices: 723
+incumbent min nodes:          648
+best lower bound:             648.0
+optimality gap:               0.000%
+wall seconds:                 0.021
+input min nodes:              652
+output min nodes:             648
+wrote:                        /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c5-b64/c5-b64-cpsat.cpwa
++ /nvme/Sync/cpwa-relu/.venv/bin/python benchmarks/benchmark_register_schedules.py /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c5-b64/c5-b64-cpsat.cpwa --schedules min-live --batches 1 10 100 1000 10000 100000 1000000 --output /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c5-b64/cuda
+SCHEDULE c5-b64-cpsat-min-live: 0.027 s
+COMPILE c5-b64-cpsat-min-live: nodes=864 live_slots=173
+  registers=165 spills=0/0 stack=0
+  batch=      1 10272.000 ns/eval delta=0
+  batch=     10 1008.000 ns/eval delta=0
+  batch=    100 94.400 ns/eval delta=0
+  batch=   1000 9.216 ns/eval delta=0
+  batch=  10000 2.928 ns/eval delta=0
+  batch= 100000 2.311 ns/eval delta=0
+  batch=1000000 2.327 ns/eval delta=0
+wrote: /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c5-b64/cuda/summary.csv
+
+===== C5 B96: exact CPWA synthesis =====
++ /nvme/Sync/cpwa-relu/.venv/bin/python benchmarks/build_native_dag_artifact.py --source /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-tdar/c5/artifacts/methane-z-b96.npz --output /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c5-b96/c5-b96-native.cpwa
+artifact:        /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c5-b96/c5-b96-native.cpwa
+pieces:          165
+subsets:         166
+lattice time:    1.9613820610102266
+DAG time:        0.015432585030794144
+nodes:           3959
+affine nodes:    165
+min nodes:       3629
+max nodes:       165
+binary ops:      3794
++ /nvme/Sync/cpwa-relu/.venv/bin/python benchmarks/synthesize_bottom_up.py --artifact /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c5-b96/c5-b96-native.cpwa --check-points 0 --output /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c5-b96/c5-b96-bottom-up.cpwa
+=== bottom-up exact min-circuit synthesis ===
+targets:                  166
+baseline min nodes:       3629
+selected factors:         544
+synthesized min nodes:    1066
+min-node reduction:       2563
+reduction percent:        70.626%
+initial target parts:     14360
+final target parts:       688
+predicted min nodes:      1066
+maximum pair uses:        154
+synthesis seconds:        8.017
+
+wrote: /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c5-b96/c5-b96-bottom-up.cpwa
++ /nvme/Sync/cpwa-relu/.venv/bin/python benchmarks/optimize_min_circuit_cpsat.py --artifact /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c5-b96/c5-b96-bottom-up.cpwa --intersections 0 --time-limit 60.0 --workers 8 --output /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c5-b96/c5-b96-cpsat.cpwa
+=== CP-SAT exact finite-library min-circuit extraction ===
+status:                       OPTIMAL
+targets:                      166
+library factors:              1231
+binary decomposition choices: 1176
+incumbent min nodes:          1060
+best lower bound:             1060.0
+optimality gap:               0.000%
+wall seconds:                 0.030
+input min nodes:              1066
+output min nodes:             1060
+wrote:                        /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c5-b96/c5-b96-cpsat.cpwa
++ /nvme/Sync/cpwa-relu/.venv/bin/python benchmarks/benchmark_register_schedules.py /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c5-b96/c5-b96-cpsat.cpwa --schedules min-live --batches 1 10 100 1000 10000 100000 1000000 --output /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c5-b96/cuda
+SCHEDULE c5-b96-cpsat-min-live: 0.062 s
+COMPILE c5-b96-cpsat-min-live: nodes=1390 live_slots=319
+  registers=255 spills=156/156 stack=160
+  batch=      1 14208.000 ns/eval delta=0
+  batch=     10 1440.000 ns/eval delta=0
+  batch=    100 134.080 ns/eval delta=0
+  batch=   1000 13.376 ns/eval delta=0
+  batch=  10000 4.890 ns/eval delta=0
+  batch= 100000 4.078 ns/eval delta=0
+  batch=1000000 4.076 ns/eval delta=0
+wrote: /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c5-b96/cuda/summary.csv
+
+===== C5 B128: exact CPWA synthesis =====
++ /nvme/Sync/cpwa-relu/.venv/bin/python benchmarks/build_native_dag_artifact.py --source /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-tdar/c5/artifacts/methane-z-b128.npz --output /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c5-b128/c5-b128-native.cpwa
+artifact:        /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c5-b128/c5-b128-native.cpwa
+pieces:          225
+subsets:         272
+lattice time:    5.776778997853398
+DAG time:        0.03310520388185978
+nodes:           7175
+affine nodes:    225
+min nodes:       6679
+max nodes:       271
+binary ops:      6950
++ /nvme/Sync/cpwa-relu/.venv/bin/python benchmarks/synthesize_bottom_up.py --artifact /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c5-b128/c5-b128-native.cpwa --check-points 0 --output /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c5-b128/c5-b128-bottom-up.cpwa
+=== bottom-up exact min-circuit synthesis ===
+targets:                  272
+baseline min nodes:       6679
+selected factors:         879
+synthesized min nodes:    1707
+min-node reduction:       4972
+reduction percent:        74.442%
+initial target parts:     32503
+final target parts:       1100
+predicted min nodes:      1707
+maximum pair uses:        261
+synthesis seconds:        33.682
+
+wrote: /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c5-b128/c5-b128-bottom-up.cpwa
++ /nvme/Sync/cpwa-relu/.venv/bin/python benchmarks/optimize_min_circuit_cpsat.py --artifact /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c5-b128/c5-b128-bottom-up.cpwa --intersections 0 --time-limit 60.0 --workers 8 --output /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c5-b128/c5-b128-cpsat.cpwa
+=== CP-SAT exact finite-library min-circuit extraction ===
+status:                       OPTIMAL
+targets:                      272
+library factors:              1932
+binary decomposition choices: 1915
+incumbent min nodes:          1697
+best lower bound:             1697.0
+optimality gap:               0.000%
+wall seconds:                 0.045
+input min nodes:              1707
+output min nodes:             1697
+wrote:                        /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c5-b128/c5-b128-cpsat.cpwa
++ /nvme/Sync/cpwa-relu/.venv/bin/python benchmarks/benchmark_register_schedules.py /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c5-b128/c5-b128-cpsat.cpwa --schedules min-live --batches 1 10 100 1000 10000 100000 1000000 --output /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c5-b128/cuda
+SCHEDULE c5-b128-cpsat-min-live: 0.111 s
+COMPILE c5-b128-cpsat-min-live: nodes=2193 live_slots=500
+  registers=255 spills=724/724 stack=728
+  batch=      1 36607.999 ns/eval delta=0
+  batch=     10 3670.400 ns/eval delta=0
+  batch=    100 334.080 ns/eval delta=0
+  batch=   1000 33.728 ns/eval delta=0
+  batch=  10000 15.856 ns/eval delta=0
+  batch= 100000 14.926 ns/eval delta=0
+  batch=1000000 13.697 ns/eval delta=0
+wrote: /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/c5-b128/cuda/summary.csv
+
+wrote: /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/summary.csv
+wrote: /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/summary.json
+wrote: /nvme/Sync/ThermoGPU/benchmarks/results-distinct-mixture-hardware-sweep/metadata.json
+rows:  245
