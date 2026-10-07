@@ -1,0 +1,9 @@
+timestamp_utc=2026-10-07T03:04:50Z
+git_commit=180bbcb0eb70747037013dc3ea44032e10185f74
+git_describe=v1.1.0-dirty
+hostname=dell7710
+kernel=Linux 7.0.0-34-generic x86_64 GNU/Linux
+cpu=Intel(R) Core(TM) i7-6920HQ CPU @ 2.90GHz
+openmp_max_threads=auto
+
+Quadro M3000M, 580.178.04, 4096 MiB
