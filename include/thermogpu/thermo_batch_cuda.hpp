@@ -39,6 +39,13 @@ struct CUDADeviceOutput {
     int error;
 };
 
+// Diagnostic compact result. Invalid entries contain NaN for Z and rho.
+struct CUDACompactOutput {
+    double Z;
+    double rho;
+    int error;
+};
+
 // Owns persistent CUDA buffers. Not thread-safe; operations are synchronous.
 // upload() invalidates the previous result; evaluate() must precede download().
 class CUDAThermoWorkspace {
@@ -64,7 +71,74 @@ public:
                          CUDADeviceOutput* device_outputs,
                          std::size_t count,
                          cudaStream_t stream = nullptr) const;
+    // Diagnostic: wall-clock breakdown of the synchronous workspace path.
+    // Times include synchronization and host work; kernel_ms is CUDA-event
+    // device elapsed time. Not safe for concurrent use of this workspace.
+    struct Profile {
+        double pack_ms = 0.0;
+        double h2d_ms = 0.0;
+        double kernel_wall_ms = 0.0;
+        double kernel_event_ms = 0.0;
+        double d2h_ms = 0.0;
+        double conversion_ms = 0.0;
+        double result_init_ms = 0.0;
+        double error_translation_ms = 0.0;
+        double numeric_phase_ms = 0.0;
+        BatchResult result;
+    };
+    [[nodiscard]] Profile profile(const BatchInput& input);
+
+    // Diagnostic only: requires a completed evaluate().
+    // Measures transfers of the same EOS results in two layouts.
+    struct CompactProfile {
+        std::size_t count = 0;
+        std::size_t full_record_bytes = 0;
+        std::size_t compact_record_bytes = 0;
+        double full_d2h_ms = 0.0;
+        double pack_kernel_ms = 0.0;
+        double compact_d2h_ms = 0.0;
+        double full_extract_ms = 0.0;
+        double compact_extract_ms = 0.0;
+        std::size_t mismatches = 0;
+        double checksum = 0.0;
+    };
+
+    [[nodiscard]] CompactProfile profile_compact() const;
+    struct FusedProfile {
+        std::size_t count = 0;
+        std::size_t mismatches = 0;
+        double reference_kernel_ms = 0.0;
+        double packing_kernel_ms = 0.0;
+        double fused_kernel_ms = 0.0;
+        double checksum = 0.0;
+    };
+
+    // Diagnostic: compares two fully GPU-resident evaluation paths.
+    // Requires upload(); evaluates both paths using the same input.
+    [[nodiscard]] FusedProfile profile_fused(
+        bool fused_first = false) const;
+
+    // Diagnostic only: compare specialized computation with
+    // compact and full-sized output storage.
+    struct StorageProfile {
+        std::size_t count = 0;
+        std::size_t mismatches = 0;
+        std::size_t full_record_bytes = 0;
+        std::size_t compact_record_bytes = 0;
+        double full_ms = 0.0;
+        double padded_ms = 0.0;
+        double compact_ms = 0.0;
+        double checksum = 0.0;
+    };
+
+    [[nodiscard]] StorageProfile profile_storage(
+        bool compact_first = false) const;
+
     [[nodiscard]] BatchResult download() const;
+
+    // Download into caller-owned storage, reusing vector capacity.
+    // Preserves NaN, phase, error, and message semantics.
+    void download_into(BatchResult& result) const;
     [[nodiscard]] std::size_t capacity() const noexcept;
     [[nodiscard]] std::size_t size() const noexcept;
 private:

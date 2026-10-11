@@ -1,0 +1,28 @@
+
+Fatbin ptx code:
+================
+arch = sm_89
+code version = [9,0]
+host = linux
+compile_size = 64bit
+compressed
+ptxasOptions = 
+
+Fatbin elf code:
+================
+arch = sm_89
+code version = [1,8]
+host = linux
+compile_size = 64bit
+
+Resource usage:
+ Common:
+  GLOBAL:272 CONSTANT[4]:16
+ Function _ZN9thermogpu6thermo53_GLOBAL__N__e5e11f56_20_thermo_batch_cuda_cu_bbf2e41222evaluate_padded_kernelEN11thermomodel6detail27PRPolynomialStateParametersENS3_14PRTPRootPolicyEddddPKNS0_15CUDADeviceInputEPNS0_16CUDADeviceOutputEm:
+  REG:60 STACK:128 SHARED:0 LOCAL:0 CONSTANT[2]:408 CONSTANT[0]:520 TEXTURE:0 SURFACE:0 SAMPLER:0
+ Function _ZN9thermogpu6thermo53_GLOBAL__N__e5e11f56_20_thermo_batch_cuda_cu_bbf2e41223evaluate_compact_kernelEN11thermomodel6detail27PRPolynomialStateParametersENS3_14PRTPRootPolicyEddddPKNS0_15CUDADeviceInputEPNS0_17CUDACompactOutputEm:
+  REG:60 STACK:128 SHARED:0 LOCAL:0 CONSTANT[2]:408 CONSTANT[0]:520 TEXTURE:0 SURFACE:0 SAMPLER:0
+ Function _ZN9thermogpu6thermo53_GLOBAL__N__e5e11f56_20_thermo_batch_cuda_cu_bbf2e41221compact_output_kernelEPKNS0_16CUDADeviceOutputEPNS0_17CUDACompactOutputEm:
+  REG:16 STACK:0 SHARED:0 LOCAL:0 CONSTANT[0]:376 TEXTURE:0 SURFACE:0 SAMPLER:0
+ Function _ZN9thermogpu6thermo53_GLOBAL__N__e5e11f56_20_thermo_batch_cuda_cu_bbf2e41215evaluate_kernelEN11thermomodel6detail27PRPolynomialStateParametersENS3_14PRTPRootPolicyEddddPKNS0_15CUDADeviceInputEPNS0_16CUDADeviceOutputEm:
+  REG:72 STACK:128 SHARED:0 LOCAL:0 CONSTANT[2]:424 CONSTANT[0]:520 TEXTURE:0 SURFACE:0 SAMPLER:0
