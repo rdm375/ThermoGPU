@@ -6,6 +6,20 @@ option(THERMOGPU_PTXAS_VERBOSE "Report CUDA ptxas resource usage during compilat
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
+# ThermoModel v2.0 thermodynamic foundation.
+# The existing ThermoGPU implementation remains available for comparison.
+add_library(thermomodel STATIC
+  src/thermomodel/ideal_gas.cpp
+  src/thermomodel/caloric.cpp
+  src/thermomodel/variable_cp_ideal_gas.cpp
+  src/thermomodel/flash.cpp
+  src/thermomodel/peng_robinson.cpp
+)
+add_library(thermomodel::thermomodel ALIAS thermomodel)
+target_include_directories(thermomodel PUBLIC include)
+target_compile_features(thermomodel PUBLIC cxx_std_20)
+target_compile_options(thermomodel PRIVATE -Wall -Wextra -Wpedantic)
+
 add_library(thermogpu_scalar
   src/cpu/pr_scalar.cpp
   src/cpu/pr_batch_scalar.cpp
