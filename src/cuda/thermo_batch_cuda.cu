@@ -60,15 +60,8 @@ private:
     T* data_ = nullptr;
 };
 
-struct DeviceInput {
-    double T;
-    double p;
-};
-
-struct DeviceOutput {
-    detail::PRTPResult result;
-    int error;
-};
+using DeviceInput = CUDADeviceInput;
+using DeviceOutput = CUDADeviceOutput;
 
 enum DeviceError : int {
     Success = 0,
@@ -308,6 +301,28 @@ CUDAThermoWorkspace::CUDAThermoWorkspace(
 CUDAThermoWorkspace::~CUDAThermoWorkspace() = default;
 CUDAThermoWorkspace::CUDAThermoWorkspace(CUDAThermoWorkspace&&) noexcept = default;
 CUDAThermoWorkspace& CUDAThermoWorkspace::operator=(CUDAThermoWorkspace&&) noexcept = default;
+
+void CUDAThermoWorkspace::evaluate_device(
+    const CUDADeviceInput* inputs,
+    CUDADeviceOutput* outputs,
+    std::size_t count,
+    cudaStream_t stream) const
+{
+    if (!impl_) throw std::logic_error("moved-from CUDA workspace");
+    if (count > impl_->capacity)
+        throw std::length_error("CUDA thermodynamic workspace capacity exceeded");
+    if (count == 0) return;
+    if (!inputs || !outputs)
+        throw std::invalid_argument("null CUDA thermodynamic device pointer");
+    constexpr unsigned int threads = 128;
+    const auto blocks = static_cast<unsigned int>(
+        count / threads + (count % threads != 0));
+    evaluate_kernel<<<blocks, threads, 0, stream>>>(
+        impl_->parameters, impl_->policy,
+        impl_->pr.Tmin, impl_->pr.Tmax, impl_->pr.pmin, impl_->pr.pmax,
+        inputs, outputs, count);
+    cuda_check(cudaGetLastError(), "CUDA thermodynamic device kernel launch");
+}
 
 std::size_t CUDAThermoWorkspace::capacity() const noexcept {
     return impl_ ? impl_->capacity : 0;

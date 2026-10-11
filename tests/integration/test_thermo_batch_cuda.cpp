@@ -212,6 +212,82 @@ void print_statistics(const Statistics& statistics)
 
 } // namespace
 
+// Validate caller-owned device buffers and a non-default CUDA stream.
+void test_device_resident(const thermogpu::thermo::CUDAPRParameters& parameters)
+{
+    using thermogpu::thermo::CUDADeviceInput;
+    using thermogpu::thermo::CUDADeviceOutput;
+    using thermogpu::thermo::CUDAThermoWorkspace;
+    constexpr std::size_t n = 4;
+    const std::array<CUDADeviceInput, n> inputs{{
+        {300.0, 5.0e6}, {320.0, 8.0e6},
+        {-1.0, 5.0e6}, {300.0, 2.0e8}
+    }};
+    CUDADeviceInput* d_inputs = nullptr;
+    CUDADeviceOutput* d_outputs = nullptr;
+    cudaStream_t stream = nullptr;
+    auto check = [](cudaError_t e) {
+        if (e != cudaSuccess) throw std::runtime_error(cudaGetErrorString(e));
+    };
+    try {
+        check(cudaStreamCreateWithFlags(&stream, cudaStreamNonBlocking));
+        check(cudaMalloc(reinterpret_cast<void**>(&d_inputs), n * sizeof(*d_inputs)));
+        check(cudaMalloc(reinterpret_cast<void**>(&d_outputs), n * sizeof(*d_outputs)));
+        check(cudaMemcpyAsync(d_inputs, inputs.data(), n * sizeof(*d_inputs),
+                              cudaMemcpyHostToDevice, stream));
+        CUDAThermoWorkspace workspace(parameters, n);
+        workspace.evaluate_device(d_inputs, d_outputs, n, stream);
+        std::array<CUDADeviceOutput, n> outputs{};
+        check(cudaMemcpyAsync(outputs.data(), d_outputs, n * sizeof(*d_outputs),
+                              cudaMemcpyDeviceToHost, stream));
+        check(cudaStreamSynchronize(stream));
+
+        BatchInput reference_input;
+        for (const auto& input : inputs) {
+            reference_input.temperature_K.push_back(input.T);
+            reference_input.pressure_Pa.push_back(input.p);
+        }
+        const auto reference = thermogpu::thermo::evaluate_batch_cuda(
+            parameters, reference_input);
+        for (std::size_t i = 0; i < n; ++i) {
+            require((outputs[i].error == 0) == reference.success(i),
+                    "device-resident error mismatch");
+            if (!reference.success(i)) continue;
+            const auto& state = outputs[i].result.state;
+            const double expected[] = {
+                reference.Z[i], reference.rho[i], reference.h[i], reference.s[i],
+                reference.u[i], reference.cp[i], reference.cv[i],
+                reference.sound_speed[i]
+            };
+            const double actual[] = {
+                state.Z, state.rho, state.h, state.s, state.u,
+                state.cp, state.cv, state.sound_speed
+            };
+            for (std::size_t j = 0; j < 8; ++j)
+                require(scaled_error(expected[j], actual[j]) <= 1e-12,
+                        "device-resident property mismatch");
+        }
+        bool rejected = false;
+        try { workspace.evaluate_device(d_inputs, d_outputs, n + 1, stream); }
+        catch (const std::length_error&) { rejected = true; }
+        require(rejected, "device-resident capacity overflow accepted");
+        workspace.evaluate_device(nullptr, nullptr, 0, stream);
+        rejected = false;
+        try { workspace.evaluate_device(nullptr, d_outputs, 1, stream); }
+        catch (const std::invalid_argument&) { rejected = true; }
+        require(rejected, "device-resident null input accepted");
+    } catch (...) {
+        if (stream) cudaStreamSynchronize(stream);
+        if (d_outputs) cudaFree(d_outputs);
+        if (d_inputs) cudaFree(d_inputs);
+        if (stream) cudaStreamDestroy(stream);
+        throw;
+    }
+    if (d_outputs) check(cudaFree(d_outputs));
+    if (d_inputs) check(cudaFree(d_inputs));
+    if (stream) check(cudaStreamDestroy(stream));
+}
+
 int main()
 {
     try {
@@ -310,6 +386,8 @@ int main()
         try { workspace.upload(too_large); }
         catch (const std::length_error&) { rejected_capacity = true; }
         require(rejected_capacity, "workspace capacity overflow accepted");
+
+        test_device_resident(parameters);
 
         print_statistics(statistics);
 
