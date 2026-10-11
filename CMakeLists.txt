@@ -274,3 +274,45 @@ add_test(
     NAME thermogpu_v2_thermo_api
     COMMAND test_thermo_api
 )
+
+# ============================================================
+# ThermoGPU v2 thermodynamic batch evaluation
+# ============================================================
+
+add_library(thermogpu_thermo_batch STATIC
+    src/thermo_batch.cpp
+)
+
+target_link_libraries(thermogpu_thermo_batch PUBLIC
+    thermogpu::thermo
+)
+
+target_include_directories(thermogpu_thermo_batch PUBLIC
+    ${CMAKE_CURRENT_SOURCE_DIR}/include
+)
+
+target_compile_features(thermogpu_thermo_batch PUBLIC
+    cxx_std_20
+)
+
+add_library(
+    thermogpu::thermo_batch
+    ALIAS thermogpu_thermo_batch
+)
+
+add_executable(test_thermo_batch
+    tests/integration/test_thermo_batch.cpp
+)
+
+target_link_libraries(test_thermo_batch PRIVATE
+    thermogpu::thermo_batch
+)
+
+target_compile_options(test_thermo_batch PRIVATE
+    -UNDEBUG
+)
+
+add_test(
+    NAME thermogpu_v2_thermo_batch
+    COMMAND test_thermo_batch
+)
