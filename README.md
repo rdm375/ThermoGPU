@@ -9,14 +9,193 @@ V1.0 targets single-phase, multicomponent Peng–Robinson (PR) calculations and 
 
 The final report consolidates the numerical validation, CPU/GPU differential testing, performance characterization, cross-machine reproduction, profiling results, limitations, and engineering conclusions from the V1.0 study.
 
-## V2.0 development
+## ThermoGPU 2.0: Installation and integration
 
-**ThermoGPU V2.0 is under active development on
-`feature/v2.0-thermomodel-integration`.** V1.0 remains the completed,
-tagged baseline.
+ThermoGPU 2.0 extends the original multicomponent Peng–Robinson
+implementation with a reusable thermodynamic model API, scalar and
+OpenMP batch evaluation, and CUDA thermodynamic batch evaluation.
 
-V2.0 extends the original Peng–Robinson EOS study toward a reusable
-thermodynamic evaluation library with CPU and GPU execution.
+The extended API provides compressibility factor, density, enthalpy,
+entropy, internal energy, heat capacities, speed of sound, and
+phase/error metadata.
+
+### Requirements
+
+- CMake 3.20 or newer.
+- A C++20 compiler.
+- OpenMP when enabled.
+- NVIDIA CUDA Toolkit when CUDA is enabled.
+
+CUDA architecture and host compiler must be compatible with the
+installed toolkit.
+
+The CUDA 12.4 / GCC 13 / `sm_52` configuration has been validated
+on the NVIDIA Quadro M3000M.
+
+### CPU-only installation
+
+```bash
+cmake -S . -B build-cpu \
+    -DCMAKE_BUILD_TYPE=Release \
+    -DTHERMOGPU_ENABLE_OPENMP=OFF \
+    -DTHERMOGPU_ENABLE_CUDA=OFF \
+    -DCMAKE_INSTALL_PREFIX="$PWD/install-cpu"
+
+cmake --build build-cpu -j4
+ctest --test-dir build-cpu --output-on-failure
+cmake --install build-cpu
+```
+
+### OpenMP installation
+
+```bash
+cmake -S . -B build-openmp \
+    -DCMAKE_BUILD_TYPE=Release \
+    -DTHERMOGPU_ENABLE_OPENMP=ON \
+    -DTHERMOGPU_ENABLE_CUDA=OFF \
+    -DCMAKE_INSTALL_PREFIX="$PWD/install-openmp"
+
+cmake --build build-openmp -j4
+ctest --test-dir build-openmp --output-on-failure
+cmake --install build-openmp
+```
+
+### CUDA installation
+
+Example for CUDA 12.4, GCC 13, and compute capability 5.2:
+
+```bash
+cmake -S . -B build-cuda \
+    -DCMAKE_BUILD_TYPE=Release \
+    -DCMAKE_CXX_COMPILER=/usr/bin/g++-13 \
+    -DCMAKE_CUDA_HOST_COMPILER=/usr/bin/g++-13 \
+    -DCMAKE_CUDA_ARCHITECTURES=52 \
+    -DTHERMOGPU_ENABLE_OPENMP=ON \
+    -DTHERMOGPU_ENABLE_CUDA=ON \
+    -DCMAKE_INSTALL_PREFIX="$PWD/install-cuda"
+
+cmake --build build-cuda -j4
+ctest --test-dir build-cuda --output-on-failure
+cmake --install build-cuda
+```
+
+### Using the installed CMake package
+
+In an external CMake project:
+
+```cmake
+cmake_minimum_required(VERSION 3.20)
+project(MyApplication LANGUAGES CXX)
+
+find_package(ThermoGPU 2.0 REQUIRED CONFIG)
+
+add_executable(my_application main.cpp)
+
+target_link_libraries(my_application PRIVATE
+    thermogpu::thermo_batch
+)
+```
+
+Configure with the installation prefix:
+
+```bash
+cmake -S . -B build \
+    -DCMAKE_PREFIX_PATH=/path/to/ThermoGPU/install-cpu
+
+cmake --build build
+```
+
+The exported CMake targets are:
+
+| Target | Purpose |
+|---|---|
+| `thermomodel::thermomodel` | Thermodynamic model implementation |
+| `thermogpu::thermo` | Unified thermodynamic model interface |
+| `thermogpu::thermo_batch` | Scalar and optional OpenMP batch evaluation |
+| `thermogpu::thermo_cuda` | CUDA thermodynamic batch evaluation |
+| `thermogpu::scalar` | Original Peng–Robinson CPU implementation |
+| `thermogpu::cuda` | Original Peng–Robinson CUDA implementation |
+
+CUDA targets are available only in CUDA-enabled installations.
+
+### Minimal thermodynamic example
+
+```cpp
+#include <thermogpu/thermo.hpp>
+#include <thermogpu/thermo_batch.hpp>
+#include <thermomodel/caloric.hpp>
+
+#include <iostream>
+#include <memory>
+
+int main()
+{
+    namespace thermo = thermogpu::thermo;
+
+    auto caloric =
+        std::make_shared<thermomodel::ConstantCp>(2200.0);
+
+    thermo::PengRobinson model(caloric);
+
+    thermo::BatchInput input{
+        {300.0, 320.0},
+        {5.0e6, 8.0e6}
+    };
+
+    const auto result =
+        thermo::evaluate_batch_scalar(model, input);
+
+    for (std::size_t i = 0; i < result.size(); ++i) {
+        if (!result.success(i))
+            return 1;
+
+        std::cout << result.Z[i]
+                  << " "
+                  << result.rho[i]
+                  << '\n';
+    }
+
+    return 0;
+}
+```
+
+For OpenMP-enabled builds, `evaluate_batch_openmp()` provides
+parallel CPU evaluation.
+
+For CUDA-enabled builds, include
+`thermogpu/thermo_batch_cuda.hpp` and link
+`thermogpu::thermo_cuda`.
+
+The CUDA interface supports reusable workspaces and GPU-resident
+execution.
+
+### Release validation
+
+ThermoGPU 2.0 packaging qualification passed:
+
+| Configuration | Regression tests |
+|---|---:|
+| CPU-only | 12/12 |
+| CPU + OpenMP | 14/14 |
+| CPU + OpenMP + CUDA | 24/24 |
+
+All three installations passed independent functional Peng–Robinson
+consumer tests after relocation to a different installation prefix.
+
+These tests establish package usability and numerical consistency
+for the tested configurations. They are not universal performance
+or hardware-compatibility guarantees.
+
+---
+
+## ThermoGPU 2.0 implementation
+
+ThermoGPU 2.0 integrates the ThermoModel thermodynamic foundation
+with scalar CPU, OpenMP, and CUDA execution. Implementation and
+installation qualification are complete, and release preparation
+is underway.
+
+ThermoGPU 1.0 remains the completed, tagged baseline.
 
 ### ThermoModel integration
 
@@ -94,9 +273,9 @@ The detailed methodology, measurements, Nsight Compute evidence,
 and limitations are documented in
 [`docs/G4.5c.2c.9-closeout.md`](docs/G4.5c.2c.9-closeout.md).
 
-### Next milestone: G4.6
+### G4.6: Integrated execution performance
 
-G4.6 will investigate integrated performance across scalar CPU,
+G4.6 investigates integrated performance across scalar CPU,
 OpenMP, and CUDA backends, including batch-size scaling,
 host/device transfer costs, and the benefits of GPU-resident
 execution.
@@ -107,7 +286,7 @@ isolated kernel timings.
 
 ## Current status
 
-**ThermoGPU V1.0 is complete and tagged `v1.0.0`. V2.0 development is ongoing; G4.5c.2c.9 is complete and G4.6 is next.**
+**ThermoGPU V1.0 is complete and tagged `v1.0.0`. V2.0 implementation and packaging qualification are complete; release preparation is underway.**
 
 V1.0 implements and validates the scalar C++, OpenMP, and CUDA backends, completes CPU/GPU differential validation and performance characterization, and reproduces the numerical implementation on a second, substantially different CPU/GPU platform. The frozen M7 implementation remains tagged `v0.7.0`; the subsequent cross-machine evidence and V1 release integration are included in `v1.0.0`.
 
@@ -332,6 +511,8 @@ The two characterized environments intentionally differ. The cross-machine exper
 Analysis and external-validation tools use a separate Python environment and are not runtime dependencies of the C++ library. See `requirements-analysis.txt` and `docs/reproducibility.md` for setup and reproducibility instructions.
 
 ## Documentation map
+
+- `docs/V2_RELEASE_NOTES.md` — ThermoGPU 2.0 release notes
 
 - `docs/G4.5c.2c.9-closeout.md` — V2.0 GPU specialization and storage-analysis closeout
 
