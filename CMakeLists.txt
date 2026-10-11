@@ -283,6 +283,15 @@ add_library(thermogpu_thermo_batch STATIC
     src/thermo_batch.cpp
 )
 
+if(THERMOGPU_ENABLE_OPENMP)
+    target_link_libraries(thermogpu_thermo_batch PUBLIC
+        OpenMP::OpenMP_CXX
+    )
+    target_compile_definitions(thermogpu_thermo_batch PUBLIC
+        THERMOGPU_HAS_OPENMP=1
+    )
+endif()
+
 target_link_libraries(thermogpu_thermo_batch PUBLIC
     thermogpu::thermo
 )
@@ -316,3 +325,18 @@ add_test(
     NAME thermogpu_v2_thermo_batch
     COMMAND test_thermo_batch
 )
+
+if(THERMOGPU_ENABLE_OPENMP)
+    add_executable(test_thermo_batch_openmp
+        tests/integration/test_thermo_batch_openmp.cpp
+    )
+
+    target_link_libraries(test_thermo_batch_openmp PRIVATE
+        thermogpu::thermo_batch
+    )
+
+    add_test(
+        NAME thermogpu_v2_thermo_batch_openmp
+        COMMAND test_thermo_batch_openmp
+    )
+endif()

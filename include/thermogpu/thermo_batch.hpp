@@ -51,4 +51,12 @@ BatchResult evaluate_batch_scalar(
     const BatchInput& input
 );
 
+#ifdef THERMOGPU_HAS_OPENMP
+// Requires a model safe for concurrent const evaluate_Tp() calls.
+BatchResult evaluate_batch_openmp(
+    const Model& model,
+    const BatchInput& input
+);
+#endif
+
 } // namespace thermogpu::thermo
