@@ -1,5 +1,6 @@
 # ThermoGPU
 
+
 ThermoGPU is a scientific-computing project investigating whether GPUs can materially accelerate large batches of engineering equation-of-state calculations without sacrificing numerical quality.
 
 V1.0 targets single-phase, multicomponent Peng–Robinson (PR) calculations and compares scalar C++, OpenMP, and CUDA backends. The project is designed to produce a reproducible computational result: thermodynamic correctness is established first, optimized backends are differentially validated against that reference, and performance claims are retained with the machine-specific evidence that supports them.
@@ -8,9 +9,105 @@ V1.0 targets single-phase, multicomponent Peng–Robinson (PR) calculations and 
 
 The final report consolidates the numerical validation, CPU/GPU differential testing, performance characterization, cross-machine reproduction, profiling results, limitations, and engineering conclusions from the V1.0 study.
 
+## V2.0 development
+
+**ThermoGPU V2.0 is under active development on
+`feature/v2.0-thermomodel-integration`.** V1.0 remains the completed,
+tagged baseline.
+
+V2.0 extends the original Peng–Robinson EOS study toward a reusable
+thermodynamic evaluation library with CPU and GPU execution.
+
+### ThermoModel integration
+
+The `ThermoModel` library provides a common thermodynamic foundation
+for the V2.0 implementation, including Peng–Robinson EOS evaluation
+and associated thermodynamic-property calculations.
+
+The extended batch interface supports:
+
+- compressibility factor `Z`;
+- mass density;
+- enthalpy and entropy;
+- internal energy;
+- isobaric and isochoric heat capacities (`cp`, `cv`);
+- speed of sound; and
+- phase/error metadata.
+
+These capabilities extend the original V1.0 calculation; they do
+not retroactively change the V1.0 specification or its frozen results.
+
+### CPU and CUDA execution
+
+V2.0 includes scalar CPU, OpenMP, and CUDA thermodynamic batch
+evaluation.
+
+The CUDA implementation supports reusable device-resident
+workspaces and stream-aware execution, allowing applications to
+avoid repeated allocation and unnecessary host/device transfers.
+
+The device-resident execution path is intended to support future
+GPU-based scientific simulations that repeatedly evaluate
+thermodynamic properties without returning intermediate results
+to the CPU.
+
+### G4.5: GPU specialization and storage analysis
+
+G4.5c.2c.9 is complete.
+
+The investigation compared three CUDA execution variants:
+
+1. Full thermodynamic evaluation with a 176-byte result record.
+2. Specialized `Z`/density/error evaluation using the original
+   176-byte result layout.
+3. Specialized `Z`/density/error evaluation using a compact
+   24-byte result layout.
+
+The padded variant isolates the effect of eliminating unnecessary
+thermodynamic calculations. The compact variant additionally
+reduces logical output size.
+
+On the RTX 4090 Laptop GPU (`sm_89`), controlled experiments
+demonstrated that computation specialization provides the
+principal kernel-time improvement. Compact storage substantially
+reduces logical output size and can reduce device-to-host
+transfer costs, but its kernel-time benefit depends on workload
+and hardware.
+
+An initial 100,000-state experiment on the Quadro M3000M
+(`sm_52`) measured:
+
+| Variant | Kernel time | Speedup vs. full |
+|---|---:|---:|
+| Full | 3.490 ms | 1.00x |
+| Specialized, padded | 2.463 ms | 1.42x |
+| Specialized, compact | 2.005 ms | 1.74x |
+
+These Maxwell timings are preliminary measurements, not
+universal performance claims.
+
+The complete configured 24-test regression suite passed on
+both the Quadro M3000M (`sm_52`) and RTX 4090 Laptop
+(`sm_89`) development platforms.
+
+The detailed methodology, measurements, Nsight Compute evidence,
+and limitations are documented in
+[`docs/G4.5c.2c.9-closeout.md`](docs/G4.5c.2c.9-closeout.md).
+
+### Next milestone: G4.6
+
+G4.6 will investigate integrated performance across scalar CPU,
+OpenMP, and CUDA backends, including batch-size scaling,
+host/device transfer costs, and the benefits of GPU-resident
+execution.
+
+The objective is to characterize complete application-facing
+execution paths rather than infer end-to-end performance from
+isolated kernel timings.
+
 ## Current status
 
-**ThermoGPU V1.0 is complete and tagged `v1.0.0`.**
+**ThermoGPU V1.0 is complete and tagged `v1.0.0`. V2.0 development is ongoing; G4.5c.2c.9 is complete and G4.6 is next.**
 
 V1.0 implements and validates the scalar C++, OpenMP, and CUDA backends, completes CPU/GPU differential validation and performance characterization, and reproduces the numerical implementation on a second, substantially different CPU/GPU platform. The frozen M7 implementation remains tagged `v0.7.0`; the subsequent cross-machine evidence and V1 release integration are included in `v1.0.0`.
 
@@ -235,6 +332,8 @@ The two characterized environments intentionally differ. The cross-machine exper
 Analysis and external-validation tools use a separate Python environment and are not runtime dependencies of the C++ library. See `requirements-analysis.txt` and `docs/reproducibility.md` for setup and reproducibility instructions.
 
 ## Documentation map
+
+- `docs/G4.5c.2c.9-closeout.md` — V2.0 GPU specialization and storage-analysis closeout
 
 - `docs/V1_REPORT.md` — final V1.0 technical report and engineering conclusions
 - `docs/V1_SPEC.md` — complete V1.0 scope and definition of done
