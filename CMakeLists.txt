@@ -340,3 +340,47 @@ if(THERMOGPU_ENABLE_OPENMP)
         COMMAND test_thermo_batch_openmp
     )
 endif()
+
+
+# ============================================================
+# ThermoGPU v2 CUDA thermodynamic batch evaluation
+# ============================================================
+
+if(THERMOGPU_ENABLE_CUDA)
+
+    add_library(thermogpu_thermo_cuda STATIC
+        src/cuda/thermo_batch_cuda.cu
+    )
+
+    target_link_libraries(thermogpu_thermo_cuda PUBLIC
+        thermogpu::thermo_batch
+    )
+
+    target_include_directories(thermogpu_thermo_cuda PUBLIC
+        ${CMAKE_CURRENT_SOURCE_DIR}/include
+    )
+
+    set_target_properties(thermogpu_thermo_cuda PROPERTIES
+        CUDA_STANDARD 17
+        CUDA_STANDARD_REQUIRED ON
+    )
+
+    add_library(
+        thermogpu::thermo_cuda
+        ALIAS thermogpu_thermo_cuda
+    )
+
+    add_executable(test_thermo_batch_cuda
+        tests/integration/test_thermo_batch_cuda.cpp
+    )
+
+    target_link_libraries(test_thermo_batch_cuda PRIVATE
+        thermogpu::thermo_cuda
+    )
+
+    add_test(
+        NAME thermogpu_v2_thermo_batch_cuda
+        COMMAND test_thermo_batch_cuda
+    )
+
+endif()
