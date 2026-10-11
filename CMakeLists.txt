@@ -158,3 +158,84 @@ add_executable(thermomodel_pr_tests
 )
 target_link_libraries(thermomodel_pr_tests PRIVATE thermomodel::thermomodel)
 add_test(NAME thermomodel_pr COMMAND thermomodel_pr_tests)
+
+# ThermoGPU v1 / ThermoModel numerical comparison.
+add_executable(compare_pure_pr
+    tests/integration/compare_pure_pr.cpp
+)
+
+target_link_libraries(compare_pure_pr PRIVATE
+    thermogpu_scalar
+    thermomodel::thermomodel
+)
+
+target_compile_options(compare_pure_pr PRIVATE
+    -Wall -Wextra -Wpedantic
+)
+
+add_test(
+    NAME thermogpu_v2_pure_pr_equivalence
+    COMMAND compare_pure_pr
+)
+
+# ============================================================
+# ThermoModel CUDA device-kernel parity validation
+# ============================================================
+
+if(THERMOGPU_ENABLE_CUDA)
+
+    function(add_thermomodel_cuda_parity_test test_name cuda_standard)
+
+        set(target_name "thermomodel_${test_name}")
+
+        add_executable(${target_name}
+            tests/thermomodel/${test_name}.cu
+        )
+
+        target_link_libraries(${target_name} PRIVATE
+            thermomodel::thermomodel
+        )
+
+        set_target_properties(${target_name} PROPERTIES
+            CUDA_STANDARD ${cuda_standard}
+            CUDA_STANDARD_REQUIRED ON
+        )
+
+        add_test(
+            NAME ${target_name}
+            COMMAND ${target_name}
+        )
+
+    endfunction()
+
+    # G2a-G2d: CUDA C++20 kernels.
+    add_thermomodel_cuda_parity_test(
+        polynomial_cp_cuda_parity 20
+    )
+
+    add_thermomodel_cuda_parity_test(
+        pr_coefficients_cuda_parity 20
+    )
+
+    add_thermomodel_cuda_parity_test(
+        cubic_cuda_parity 20
+    )
+
+    add_thermomodel_cuda_parity_test(
+        pr_derivatives_cuda_parity 20
+    )
+
+    add_thermomodel_cuda_parity_test(
+        pr_residual_cuda_parity 20
+    )
+
+    # G2e: CUDA C++17 kernels.
+    add_thermomodel_cuda_parity_test(
+        pr_state_cuda_parity 17
+    )
+
+    add_thermomodel_cuda_parity_test(
+        pr_tp_cuda_parity 17
+    )
+
+endif()
