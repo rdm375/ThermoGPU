@@ -1,5 +1,8 @@
 cmake_minimum_required(VERSION 3.20)
-project(ThermoGPU VERSION 1.0.0 LANGUAGES CXX)
+project(ThermoGPU VERSION 2.0.0 LANGUAGES CXX)
+
+include(GNUInstallDirs)
+include(CMakePackageConfigHelpers)
 option(THERMOGPU_ENABLE_OPENMP "Build OpenMP backend" ON)
 option(THERMOGPU_ENABLE_CUDA "Build CUDA backend" OFF)
 option(THERMOGPU_PTXAS_VERBOSE "Report CUDA ptxas resource usage during compilation" OFF)
@@ -16,7 +19,10 @@ add_library(thermomodel STATIC
   src/thermomodel/peng_robinson.cpp
 )
 add_library(thermomodel::thermomodel ALIAS thermomodel)
-target_include_directories(thermomodel PUBLIC include)
+target_include_directories(thermomodel PUBLIC
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+    $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
+)
 target_compile_features(thermomodel PUBLIC cxx_std_20)
 target_compile_options(thermomodel PRIVATE -Wall -Wextra -Wpedantic)
 
@@ -26,7 +32,10 @@ add_library(thermogpu_scalar
   src/cpu/tdar_oracle.cpp
   src/cpu/mixture_benchmark.cpp
 )
-target_include_directories(thermogpu_scalar PUBLIC include)
+target_include_directories(thermogpu_scalar PUBLIC
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+    $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
+)
 target_compile_options(thermogpu_scalar PRIVATE -Wall -Wextra -Wpedantic)
 if(THERMOGPU_ENABLE_OPENMP)
   find_package(OpenMP REQUIRED)
@@ -37,7 +46,10 @@ endif()
 if(THERMOGPU_ENABLE_CUDA)
   enable_language(CUDA)
   add_library(thermogpu_cuda src/cuda/pr_cuda.cu)
-  target_include_directories(thermogpu_cuda PUBLIC include)
+  target_include_directories(thermogpu_cuda PUBLIC
+      $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+      $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
+  )
   target_link_libraries(thermogpu_cuda PUBLIC thermogpu_scalar)
   target_compile_definitions(thermogpu_cuda PUBLIC THERMOGPU_HAS_CUDA=1)
   set_target_properties(thermogpu_cuda PROPERTIES CUDA_STANDARD 17 CUDA_STANDARD_REQUIRED ON)
@@ -252,7 +264,8 @@ target_link_libraries(thermogpu_thermo INTERFACE
 )
 
 target_include_directories(thermogpu_thermo INTERFACE
-    ${CMAKE_CURRENT_SOURCE_DIR}/include
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+    $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
 )
 
 target_compile_features(thermogpu_thermo INTERFACE
@@ -297,7 +310,8 @@ target_link_libraries(thermogpu_thermo_batch PUBLIC
 )
 
 target_include_directories(thermogpu_thermo_batch PUBLIC
-    ${CMAKE_CURRENT_SOURCE_DIR}/include
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+    $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
 )
 
 target_compile_features(thermogpu_thermo_batch PUBLIC
@@ -352,12 +366,16 @@ if(THERMOGPU_ENABLE_CUDA)
         src/cuda/thermo_batch_cuda.cu
     )
 
+    find_package(CUDAToolkit REQUIRED)
+
     target_link_libraries(thermogpu_thermo_cuda PUBLIC
         thermogpu::thermo_batch
+        CUDA::cudart
     )
 
     target_include_directories(thermogpu_thermo_cuda PUBLIC
-        ${CMAKE_CURRENT_SOURCE_DIR}/include
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+        $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
     )
 
     set_target_properties(thermogpu_thermo_cuda PROPERTIES
@@ -408,3 +426,104 @@ if(THERMOGPU_ENABLE_CUDA)
     )
 
 endif()
+
+
+# ============================================================
+# ThermoGPU 2.0 installation and CMake package exports
+# ============================================================
+
+set_target_properties(thermogpu_thermo PROPERTIES
+    EXPORT_NAME thermo
+)
+
+set_target_properties(thermogpu_thermo_batch PROPERTIES
+    EXPORT_NAME thermo_batch
+)
+
+set_target_properties(thermogpu_scalar PROPERTIES
+    EXPORT_NAME scalar
+)
+
+install(DIRECTORY include/
+    DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
+    PATTERN "cuda_diagnostics.hpp" EXCLUDE
+    PATTERN "thermo_batch_cuda.hpp" EXCLUDE
+)
+
+if(THERMOGPU_ENABLE_CUDA)
+    install(FILES
+        include/thermogpu/cuda_diagnostics.hpp
+        include/thermogpu/thermo_batch_cuda.hpp
+        DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/thermogpu
+    )
+endif()
+
+install(TARGETS thermomodel
+    EXPORT ThermoModelTargets
+    ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+    RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+)
+
+install(TARGETS
+    thermogpu_scalar
+    thermogpu_thermo
+    thermogpu_thermo_batch
+    EXPORT ThermoGPUTargets
+    ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+    RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+)
+
+if(THERMOGPU_ENABLE_CUDA)
+    set_target_properties(thermogpu_cuda PROPERTIES
+        EXPORT_NAME cuda
+    )
+
+    set_target_properties(thermogpu_thermo_cuda PROPERTIES
+        EXPORT_NAME thermo_cuda
+    )
+
+    install(TARGETS
+        thermogpu_cuda
+        thermogpu_thermo_cuda
+        EXPORT ThermoGPUTargets
+        ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+        LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+        RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+    )
+endif()
+
+set(THERMOGPU_INSTALL_CMAKEDIR
+    ${CMAKE_INSTALL_LIBDIR}/cmake/ThermoGPU
+)
+
+install(EXPORT ThermoModelTargets
+    FILE ThermoModelTargets.cmake
+    NAMESPACE thermomodel::
+    DESTINATION ${THERMOGPU_INSTALL_CMAKEDIR}
+)
+
+install(EXPORT ThermoGPUTargets
+    FILE ThermoGPUTargets.cmake
+    NAMESPACE thermogpu::
+    DESTINATION ${THERMOGPU_INSTALL_CMAKEDIR}
+)
+
+configure_package_config_file(
+    ${CMAKE_CURRENT_SOURCE_DIR}/cmake/ThermoGPUConfig.cmake.in
+    ${CMAKE_CURRENT_BINARY_DIR}/ThermoGPUConfig.cmake
+    INSTALL_DESTINATION ${THERMOGPU_INSTALL_CMAKEDIR}
+)
+
+write_basic_package_version_file(
+    ${CMAKE_CURRENT_BINARY_DIR}/ThermoGPUConfigVersion.cmake
+    VERSION ${PROJECT_VERSION}
+    COMPATIBILITY SameMajorVersion
+)
+
+install(FILES
+    ${CMAKE_CURRENT_BINARY_DIR}/ThermoGPUConfig.cmake
+    ${CMAKE_CURRENT_BINARY_DIR}/ThermoGPUConfigVersion.cmake
+    DESTINATION ${THERMOGPU_INSTALL_CMAKEDIR}
+)

@@ -51,3 +51,5 @@ Thumbs.db
 
 # Generated benchmark results
 benchmarks/results-*/
+/build-release-*/
+/install-release-*/
