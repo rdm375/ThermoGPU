@@ -1,0 +1,16 @@
+{
+  "generator": "tools/generate_cantera_caloric_reference.py",
+  "source": "Cantera gri30.yaml, GRI-Mech 3.0, CH4 NASA7",
+  "cantera_version": "3.2.0",
+  "thermo_type": "NasaPoly2",
+  "temperature_range_K": [
+    200.0,
+    1000.0
+  ],
+  "reference_temperature_K": 298.15,
+  "molar_mass_kg_per_mol": 0.016043,
+  "molar_mass_note": "ThermoModel convention, deliberately fixed",
+  "units": "mass-specific SI",
+  "csv_sha256": "bdeb3b1878eba22188e13283bc12614d6da64b5e2c3bfc73f2a6a421ecd5c824",
+  "source_url": "https://github.com/Cantera/cantera/blob/main/data/gri30.yaml"
+}

@@ -139,3 +139,22 @@ target_link_libraries(test_pr_frozen_oracle PRIVATE thermogpu_scalar)
 target_compile_options(test_pr_frozen_oracle PRIVATE -Wall -Wextra -Wpedantic)
 add_test(NAME pr_frozen_oracle COMMAND test_pr_frozen_oracle
   ${CMAKE_SOURCE_DIR}/tests/reference/data)
+
+# Imported ThermoModel regression tests.
+add_executable(thermomodel_tests
+    tests/thermomodel/test_main.cpp
+)
+target_link_libraries(thermomodel_tests PRIVATE thermomodel::thermomodel)
+add_test(NAME thermomodel_contract COMMAND thermomodel_tests)
+
+add_executable(thermomodel_v02_tests
+    tests/thermomodel/test_v02.cpp
+)
+target_link_libraries(thermomodel_v02_tests PRIVATE thermomodel::thermomodel)
+add_test(NAME thermomodel_v02 COMMAND thermomodel_v02_tests)
+
+add_executable(thermomodel_pr_tests
+    tests/thermomodel/test_pr.cpp
+)
+target_link_libraries(thermomodel_pr_tests PRIVATE thermomodel::thermomodel)
+add_test(NAME thermomodel_pr COMMAND thermomodel_pr_tests)

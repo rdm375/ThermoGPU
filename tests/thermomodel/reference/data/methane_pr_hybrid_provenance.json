@@ -1,0 +1,30 @@
+{
+  "description": "Hybrid methane PR/caloric reference",
+  "generator": "tools/generate_hybrid_methane_reference.py",
+  "thermopack": "2.2.3 (expected; verify environment)",
+  "cantera_version": "3.2.0",
+  "cantera_dataset": "gri30.yaml, CH4 NASA7",
+  "molar_mass_kg_mol": 0.016043,
+  "PR": {
+    "Tc_K": 190.56,
+    "pc_Pa": 4599200.0,
+    "acentric": 0.01142,
+    "mixing": "vdW",
+    "alpha": "Classic",
+    "phase": "vapor"
+  },
+  "temperature_K": [
+    220.0,
+    300.0,
+    400.0,
+    600.0
+  ],
+  "pressure_Pa": [
+    100000.0,
+    1000000.0,
+    5000000.0,
+    10000000.0
+  ],
+  "comparisons": 112,
+  "csv_sha256": "1f8494f84f8428e8c3bdff270e714cc36c0699951613d8bc2feffa60442a2ce4"
+}
