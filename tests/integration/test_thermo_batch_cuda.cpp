@@ -277,6 +277,40 @@ int main()
         require(rejected,
                 "mismatched CUDA batch was accepted");
 
+        // Persistent allocation: repeated uploads of different sizes.
+        thermogpu::thermo::CUDAThermoWorkspace workspace(parameters, input.size());
+        require(workspace.capacity() == input.size(), "workspace capacity mismatch");
+        bool premature_download = false;
+        try { (void)workspace.download(); }
+        catch (const std::logic_error&) { premature_download = true; }
+        require(premature_download, "download before evaluate accepted");
+
+        for (std::size_t count : {std::size_t{0}, std::size_t{1},
+                                  std::size_t{97}, input.size(), std::size_t{3}}) {
+            BatchInput subset;
+            subset.temperature_K.assign(input.temperature_K.begin(),
+                                        input.temperature_K.begin() + count);
+            subset.pressure_Pa.assign(input.pressure_Pa.begin(),
+                                      input.pressure_Pa.begin() + count);
+            workspace.upload(subset);
+            require(workspace.size() == count, "workspace size mismatch");
+            workspace.evaluate();
+            auto repeated = workspace.download();
+            auto reference = thermogpu::thermo::evaluate_batch_cuda(parameters, subset);
+            compare(reference, repeated, statistics, 1e-12);
+            // Multiple downloads must remain valid.
+            auto again = workspace.download();
+            compare(reference, again, statistics, 1e-12);
+        }
+
+        bool rejected_capacity = false;
+        BatchInput too_large;
+        too_large.temperature_K.assign(input.size() + 1, 300.0);
+        too_large.pressure_Pa.assign(input.size() + 1, 1.0e6);
+        try { workspace.upload(too_large); }
+        catch (const std::length_error&) { rejected_capacity = true; }
+        require(rejected_capacity, "workspace capacity overflow accepted");
+
         print_statistics(statistics);
 
         require(statistics.status_mismatches == 0,

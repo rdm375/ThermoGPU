@@ -4,6 +4,8 @@
 #include "thermomodel/peng_robinson.hpp"
 
 #include <array>
+#include <cstddef>
+#include <memory>
 
 namespace thermogpu::thermo {
 
@@ -20,6 +22,28 @@ struct CUDAPRParameters {
     };
 
     double caloric_scale = 1000.0;
+};
+
+// Owns persistent CUDA buffers. Not thread-safe; operations are synchronous.
+// upload() invalidates the previous result; evaluate() must precede download().
+class CUDAThermoWorkspace {
+public:
+    CUDAThermoWorkspace(const CUDAPRParameters& parameters,
+                        std::size_t capacity);
+    ~CUDAThermoWorkspace();
+    CUDAThermoWorkspace(const CUDAThermoWorkspace&) = delete;
+    CUDAThermoWorkspace& operator=(const CUDAThermoWorkspace&) = delete;
+    CUDAThermoWorkspace(CUDAThermoWorkspace&&) noexcept;
+    CUDAThermoWorkspace& operator=(CUDAThermoWorkspace&&) noexcept;
+
+    void upload(const BatchInput& input);
+    void evaluate();
+    [[nodiscard]] BatchResult download() const;
+    [[nodiscard]] std::size_t capacity() const noexcept;
+    [[nodiscard]] std::size_t size() const noexcept;
+private:
+    struct Impl;
+    std::unique_ptr<Impl> impl_;
 };
 
 BatchResult evaluate_batch_cuda(

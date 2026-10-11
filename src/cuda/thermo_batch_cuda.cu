@@ -271,116 +271,99 @@ BatchResult make_result(std::size_t n)
 
 } // namespace
 
-BatchResult evaluate_batch_cuda(
-    const CUDAPRParameters& parameters,
-    const BatchInput& input)
-{
-    if (input.temperature_K.size() !=
-        input.pressure_Pa.size()) {
-        throw std::invalid_argument(
-            "thermodynamic batch T/p size mismatch"
-        );
+struct CUDAThermoWorkspace::Impl {
+    explicit Impl(const CUDAPRParameters& configuration, std::size_t max_count)
+        : capacity(max_count),
+          device_inputs(max_count), device_outputs(max_count),
+          host_inputs(max_count), host_outputs(max_count)
+    {
+        auto caloric = std::make_shared<thermomodel::PolynomialCp>(
+            configuration.caloric_coefficients, configuration.caloric_scale);
+        const thermomodel::PengRobinson validated(caloric, configuration.pr);
+        pr = validated.parameters();
+        policy = convert_policy(pr.root_policy);
+        parameters = make_device_parameters(configuration);
+        if (capacity > static_cast<std::size_t>(
+                std::numeric_limits<unsigned int>::max()) * 128ULL)
+            throw std::length_error("CUDA thermodynamic workspace too large");
     }
 
-    // Validate the model using ThermoModel's production
-    // constructor, including its caloric admissibility checks.
-    auto caloric =
-        std::make_shared<thermomodel::PolynomialCp>(
-            parameters.caloric_coefficients,
-            parameters.caloric_scale
-        );
+    std::size_t capacity;
+    std::size_t count = 0;
+    bool uploaded = false;
+    bool evaluated = false;
+    thermomodel::PRParameters pr{};
+    detail::PRTPRootPolicy policy{};
+    detail::PRPolynomialStateParameters parameters{};
+    DeviceBuffer<DeviceInput> device_inputs;
+    DeviceBuffer<DeviceOutput> device_outputs;
+    std::vector<DeviceInput> host_inputs;
+    mutable std::vector<DeviceOutput> host_outputs;
+};
 
-    const thermomodel::PengRobinson validated_model(
-        caloric, parameters.pr
-    );
+CUDAThermoWorkspace::CUDAThermoWorkspace(
+    const CUDAPRParameters& parameters, std::size_t capacity)
+    : impl_(std::make_unique<Impl>(parameters, capacity)) {}
 
-    const auto& pr = validated_model.parameters();
+CUDAThermoWorkspace::~CUDAThermoWorkspace() = default;
+CUDAThermoWorkspace::CUDAThermoWorkspace(CUDAThermoWorkspace&&) noexcept = default;
+CUDAThermoWorkspace& CUDAThermoWorkspace::operator=(CUDAThermoWorkspace&&) noexcept = default;
 
-    const auto policy = convert_policy(pr.root_policy);
+std::size_t CUDAThermoWorkspace::capacity() const noexcept {
+    return impl_ ? impl_->capacity : 0;
+}
+std::size_t CUDAThermoWorkspace::size() const noexcept {
+    return impl_ ? impl_->count : 0;
+}
 
-    const auto device_parameters =
-        make_device_parameters(parameters);
+void CUDAThermoWorkspace::upload(const BatchInput& input) {
+    if (!impl_) throw std::logic_error("moved-from CUDA workspace");
+    if (input.temperature_K.size() != input.pressure_Pa.size())
+        throw std::invalid_argument("thermodynamic batch T/p size mismatch");
+    if (input.size() > impl_->capacity)
+        throw std::length_error("CUDA thermodynamic workspace capacity exceeded");
+    impl_->uploaded = false;
+    impl_->evaluated = false;
+    impl_->count = input.size();
+    for (std::size_t i = 0; i < impl_->count; ++i)
+        impl_->host_inputs[i] = {input.temperature_K[i], input.pressure_Pa[i]};
+    if (impl_->count)
+        cuda_check(cudaMemcpy(impl_->device_inputs.data(), impl_->host_inputs.data(),
+                              impl_->count * sizeof(DeviceInput), cudaMemcpyHostToDevice),
+                   "CUDA thermodynamic input transfer");
+    impl_->uploaded = true;
+}
 
-    const std::size_t n = input.size();
+void CUDAThermoWorkspace::evaluate() {
+    if (!impl_ || !impl_->uploaded)
+        throw std::logic_error("CUDA workspace requires upload before evaluate");
+    impl_->evaluated = false;
+    if (impl_->count) {
+        constexpr unsigned int threads = 128;
+        const auto blocks = static_cast<unsigned int>(
+            impl_->count / threads + (impl_->count % threads != 0));
+        evaluate_kernel<<<blocks, threads>>>(
+            impl_->parameters, impl_->policy,
+            impl_->pr.Tmin, impl_->pr.Tmax, impl_->pr.pmin, impl_->pr.pmax,
+            impl_->device_inputs.data(), impl_->device_outputs.data(), impl_->count);
+        cuda_check(cudaGetLastError(), "CUDA thermodynamic kernel launch");
+        cuda_check(cudaDeviceSynchronize(), "CUDA thermodynamic kernel execution");
+    }
+    impl_->evaluated = true;
+}
 
+BatchResult CUDAThermoWorkspace::download() const {
+    if (!impl_ || !impl_->evaluated)
+        throw std::logic_error("CUDA workspace requires evaluate before download");
+    const std::size_t n = impl_->count;
     BatchResult result = make_result(n);
-
-    if (n == 0)
-        return result;
-
-    constexpr std::size_t threads = 128;
-
-    const std::size_t blocks =
-        n / threads + (n % threads != 0);
-
-    if (blocks >
-        static_cast<std::size_t>(
-            std::numeric_limits<unsigned int>::max())) {
-        throw std::length_error(
-            "CUDA thermodynamic batch too large"
-        );
-    }
-
-    std::vector<DeviceInput> host_inputs(n);
-    std::vector<DeviceOutput> host_outputs(n);
-
-    for (std::size_t i = 0; i < n; ++i) {
-        host_inputs[i] = {
-            input.temperature_K[i],
-            input.pressure_Pa[i]
-        };
-    }
-
-    DeviceBuffer<DeviceInput> device_inputs(n);
-    DeviceBuffer<DeviceOutput> device_outputs(n);
-
-    cuda_check(
-        cudaMemcpy(
-            device_inputs.data(),
-            host_inputs.data(),
-            n * sizeof(DeviceInput),
-            cudaMemcpyHostToDevice
-        ),
-        "CUDA thermodynamic input transfer"
-    );
-
-    evaluate_kernel<<<
-        static_cast<unsigned int>(blocks),
-        static_cast<unsigned int>(threads)
-    >>>(
-        device_parameters,
-        policy,
-        pr.Tmin,
-        pr.Tmax,
-        pr.pmin,
-        pr.pmax,
-        device_inputs.data(),
-        device_outputs.data(),
-        n
-    );
-
-    cuda_check(
-        cudaGetLastError(),
-        "CUDA thermodynamic kernel launch"
-    );
-
-    cuda_check(
-        cudaDeviceSynchronize(),
-        "CUDA thermodynamic kernel execution"
-    );
-
-    cuda_check(
-        cudaMemcpy(
-            host_outputs.data(),
-            device_outputs.data(),
-            n * sizeof(DeviceOutput),
-            cudaMemcpyDeviceToHost
-        ),
-        "CUDA thermodynamic output transfer"
-    );
-
-    const double b = device_parameters.pr.coefficients.b;
-
+    if (n)
+        cuda_check(cudaMemcpy(impl_->host_outputs.data(), impl_->device_outputs.data(),
+                              n * sizeof(DeviceOutput), cudaMemcpyDeviceToHost),
+                   "CUDA thermodynamic output transfer");
+    const auto& host_outputs = impl_->host_outputs;
+    const auto& pr = impl_->pr;
+    const double b = impl_->parameters.pr.coefficients.b;
     for (std::size_t i = 0; i < n; ++i) {
         const auto& output = host_outputs[i];
 
@@ -415,6 +398,17 @@ BatchResult evaluate_batch_cuda(
     }
 
     return result;
+}
+
+BatchResult evaluate_batch_cuda(
+    const CUDAPRParameters& parameters, const BatchInput& input)
+{
+    if (input.temperature_K.size() != input.pressure_Pa.size())
+        throw std::invalid_argument("thermodynamic batch T/p size mismatch");
+    CUDAThermoWorkspace workspace(parameters, input.size());
+    workspace.upload(input);
+    workspace.evaluate();
+    return workspace.download();
 }
 
 } // namespace thermogpu::thermo
