@@ -239,3 +239,38 @@ if(THERMOGPU_ENABLE_CUDA)
     )
 
 endif()
+
+
+# ============================================================
+# ThermoGPU v2 thermodynamic model API
+# ============================================================
+
+add_library(thermogpu_thermo INTERFACE)
+
+target_link_libraries(thermogpu_thermo INTERFACE
+    thermomodel::thermomodel
+)
+
+target_include_directories(thermogpu_thermo INTERFACE
+    ${CMAKE_CURRENT_SOURCE_DIR}/include
+)
+
+target_compile_features(thermogpu_thermo INTERFACE
+    cxx_std_20
+)
+
+add_library(thermogpu::thermo ALIAS thermogpu_thermo)
+
+# Public API integration test.
+add_executable(test_thermo_api
+    tests/integration/test_thermo_api.cpp
+)
+
+target_link_libraries(test_thermo_api PRIVATE
+    thermogpu::thermo
+)
+
+add_test(
+    NAME thermogpu_v2_thermo_api
+    COMMAND test_thermo_api
+)
