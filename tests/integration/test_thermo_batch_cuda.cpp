@@ -212,6 +212,155 @@ void print_statistics(const Statistics& statistics)
 
 } // namespace
 
+
+// G4.6c.1: validate reusable caller-owned BatchResult storage.
+void test_download_into_reuse(const CUDAPRParameters& parameters)
+{
+    using thermogpu::thermo::CUDAThermoWorkspace;
+
+    constexpr std::size_t capacity = 8;
+    CUDAThermoWorkspace workspace(parameters, capacity);
+    BatchResult reused;
+
+    auto check_numeric = [](double a, double b) {
+        return (std::isnan(a) && std::isnan(b)) || a == b;
+    };
+
+    auto check_result = [&](const BatchResult& expected,
+                            const BatchResult& actual) {
+        require(expected.size() == actual.size(),
+                "reuse result size mismatch");
+
+        const std::size_t n = expected.size();
+
+        require(actual.rho.size() == n &&
+                actual.h.size() == n &&
+                actual.s.size() == n &&
+                actual.u.size() == n &&
+                actual.cp.size() == n &&
+                actual.cv.size() == n &&
+                actual.sound_speed.size() == n &&
+                actual.phase.size() == n &&
+                actual.error.size() == n &&
+                actual.message.size() == n,
+                "reuse result vector size mismatch");
+
+        for (std::size_t i = 0; i < n; ++i) {
+            require(expected.error[i] == actual.error[i],
+                    "reuse error mismatch");
+            require(expected.phase[i] == actual.phase[i],
+                    "reuse phase mismatch");
+            require(expected.message[i] == actual.message[i],
+                    "reuse message mismatch");
+
+            const double reference[8] = {
+                expected.Z[i], expected.rho[i],
+                expected.h[i], expected.s[i],
+                expected.u[i], expected.cp[i],
+                expected.cv[i], expected.sound_speed[i]
+            };
+
+            const double values[8] = {
+                actual.Z[i], actual.rho[i],
+                actual.h[i], actual.s[i],
+                actual.u[i], actual.cp[i],
+                actual.cv[i], actual.sound_speed[i]
+            };
+
+            for (std::size_t j = 0; j < 8; ++j)
+                require(check_numeric(reference[j], values[j]),
+                        "reuse numeric property mismatch");
+        }
+    };
+
+    auto make_case = [](std::initializer_list<std::pair<double, double>> states) {
+        BatchInput input;
+        for (const auto& state : states) {
+            input.temperature_K.push_back(state.first);
+            input.pressure_Pa.push_back(state.second);
+        }
+        return input;
+    };
+
+    const auto valid = make_case({
+        {300.0, 5.0e6},
+        {320.0, 8.0e6},
+        {350.0, 3.0e6},
+        {400.0, 1.0e6}
+    });
+
+    const auto invalid = make_case({
+        {-1.0, 5.0e6},
+        {300.0, -1.0},
+        {std::numeric_limits<double>::quiet_NaN(), 1.0e6},
+        {50.0, 1.0e6}
+    });
+
+    const auto mixed = make_case({
+        {300.0, 5.0e6},
+        {-1.0, 5.0e6},
+        {320.0, 8.0e6},
+        {300.0, -1.0},
+        {350.0, 3.0e6},
+        {50.0, 1.0e6},
+        {400.0, 1.0e6},
+        {std::numeric_limits<double>::quiet_NaN(), 1.0e6}
+    });
+
+    auto run = [&](const BatchInput& input) {
+        workspace.upload(input);
+        workspace.evaluate();
+
+        const BatchResult fresh = workspace.download();
+        workspace.download_into(reused);
+
+        check_result(fresh, reused);
+
+        // A second download into the same storage must remain identical.
+        workspace.download_into(reused);
+        check_result(fresh, reused);
+
+        return fresh;
+    };
+
+    const auto first = run(valid);
+    require(first.success(0), "expected valid initial state");
+
+    const auto second = run(invalid);
+    require(!second.success(0), "expected invalid replacement state");
+
+    for (std::size_t i = 0; i < second.size(); ++i) {
+        require(!second.success(i), "invalid case unexpectedly succeeded");
+
+        require(std::isnan(reused.Z[i]) &&
+                std::isnan(reused.rho[i]) &&
+                std::isnan(reused.h[i]) &&
+                std::isnan(reused.s[i]) &&
+                std::isnan(reused.u[i]) &&
+                std::isnan(reused.cp[i]) &&
+                std::isnan(reused.cv[i]) &&
+                std::isnan(reused.sound_speed[i]),
+                "stale numeric value after failure");
+
+        require(reused.phase[i] == thermomodel::Phase::Unknown,
+                "stale phase after failure");
+    }
+
+    const auto third = run(mixed);
+    require(third.size() == capacity, "mixed batch size mismatch");
+    require(third.success(0), "valid state did not recover");
+
+    const auto fourth = run(valid);
+    require(fourth.size() == valid.size(),
+            "reused output did not shrink");
+    require(fourth.success(0), "valid state failed after reuse");
+
+    for (const auto& message : reused.message)
+        require(message.empty(), "stale diagnostic message after recovery");
+
+    std::cout << "CUDA BatchResult reuse parity PASS\n";
+}
+
 // Validate caller-owned device buffers and a non-default CUDA stream.
 void test_device_resident(const thermogpu::thermo::CUDAPRParameters& parameters)
 {
@@ -352,6 +501,9 @@ int main()
 
         require(rejected,
                 "mismatched CUDA batch was accepted");
+
+        // G4.6c.1: reusable output parity and failure transitions.
+        test_download_into_reuse(parameters);
 
         // Persistent allocation: repeated uploads of different sizes.
         thermogpu::thermo::CUDAThermoWorkspace workspace(parameters, input.size());

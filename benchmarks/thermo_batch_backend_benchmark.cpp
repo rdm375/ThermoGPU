@@ -159,6 +159,17 @@ int main(int argc, char** argv) {
                     sink+=result.Z[n/2];
                 };
                 emit(file,gpu,"cuda_workspace",workload,n,host_measure(workspace_call,repeats),repeats,1,sink);
+                // G4.6c.1: reuse caller-owned BatchResult storage.
+                BatchResult reusable_result;
+                auto workspace_reuse_call=[&]{
+                    workspace.upload(input);
+                    workspace.evaluate();
+                    workspace.download_into(reusable_result);
+                    sink+=reusable_result.Z[n/2];
+                };
+                emit(file,gpu,"cuda_workspace_reuse",workload,n,
+                     host_measure(workspace_reuse_call,repeats),
+                     repeats,1,sink);
                 std::vector<CUDADeviceInput> host(n);
                 for (std::size_t j=0;j<n;++j)
                     host[j]={input.temperature_K[j],input.pressure_Pa[j]};

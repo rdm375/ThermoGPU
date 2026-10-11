@@ -379,6 +379,14 @@ if(THERMOGPU_ENABLE_CUDA)
     )
 
 
+    # G4.6c: CUDA workspace execution-time decomposition.
+    add_executable(thermogpu_thermo_profile_benchmark
+        benchmarks/thermo_batch_profile_benchmark.cpp
+    )
+    target_link_libraries(thermogpu_thermo_profile_benchmark PRIVATE
+        thermogpu::thermo_cuda
+    )
+
     add_executable(thermogpu_thermo_batch_benchmark
         benchmarks/thermo_batch_backend_benchmark.cpp
     )
