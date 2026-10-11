@@ -370,6 +370,22 @@ if(THERMOGPU_ENABLE_CUDA)
         ALIAS thermogpu_thermo_cuda
     )
 
+    add_executable(thermogpu_thermo_fused_benchmark
+        benchmarks/thermo_batch_fused_benchmark.cpp
+    )
+    target_link_libraries(
+        thermogpu_thermo_fused_benchmark PRIVATE
+        thermogpu::thermo_cuda
+    )
+
+
+    add_executable(thermogpu_thermo_batch_benchmark
+        benchmarks/thermo_batch_backend_benchmark.cpp
+    )
+    target_link_libraries(thermogpu_thermo_batch_benchmark PRIVATE
+        thermogpu::thermo_cuda
+    )
+
     add_executable(test_thermo_batch_cuda
         tests/integration/test_thermo_batch_cuda.cpp
     )
