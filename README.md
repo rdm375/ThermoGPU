@@ -533,6 +533,12 @@ Analysis and external-validation tools use a separate Python environment and are
 
 ThermoGPU is free software licensed under the GNU General Public License, version 3 or, at your option, any later version (`GPL-3.0-or-later`). See `LICENSE` for the full license text.
 
+### Commercial licensing
+
+Organizations that require proprietary terms may contact Richard Myers via GitHub account [@rdm375](https://github.com/rdm375) to negotiate a separate commercial license. Negotiated terms may include per-seat fees, royalties, or other compensation.
+
+This notice does not grant a separate commercial license or set a fee schedule. Any separate license, including its scope, fees or royalties, reporting, and other terms, must be set out in a written agreement with the relevant rights holders. The `GPL-3.0-or-later` license remains available under its terms.
+
 ### TDAR oracle bridge
 
 `thermogpu_tdar_oracle` exposes the validated pure-methane Peng--Robinson
