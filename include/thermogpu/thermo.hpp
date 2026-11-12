@@ -22,6 +22,8 @@ template<class T>
 using Result = thermomodel::Result<T>;
 
 using PengRobinson = thermomodel::PengRobinson;
+using PengRobinsonMixture = thermomodel::PengRobinsonMixture;
+using PRMixtureComponent = thermomodel::PRMixtureComponent;
 using PRParameters = thermomodel::PRParameters;
 using PRRootPolicy = thermomodel::PRRootPolicy;
 

@@ -17,6 +17,7 @@ add_library(thermomodel STATIC
   src/thermomodel/variable_cp_ideal_gas.cpp
   src/thermomodel/flash.cpp
   src/thermomodel/peng_robinson.cpp
+  src/thermomodel/peng_robinson_mixture.cpp
 )
 add_library(thermomodel::thermomodel ALIAS thermomodel)
 target_include_directories(thermomodel PUBLIC
